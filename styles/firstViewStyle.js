@@ -45,8 +45,8 @@ export const onBoardingStyles = StyleSheet.create({
     marginTop: -60,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 260,
+    height: 260,
   },
   textBottomFromImageContainer: {
     flexDirection: "row",
