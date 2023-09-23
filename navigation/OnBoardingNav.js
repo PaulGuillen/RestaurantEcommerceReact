@@ -10,7 +10,7 @@ const Stack = createNativeStackNavigator();
 const OnBoardingNav = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown : false}}>
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="FirstView" component={FirstView} />
         <Stack.Screen name="SecondView" component={SecondView} />
         <Stack.Screen name="ThirdView" component={ThirdView} />

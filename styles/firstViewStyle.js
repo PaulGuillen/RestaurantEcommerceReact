@@ -76,7 +76,7 @@ export const onBoardingStyles = StyleSheet.create({
   },
   buttonStyle: {
     bottom: 10,
-    right: 30,
+    right: 20,
   },
   buttonText: {
     color: "black",

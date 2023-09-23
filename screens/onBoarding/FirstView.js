@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 const FirstView = () => {
   const navigation = useNavigation();
   const showSecondView = () => {
-    navigation.navigate("SecondView")
+    navigation.navigate("SecondView");
   };
 
   return (
