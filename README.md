@@ -1,12 +1,16 @@
 # RestaurantEcommerceReact
 
-Proyecto en progreso...
+_Proyecto realizado con react expo go, actualmente esta en pleno desarollo, tener paciencia._
 
-_Realizado con EXPO GO_
+## Comenzando 🚀
+_Para comenzar debes instalar las siguientes librerias._
 
-Libraries 
-Navigation y stack
+```
+. Navigation
+. Navigation-stack
+```
 
-![Screenshot_1695497757](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/04713ad8-e2dc-4940-bdeb-27194af2a2fe)
+### Pre-requisitos 📋
+_Actualmente el BE esta conectado a FIREBASE, se brindara un ejemplo de como es el manejo, ademas se debe tener conocimiento en consumo de servicios._
 
 
