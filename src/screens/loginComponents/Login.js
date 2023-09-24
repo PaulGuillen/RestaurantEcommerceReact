@@ -11,41 +11,29 @@ import {
 import { useBackButtonHandler } from "../../util/LifeCycle";
 import { loginStyle } from "../../styles/loginComponent/loginViewStyle.js";
 import { useState } from "react";
+import { LoginServices } from "../../data/services/loginServices";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const Login = () => {
   useBackButtonHandler();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    const loginUrl = "http://192.168.100.128:3000/users/login";
-
-    const data = {
-      email: email,
-      password: password,
-    };
-
+    setLoading(true);
     try {
-      const response = await fetch(loginUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const responseData = await response.json();
-
-      if (response.status === 200 || responseData.status === 200) {
-        Alert.alert("Éxito", responseData.message);
-        console.log("Respuesta del servidor:", responseData);
+      const response = await LoginServices.login(email, password);
+      if (response.success) {
+        Alert.alert("Éxito", response.data.message);
       } else {
-        Alert.alert("Error", "Credenciales de inicio de sesión incorrectas");
-        console.log("Respuesta del servidor:", responseData);
+        Alert.alert("Error", response.error);
       }
     } catch (error) {
       console.error("Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,6 +80,11 @@ const Login = () => {
           </View>
         </View>
       </ImageBackground>
+      <Spinner
+        visible={loading}
+        textContent={"Cargando..."}
+        textStyle={{ color: "#FFF" }}
+      />
     </ScrollView>
   );
 };
