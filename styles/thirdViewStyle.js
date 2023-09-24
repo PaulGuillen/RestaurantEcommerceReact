@@ -26,7 +26,6 @@ export const thirdOnBoardingStyles = StyleSheet.create({
   horizontalCotainerBottom: {
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
-    paddingHorizontal: 20,
   },
   separatorContainer: {
     width: '100%',
@@ -37,10 +36,6 @@ export const thirdOnBoardingStyles = StyleSheet.create({
     width: '100%',
     height: 1,
     backgroundColor: 'gray',
-  },
-  buttonStartStyle: {
-    bottom: 10,
-    start: 20,
   },
   buttonEndStyle: {
     bottom: 10,
