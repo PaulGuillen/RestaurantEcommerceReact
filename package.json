@@ -14,7 +14,9 @@
     "expo": "~49.0.11",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
-    "react-native": "0.72.4"
+    "react-native": "0.72.4",
+    "react-native-android-taskdescription": "^1.0.5",
+    "react-native-exit-app": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

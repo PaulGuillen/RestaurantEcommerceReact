@@ -4,33 +4,31 @@ import {
   TouchableOpacity,
   Text,
   Image,
-} from "react-native";
-import { secondOnBoardingStyles } from "../../styles/secondViewStyle";
-import { useNavigation } from "@react-navigation/native";
+} from 'react-native';
+import { secondOnBoardingStyles } from '../../styles/secondViewStyle';
+import { useNavigation } from '@react-navigation/native';
 
 const SecondView = () => {
   const navigation = useNavigation();
 
   const showFirstView = () => {
-    navigation.navigate("FirstView");
+    navigation.navigate('FirstView');
   };
 
   const showThirdView = () => {
-    navigation.navigate("ThirdView");
+    navigation.navigate('ThirdView');
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/images/backgroundViewPrincipal.png")}
-      style={secondOnBoardingStyles.container}
-    >
+    <ImageBackground style={secondOnBoardingStyles.container}>
       <View style={secondOnBoardingStyles.body}>
         <Image
-          source={require("../../assets/images/eating_2.png")}
+          source={require('../../assets/images/eating_2.png')}
           style={secondOnBoardingStyles.image}
         />
         <Text style={secondOnBoardingStyles.textBottomFromImage}>
-          Come y bebe que la vida es breve
+          Come y bebe que la vida es breve, no dejes para mañana lo que puede
+          comer hoy
         </Text>
       </View>
 

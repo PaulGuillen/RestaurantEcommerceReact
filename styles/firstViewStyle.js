@@ -1,20 +1,20 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const onBoardingStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 20,
     marginTop: 60,
     marginBottom: 20,
   },
   verticalContainer: {
-    flexDirection: "column",
-    alignItems: "flex-start",
+    flexDirection: 'column',
+    alignItems: 'flex-start',
     flex: 1,
   },
   textLeft: {
@@ -22,23 +22,23 @@ export const onBoardingStyles = StyleSheet.create({
   },
   textRigth: {
     fontSize: 34,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginVertical: -6,
-    fontStyle: "normal",
+    fontStyle: 'normal',
   },
   rotatedContainer: {
-    transform: [{ rotate: "-90deg" }],
+    transform: [{ rotate: '-90deg' }],
     marginRight: -40,
   },
   separator: {
     width: 1,
     height: 94,
-    backgroundColor: "gray",
+    backgroundColor: 'gray',
     marginHorizontal: 20,
   },
   body: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 1,
   },
   imageContainer: {
@@ -49,38 +49,38 @@ export const onBoardingStyles = StyleSheet.create({
     height: 260,
   },
   textBottomFromImageContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 10,
   },
   textBottomFromImage: {
     fontSize: 18,
-    fontWeight: "500",
+    fontWeight: '500',
     marginHorizontal: 4,
-    fontStyle: "italic",
+    fontStyle: 'italic',
   },
   bottom: {
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
   },
   separatorContainer: {
-    width: "100%",
-    alignSelf: "center",
+    width: '100%',
+    alignSelf: 'center',
     bottom: 20,
   },
   separatorBottom: {
-    width: "100%",
+    width: '100%',
     height: 1,
-    backgroundColor: "gray",
+    backgroundColor: 'gray',
   },
   buttonStyle: {
     bottom: 10,
     right: 20,
   },
   buttonText: {
-    color: "black",
+    color: 'black',
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 });
