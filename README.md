@@ -25,6 +25,11 @@ _Bueno en este caso mostrare las primera vistas que se mostraran en este proyect
 
 _* Vistas Login Componentes_
 
-_Bueno primera vista creada Login funcional con un BE personalziado conectado a Firebase._
+_Bueno primera vista creada Login funcional con un BE personalziado conectado a Firebase, actulamente sigue en desarollo._
 
 ![Screenshot_1695530219](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/c3b626a1-7eb8-4ba6-ada0-1e34b2ccdff6)
+
+
+## Autor ✒️
+
+* **Paul Guillen Acuña** - *Mi Repositorio* - [PaulGuillen](https://github.com/PaulGuillen?tab=repositories)
