@@ -4,26 +4,26 @@ import {
   TouchableOpacity,
   Text,
   Image,
-} from 'react-native';
-import { secondOnBoardingStyles } from '../../styles/secondViewStyle';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import { secondOnBoardingStyles } from "../../styles/secondViewStyle.js";
+import { useNavigation } from "@react-navigation/native";
 
 const SecondView = () => {
   const navigation = useNavigation();
 
   const showFirstView = () => {
-    navigation.navigate('FirstView');
+    navigation.navigate("FirstView");
   };
 
   const showThirdView = () => {
-    navigation.navigate('ThirdView');
+    navigation.navigate("ThirdView");
   };
 
   return (
     <ImageBackground style={secondOnBoardingStyles.container}>
       <View style={secondOnBoardingStyles.body}>
         <Image
-          source={require('../../assets/images/eating_2.png')}
+          source={require("../../../assets//images/eating_2.png")}
           style={secondOnBoardingStyles.image}
         />
         <Text style={secondOnBoardingStyles.textBottomFromImage}>
@@ -41,13 +41,13 @@ const SecondView = () => {
             style={secondOnBoardingStyles.buttonStartStyle}
             onPress={showFirstView}
           >
-            <Text style={secondOnBoardingStyles.buttonText}>...Previo</Text>
+            <Text style={secondOnBoardingStyles.buttonText}>Previo</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={secondOnBoardingStyles.buttonEndStyle}
             onPress={showThirdView}
           >
-            <Text style={secondOnBoardingStyles.buttonText}>Siguiente...</Text>
+            <Text style={secondOnBoardingStyles.buttonText}>Siguiente</Text>
           </TouchableOpacity>
         </View>
       </View>

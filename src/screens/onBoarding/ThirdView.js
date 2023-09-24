@@ -21,7 +21,7 @@ const ThirdView = () => {
     <ImageBackground style={thirdOnBoardingStyles.container}>
       <View style={thirdOnBoardingStyles.body}>
         <Image
-          source={require("../../assets/images/eating_3.png")}
+          source={require("../../../assets/images/eating_3.png")}
           style={thirdOnBoardingStyles.image}
         />
         <Text style={thirdOnBoardingStyles.textBottomFromImage}>

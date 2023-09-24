@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { BackHandler } from 'react-native';
+import { useEffect } from "react";
+import { BackHandler } from "react-native";
 
 export const useBackButtonHandler = () => {
   useEffect(() => {
@@ -9,7 +9,7 @@ export const useBackButtonHandler = () => {
     };
 
     const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
+      "hardwareBackPress",
       backAction
     );
 

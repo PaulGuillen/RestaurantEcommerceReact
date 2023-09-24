@@ -4,19 +4,19 @@ import {
   Image,
   TouchableOpacity,
   ImageBackground,
-} from 'react-native';
-import { onBoardingStyles } from '../../styles/firstViewStyle.js';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import { onBoardingStyles } from "../../styles/firstViewStyle.js";
+import { useNavigation } from "@react-navigation/native";
 
 const FirstView = () => {
   const navigation = useNavigation();
   const showSecondView = () => {
-    navigation.navigate('SecondView');
+    navigation.navigate("SecondView");
   };
 
   return (
     <ImageBackground
-      source={require('../../assets/images/backgroundViewPrincipal.png')}
+      source={require("../../../assets/images/backgroundViewPrincipal.png")}
       style={onBoardingStyles.container}
     >
       <View style={onBoardingStyles.header}>
@@ -34,7 +34,7 @@ const FirstView = () => {
       <View style={onBoardingStyles.body}>
         <View style={onBoardingStyles.imageContainer}>
           <Image
-            source={require('../../assets/images/eating.png')}
+            source={require("../../../assets/images/eating.png")}
             style={onBoardingStyles.image}
           />
           <View style={onBoardingStyles.textBottomFromImageContainer}>
@@ -57,7 +57,7 @@ const FirstView = () => {
           style={onBoardingStyles.buttonStyle}
           onPress={showSecondView}
         >
-          <Text style={onBoardingStyles.buttonText}>Siguiente..</Text>
+          <Text style={onBoardingStyles.buttonText}>Siguiente</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
