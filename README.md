@@ -16,7 +16,7 @@ _Actualmente el BE esta conectado a FIREBASE, se brindara un ejemplo de como es 
 ## Ejecutando los diseños ⚙️
 _* Vistas OnBoarding_
 
-_Bueno en este caso mostrare las primera vistas que se mostraran en este proyecto 3 vistas de OnBoarding, se planea una logica en el cual si ya se ejecuto 1 vez entonces no se vuelva a mostrar hasta que la aplicacion se desturya o desinstale._
+_Bueno en este caso se mostraran en este proyecto 3 vistas de OnBoarding, se planea una logica en el cual si ya se ejecuto 1 vez entonces no se vuelva a mostrar hasta que la aplicacion se destruya o desinstale._
 
 ![Screenshot_1695530199](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/66a4823e-b094-41b0-89b4-ccad7572a6e5)
 ![Screenshot_1695530202](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/affb2567-221e-4cd8-a8bd-9f8e0501d201)
