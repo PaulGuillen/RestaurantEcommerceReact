@@ -13,8 +13,11 @@ import { loginStyle } from "../../styles/loginComponent/loginViewStyle.js";
 import { useState } from "react";
 import { LoginServices } from "../../data/services/loginServices";
 import Spinner from "react-native-loading-spinner-overlay";
+import { useNavigation } from "@react-navigation/native";
 
 const Login = () => {
+  const navigation = useNavigation();
+
   useBackButtonHandler();
 
   const [email, setEmail] = useState("");
@@ -22,11 +25,21 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
+    const inputsAreValid = isValidInput(email, password);
+
+    if (!inputsAreValid) {
+      Alert.alert(
+        "Error",
+        "Por favor, complete todos los campos correctamente."
+      );
+      return;
+    }
+
     setLoading(true);
     try {
       const response = await LoginServices.login(email, password);
       if (response.success) {
-        Alert.alert("Éxito", response.data.message);
+        navigation.navigate("HomeComponent", { screen: "HomeScreen" });
       } else {
         Alert.alert("Error", response.error);
       }
@@ -35,6 +48,10 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const isValidInput = (email, password) => {
+    return email.trim().length > 0 && password.trim().length > 0;
   };
 
   return (
