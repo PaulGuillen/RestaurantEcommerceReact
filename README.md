@@ -10,6 +10,7 @@ _Para comenzar debes instalar las siguientes librerias._
 . Navigation
 . Navigation-stack
 . npm install react-native-loading-spinner-overlay
+. npm install react-native-paper
 
 ```
 
