@@ -1,7 +1,9 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import SearchFilter from "../../components/SearchFilter";
 import Header from "../../components/Header";
 import CardViewPromotion from "../../components/CardViewPromotion";
+import CategoriesFilter from "../../components/CategoriesFilter";
+import ProductCard from "../../components/ProductCard";
 
 const HomeScreen = () => {
   return (
@@ -11,6 +13,14 @@ const HomeScreen = () => {
       <SearchFilter icon="search" placeholder={"Buscando..."} />
 
       <CardViewPromotion />
+
+      <View style={styles.categoryFilterView}>
+        <CategoriesFilter />
+      </View>
+
+      <View style={styles.productView}>
+        <ProductCard />
+      </View>
     </SafeAreaView>
   );
 };
@@ -21,16 +31,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 60,
   },
-  categoryFilterView: {
-    marginTop: 20,
-  },
   recipeCardView: {
     flex: 1,
     marginTop: 20,
   },
-  subTitleTextView: {
-    fontSize: 22,
-    fontWeight: "bold",
+  categoryFilterView: {},
+
+  productView: {
+    flex: 1,
   },
 });
 
