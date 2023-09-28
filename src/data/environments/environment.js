@@ -5,4 +5,5 @@ export const environment = {
   apiGetMainPromotion: API_BASE_URL + "/home",
   apiGetCategoriesHome: API_BASE_URL + "/home",
   apiGetProducts: API_BASE_URL + "/home",
+  apiPostFavourites: API_BASE_URL + "/favourite",
 };

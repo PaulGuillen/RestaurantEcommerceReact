@@ -10,6 +10,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
+import { FavouriteServices } from "../data/services/favouriteServices";
 
 const ProductCard = ({ filterText, category }) => {
   const [data, setData] = useState([]);
@@ -53,21 +54,35 @@ const ProductCard = ({ filterText, category }) => {
     setHasFetchedData(false);
   });
 
-  const handleFavoritePress = (product) => {
+  const handleFavoritePress = async (product) => {
     const productIndex = data.findIndex((item) => item.id === product.id);
-
     const updatedData = [...data];
-    updatedData[productIndex] = {
-      ...updatedData[productIndex],
-      isFavorite: !updatedData[productIndex].isFavorite,
-    };
 
-    setData(updatedData);
+    try {
+      const updatedProduct = {
+        ...updatedData[productIndex],
+        isFavorite: !updatedData[productIndex].isFavorite,
+      };
 
-    if (updatedData[productIndex].isFavorite) {
-      console.log("Producto agregado a favoritos:", product.title);
-    } else {
-      console.log("Producto deseleccionado de favoritos:", product.title);
+      const response = await FavouriteServices.favouritesProducts(
+        updatedProduct
+      );
+
+      if (response.success) {
+        updatedData[productIndex] = updatedProduct;
+        setData(updatedData);
+
+        if (updatedData[productIndex].isFavorite) {
+          console.log("Producto agregado a favoritos:", product.title);
+        } else {
+          console.log("Producto deseleccionado de favoritos:", product.title);
+        }
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "Hubo un problema al realizar la solicitud");
     }
   };
 
