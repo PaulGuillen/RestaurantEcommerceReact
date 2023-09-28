@@ -9,7 +9,7 @@ import {
 import { HomeServices } from "../data/services/homeServices";
 import { useFocusEffect } from "@react-navigation/native";
 
-const CategoriesFilter = () => {
+const CategoriesFilter = ({ onSelectCategory }) => {
   const [data, setData] = useState([]);
   const [hasFetchedData, setHasFetchedData] = useState(false);
 

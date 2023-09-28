@@ -11,12 +11,22 @@ import { useEffect, useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
 
-const ProductCard = ({ filterText }) => {
+const ProductCard = ({ filterText, category }) => {
   const [data, setData] = useState([]);
   const [hasFetchedData, setHasFetchedData] = useState(false);
-  const filteredData = data.filter((productDetail) =>
-    productDetail.title.toLowerCase().includes(filterText.toLowerCase())
-  );
+
+  const filteredData = data.filter((productDetail) => {
+    if (category) {
+      return (
+        productDetail.title.toLowerCase().includes(filterText.toLowerCase()) &&
+        productDetail.type === category
+      );
+    } else {
+      return productDetail.title
+        .toLowerCase()
+        .includes(filterText.toLowerCase());
+    }
+  });
 
   const fetchData = async () => {
     try {

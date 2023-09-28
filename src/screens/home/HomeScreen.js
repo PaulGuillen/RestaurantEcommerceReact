@@ -9,9 +9,14 @@ import { useState, useEffect } from "react";
 const HomeScreen = () => {
   const [filterText, setFilterText] = useState("");
   const [keyboardActive, setKeyboardActive] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const handleFilterChange = (text) => {
     setFilterText(text);
+  };
+
+  const handleCategorySelect = (category) => {
+    setSelectedCategory(category);
   };
 
   useEffect(() => {
@@ -48,13 +53,13 @@ const HomeScreen = () => {
       <CardViewPromotion />
 
       <View style={styles.categoryFilterView}>
-        <CategoriesFilter />
+        <CategoriesFilter onSelectCategory={handleCategorySelect} />
       </View>
 
       <View
         style={[styles.productView, { paddingBottom: keyboardActive ? 60 : 0 }]}
       >
-        <ProductCard filterText={filterText} />
+        <ProductCard filterText={filterText} category={selectedCategory} />
       </View>
     </ScrollView>
   );
@@ -66,7 +71,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 60,
   },
-  categoryFilterView: {},
+  categoryFilterView: {
+    paddingBottom: 10,
+  },
   productView: {
     flex: 1,
   },
