@@ -83,6 +83,7 @@ export const HomeServices = {
         console.log("Exitoso:", data);
 
         const formattedData = data.map((item) => ({
+          id: item.id || "",
           title: item.title || "",
           type: item.type || "",
           description: item.description || "",

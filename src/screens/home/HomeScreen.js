@@ -1,16 +1,49 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Keyboard } from "react-native";
 import SearchFilter from "../../components/SearchFilter";
 import Header from "../../components/Header";
 import CardViewPromotion from "../../components/CardViewPromotion";
 import CategoriesFilter from "../../components/CategoriesFilter";
 import ProductCard from "../../components/ProductCard";
+import { useState, useEffect } from "react";
 
 const HomeScreen = () => {
+  const [filterText, setFilterText] = useState("");
+  const [keyboardActive, setKeyboardActive] = useState(false);
+
+  const handleFilterChange = (text) => {
+    setFilterText(text);
+  };
+
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      () => {
+        setKeyboardActive(true);
+      }
+    );
+
+    const keyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      () => {
+        setKeyboardActive(false);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
+
   return (
-    <SafeAreaView style={styles.safeAreaView}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Header headerText={"Feliz "} headerIcon={"shopping-bag"} />
 
-      <SearchFilter icon="search" placeholder={"Buscando..."} />
+      <SearchFilter
+        icon="search"
+        placeholder={"Buscando..."}
+        onFilterChange={handleFilterChange}
+      />
 
       <CardViewPromotion />
 
@@ -18,25 +51,22 @@ const HomeScreen = () => {
         <CategoriesFilter />
       </View>
 
-      <View style={styles.productView}>
-        <ProductCard />
+      <View
+        style={[styles.productView, { paddingBottom: keyboardActive ? 60 : 0 }]}
+      >
+        <ProductCard filterText={filterText} />
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaView: {
-    flex: 1,
+  container: {
+    flexGrow: 1,
     marginHorizontal: 10,
     marginTop: 60,
   },
-  recipeCardView: {
-    flex: 1,
-    marginTop: 20,
-  },
   categoryFilterView: {},
-
   productView: {
     flex: 1,
   },

@@ -1,9 +1,13 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { useState } from "react";
 
-const SearchFilter = ({ icon, placeholder, onChangeText }) => {
+const SearchFilter = ({ icon, placeholder, onFilterChange }) => {
+  const [searchText, setSearchText] = useState("");
+
   const handleTextChange = (text) => {
-    onChangeText(text);
+    setSearchText(text);
+    onFilterChange(text);
   };
 
   return (
@@ -14,6 +18,7 @@ const SearchFilter = ({ icon, placeholder, onChangeText }) => {
           style={styles.inputText}
           placeholder={placeholder}
           onChangeText={handleTextChange}
+          value={searchText}
         />
       </View>
     </View>
