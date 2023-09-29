@@ -24,6 +24,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleRegister = () => {
+    navigation.navigate("Register");
+  };
+
   const handleLogin = async () => {
     const inputsAreValid = isValidInput(email, password);
 
@@ -91,7 +95,9 @@ const Login = () => {
             <View style={loginStyle.horizontalContainer}>
               <Text>¿Nuevo Usuario?</Text>
               <TouchableOpacity>
-                <Text style={loginStyle.textRegister}>Registrarme</Text>
+                <Text style={loginStyle.textRegister} onPress={handleRegister}>
+                  Registrarme
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
