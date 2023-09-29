@@ -14,6 +14,7 @@ import { useState } from "react";
 import { LoginServices } from "../../data/services/loginServices";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useNavigation } from "@react-navigation/native";
+import * as SecureStore from "expo-secure-store";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -44,6 +45,9 @@ const Login = () => {
       const response = await LoginServices.login(email, password);
       if (response.success) {
         navigation.navigate("HomeComponent", { screen: "HomeScreen" });
+        const uid = response.data?.uid;
+        await SecureStore.setItemAsync("userUid", uid);
+        console.log("Exitoso", response.data?.uid);
       } else {
         Alert.alert("Error", response.error);
       }

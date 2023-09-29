@@ -1,13 +1,28 @@
 import { Text, Image, StyleSheet, View, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import * as SecureStore from "expo-secure-store";
 
 const Perfil = () => {
   const navigation = useNavigation();
+
   const userProfile = {
     fullName: "John Doe",
     email: "johndoe@example.com",
     profileImage: require("../../../assets/images/eating.png"),
   };
+
+  // Obtén el UID guardado en SecureStore
+  SecureStore.getItemAsync("userUid")
+    .then((uid) => {
+      if (uid) {
+        console.log("UUID:", uid);
+      } else {
+        console.log("El UID no esta disponible en SecureStore");
+      }
+    })
+    .catch((error) => {
+      console.error("Error al obtener el UID desde SecureStore:", error);
+    });
 
   const handleLogout = () => {
     navigation.navigate("Login");

@@ -11,10 +11,24 @@ import { useEffect, useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
 import { FavouriteServices } from "../data/services/favouriteServices";
+import * as SecureStore from "expo-secure-store";
 
 const ProductCard = ({ filterText, category }) => {
+  const [userUID, setUID] = useState([]);
   const [data, setData] = useState([]);
   const [hasFetchedData, setHasFetchedData] = useState(false);
+
+  SecureStore.getItemAsync("userUid")
+    .then((uid) => {
+      if (uid) {
+        setUID(uid);
+      } else {
+        console.log("El UID no esta disponible en SecureStore");
+      }
+    })
+    .catch((error) => {
+      console.error("Error al obtener el UID desde SecureStore:", error);
+    });
 
   const filteredData = data.filter((productDetail) => {
     if (category) {
@@ -62,6 +76,7 @@ const ProductCard = ({ filterText, category }) => {
       const updatedProduct = {
         ...updatedData[productIndex],
         isFavorite: !updatedData[productIndex].isFavorite,
+        userUID: userUID,
       };
 
       const response = await FavouriteServices.favouritesProducts(
