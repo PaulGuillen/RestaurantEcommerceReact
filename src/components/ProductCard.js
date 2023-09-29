@@ -52,7 +52,6 @@ const ProductCard = ({ filterText, category }) => {
         Alert.alert("Error", response.error);
       }
     } catch (error) {
-      console.error("Error:", error);
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
   };

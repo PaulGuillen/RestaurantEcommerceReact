@@ -16,11 +16,9 @@ export const LoginServices = {
 
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Exitoso:", data.message);
         return { success: true, data: data };
       } else {
         const errorData = await response.json();
-        console.log("Exitoso:", errorData.message);
         return {
           success: false,
           error:

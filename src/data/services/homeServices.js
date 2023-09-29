@@ -11,8 +11,6 @@ export const HomeServices = {
       );
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Exitoso:", data);
-
         const formattedData = data.map((item) => ({
           price: item.price || 0,
           title: item.title || "",
@@ -25,7 +23,6 @@ export const HomeServices = {
         return { success: true, data: formattedData };
       } else {
         const errorData = await response.json();
-        console.log("Error:", errorData);
         return {
           success: false,
           error:
@@ -49,8 +46,6 @@ export const HomeServices = {
       );
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Exitoso:", data);
-
         const formattedData = data.map((item) => ({
           id: item.id || "",
           category: item.category || "",
@@ -60,7 +55,6 @@ export const HomeServices = {
         return { success: true, data: formattedData };
       } else {
         const errorData = await response.json();
-        console.log("Error:", errorData);
         return {
           success: false,
           error:
@@ -80,8 +74,6 @@ export const HomeServices = {
       });
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Exitoso:", data);
-
         const formattedData = data.map((item) => ({
           id: item.id || "",
           title: item.title || "",
@@ -96,7 +88,6 @@ export const HomeServices = {
         return { success: true, data: formattedData };
       } else {
         const errorData = await response.json();
-        console.log("Error:", errorData);
         return {
           success: false,
           error:
