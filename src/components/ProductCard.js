@@ -6,12 +6,12 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
 import { FavouriteServices } from "../data/services/favouriteServices";
 import * as SecureStore from "expo-secure-store";
+import { useFocusEffect } from "@react-navigation/native";
 
 const ProductCard = ({ filterText, category }) => {
   const [userUID, setUID] = useState([]);
@@ -78,7 +78,7 @@ const ProductCard = ({ filterText, category }) => {
         userUID: userUID,
       };
 
-      const response = await FavouriteServices.favouritesProducts(
+      const response = await FavouriteServices.saveFavoriteProduct(
         updatedProduct
       );
 

@@ -1,9 +1,9 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeScreen from "../screens/home/HomeScreen";
 import Promotions from "../screens/home/Promotions";
-import Favourites from "../screens/home/Favourites";
 import Perfil from "../screens/home/Perfil";
 import { Ionicons } from "@expo/vector-icons";
+import Favorites from "../screens/home/Favorites";
 
 const Tab = createBottomTabNavigator();
 
@@ -42,7 +42,7 @@ const HomeNavigator = () => {
       />
       <Tab.Screen
         name="Favoritos"
-        component={Favourites}
+        component={Favorites}
         options={{
           tabBarIcon: HeartIcon,
         }}

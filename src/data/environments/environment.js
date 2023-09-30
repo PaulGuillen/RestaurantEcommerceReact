@@ -6,6 +6,7 @@ export const environment = {
   apiGetMainPromotion: API_BASE_URL + "/home",
   apiGetCategoriesHome: API_BASE_URL + "/home",
   apiGetProducts: API_BASE_URL + "/home",
-  apiPostFavourites: API_BASE_URL + "/favourite",
+  apiPostFavorites: API_BASE_URL + "/favorite",
+  apiGetFavorites: API_BASE_URL + "/favorite",
   apiGetMainUser: API_BASE_URL + "/perfil",
 };
