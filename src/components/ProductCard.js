@@ -108,19 +108,20 @@ const ProductCard = ({ filterText, category }) => {
     >
       {filteredData.map((productDetail) => (
         <View key={productDetail.id} style={styles.containerBody}>
-          <View style={[styles.card, { backgroundColor: productDetail.color }]}>
-            <Text style={styles.priceText}>
-              Precio S/.{productDetail.price}
-            </Text>
-
-            <Text style={styles.titleText}>{productDetail.title}</Text>
-
+          <View style={[styles.card]}>
             <View style={styles.imageContainer}>
               <Image
                 source={{ uri: productDetail.image }}
                 style={styles.image}
-                resizeMode="contain"
               />
+            </View>
+
+            <View style={styles.overlay}>
+              <Text style={styles.priceText}>
+                Precio S/.{productDetail.price}
+              </Text>
+
+              <Text style={styles.titleText}>{productDetail.title}</Text>
             </View>
 
             <TouchableOpacity
@@ -142,33 +143,16 @@ const ProductCard = ({ filterText, category }) => {
 
 const styles = StyleSheet.create({
   containerBody: {
-    marginHorizontal: 6,
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "center",
   },
   card: {
-    backgroundColor: "#fff",
+    flex: 1,
     borderRadius: 10,
-    elevation: 3,
-    width: 240,
-    shadowColor: "#000",
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    marginHorizontal: 10,
+    width: 260,
+    marginRight: 20,
     marginVertical: 6,
-    padding: 20,
-  },
-  priceText: {
-    textAlign: "right",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  titleText: {
-    top: 30,
-    textAlign: "center",
-    fontSize: 20,
-    fontWeight: "bold",
   },
   imageContainer: {
     flex: 1,
@@ -178,7 +162,32 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "100%",
+    height: "80%",
+    resizeMode: "cover",
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  priceText: {
+    textAlign: "right",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#fff",
+  },
+  titleText: {
+    marginVertical: 10,
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
   },
   favoriteButton: {
     backgroundColor: "transparent",

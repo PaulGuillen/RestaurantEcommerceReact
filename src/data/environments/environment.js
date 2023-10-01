@@ -9,4 +9,5 @@ export const environment = {
   apiPostFavorites: API_BASE_URL + "/favorite",
   apiGetFavorites: API_BASE_URL + "/favorite",
   apiGetMainUser: API_BASE_URL + "/perfil",
+  apiGetAllPromotions: API_BASE_URL + "/promotion",
 };

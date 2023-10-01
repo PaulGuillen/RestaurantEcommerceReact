@@ -71,9 +71,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 60,
   },
-  categoryFilterView: {
-    paddingBottom: 10,
-  },
   productView: {
     flex: 1,
   },

@@ -72,19 +72,17 @@ const CategoriesFilter = ({ onSelectCategory }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 6,
     flexDirection: "row",
     justifyContent: "space-between",
   },
   categoryButton: {
-    padding: 8,
     borderWidth: 1,
     borderColor: "#ccc",
     marginRight: 10,
     borderRadius: 18,
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     paddingVertical: 10,
-    margin: 4,
+    marginBottom: 10,
   },
   selectedCategory: {
     borderRadius: 18,

@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     marginVertical: 18,
-    marginHorizontal: 10,
+    marginHorizontal: 2,
     height: 140,
     backgroundColor: "white",
     borderColor: "transparent",

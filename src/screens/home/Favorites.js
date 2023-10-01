@@ -13,7 +13,7 @@ import * as SecureStore from "expo-secure-store";
 
 const Favorites = () => {
   const [data, setData] = useState([]);
-  const [showImageCentered, setShowImageCentered] = useState(false); // Nueva variable de estado
+  const [showImageCentered, setShowImageCentered] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
