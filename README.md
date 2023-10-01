@@ -30,9 +30,21 @@ _Bueno en este caso se mostraran en este proyecto 3 vistas de OnBoarding, se pla
 
 _\* Vistas Login Componentes_
 
-_Bueno primera vista creada Login funcional con un BE personalziado conectado a Firebase, actulamente sigue en desarollo._
+_Estas dos vistas estan conectadas a un BE el cual consume la base de datos NOSQL firebase_
 
 ![Screenshot_1695530219](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/c3b626a1-7eb8-4ba6-ada0-1e34b2ccdff6)
+![Screenshot_1696127294](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/01002430-d848-4835-b5e9-d6a0f2623245)
+
+
+_\* Vistas Principales Componentes_
+
+_Estas dos vistas estan conectadas a un BE el cual consume la base de datos NOSQL firebase, tenemos opciones como Incio, Promociones, Favoritos y Perfil_
+
+![Screenshot_1696124805](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/37c010cd-e6bb-4094-ba43-9612894bceae)
+![Screenshot_1696127344](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/7fd70577-6f26-42a3-ba36-eefcdda0a3bf)
+![Screenshot_1696127347](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/ee535973-2f37-47a3-b764-d3a0b995898b)
+![Screenshot_1696127349](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/9db1225f-c869-4325-8ae2-a5e4123c6057)
+
 
 ## Autor ✒️
 
