@@ -7,9 +7,10 @@ export const registerStyle = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
+    justifyContent: "center",
   },
   containerBody: {
-    flex: 1,
+    marginTop: 60,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -75,6 +76,7 @@ export const registerStyle = StyleSheet.create({
     padding: 60,
   },
   textRegister: {
+    margin: 20,
     marginLeft: 10,
     fontWeight: "600",
     textDecorationLine: "underline",

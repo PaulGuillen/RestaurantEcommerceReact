@@ -1,12 +1,12 @@
 import {
-  ScrollView,
+  ImageBackground,
+  Alert,
   View,
-  Image,
+  ScrollView,
   Text,
   TextInput,
-  ImageBackground,
+  Image,
   TouchableOpacity,
-  Alert,
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
 import { registerStyle } from "../../styles/loginComponent/registerViewStyle";
@@ -22,6 +22,10 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleBack = () => {
+    navigation.navigate("Login");
+  };
 
   const handleRegister = async () => {
     const inputsAreValid = isValidInput(name, lastname, email, password);
@@ -69,59 +73,68 @@ const Register = () => {
     );
   };
   return (
-    <ScrollView contentContainerStyle={registerStyle.container}>
+    <View style={registerStyle.container}>
       <ImageBackground
         source={require("../../../assets/images/backgroundLogin.png")}
         style={registerStyle.backgroundImage}
       >
-        <View style={registerStyle.containerBody}>
-          <View style={registerStyle.card}>
-            <Image
-              source={require("../../../assets/images/icon_login.png")}
-              style={registerStyle.cardImage}
-            />
-            <Text style={registerStyle.cardTitle}>Registrate en Pa'Comer</Text>
-            <TextInput
-              style={registerStyle.inputText}
-              placeholder="Nombres"
-              onChangeText={(text) => setName(text)}
-            />
-            <TextInput
-              style={registerStyle.inputText}
-              placeholder="Apellidos"
-              onChangeText={(text) => setLastname(text)}
-            />
-            <TextInput
-              style={registerStyle.inputText}
-              placeholder="Correo"
-              inputText="email"
-              onChangeText={(text) => setEmail(text)}
-            />
-            <TextInput
-              style={registerStyle.inputText}
-              placeholder="Contraseña"
-              secureTextEntry
-              onChangeText={(text) => setPassword(text)}
-            />
-            <TextInput
-              style={registerStyle.inputText}
-              placeholder="Confirmar contraseña"
-              secureTextEntry
-            />
-            <TouchableOpacity style={registerStyle.roundedButton}>
-              <Text style={registerStyle.buttonText} onPress={handleRegister}>
-                Registrar
+        <ScrollView>
+          <View style={registerStyle.containerBody}>
+            <View style={registerStyle.card}>
+              <Image
+                source={require("../../../assets/images/icon_login.png")}
+                style={registerStyle.cardImage}
+              />
+              <Text style={registerStyle.cardTitle}>
+                Registrate en Pa'Comer
               </Text>
-            </TouchableOpacity>
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Nombres"
+                onChangeText={(text) => setName(text)}
+              />
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Apellidos"
+                onChangeText={(text) => setLastname(text)}
+              />
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Correo"
+                inputText="email"
+                onChangeText={(text) => setEmail(text)}
+              />
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Contraseña"
+                secureTextEntry
+                onChangeText={(text) => setPassword(text)}
+              />
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Confirmar contraseña"
+                secureTextEntry
+              />
+              <TouchableOpacity style={registerStyle.roundedButton}>
+                <Text style={registerStyle.buttonText} onPress={handleRegister}>
+                  Registrar
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text style={registerStyle.textRegister} onPress={handleBack}>
+                  Volver
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+          <Spinner
+            visible={loading}
+            textContent={"Cargando..."}
+            textStyle={{ color: "#FFF" }}
+          />
+        </ScrollView>
       </ImageBackground>
-      <Spinner
-        visible={loading}
-        textContent={"Cargando..."}
-        textStyle={{ color: "#FFF" }}
-      />
-    </ScrollView>
+    </View>
   );
 };
 
