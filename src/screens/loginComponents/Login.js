@@ -47,6 +47,8 @@ const Login = () => {
         navigation.navigate("HomeComponent", { screen: "HomeScreen" });
         const uid = response.data?.uid;
         await SecureStore.setItemAsync("userUid", uid);
+        setEmail("");
+        setPassword("");
       } else {
         Alert.alert("Error", response.error);
       }

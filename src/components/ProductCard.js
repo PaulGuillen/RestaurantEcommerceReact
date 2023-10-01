@@ -48,6 +48,7 @@ const ProductCard = ({ filterText, category }) => {
       const response = await HomeServices.getProducts();
       if (response.success) {
         setData(response.data);
+        console.log(response.data);
       } else {
         Alert.alert("Error", response.error);
       }

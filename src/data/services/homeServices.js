@@ -83,6 +83,7 @@ export const HomeServices = {
           price: item.price || "",
           color: item.color || "",
           image: item.image || "",
+          productID: item.productID || "",
         }));
 
         return { success: true, data: formattedData };

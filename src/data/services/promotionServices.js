@@ -22,6 +22,7 @@ export const PromotionService = {
           image: item.image || "",
           productID: item.productID || "",
           rating: item.rating || "",
+          totalPriceDiscount: item.totalPriceDiscount || 0,
         }));
 
         return { success: true, data: formattedData };
