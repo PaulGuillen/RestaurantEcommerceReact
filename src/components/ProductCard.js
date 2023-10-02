@@ -46,9 +46,9 @@ const ProductCard = ({ filterText, category }) => {
     }
   };
 
-  const fetchDataFavoriteProduct = async () => {
+  const fetchDataFavoriteProduct = async (uniqueUID) => {
     try {
-      const response = await FavoriteServices.getFavoriteProducts(userUID);
+      const response = await FavoriteServices.getFavoriteProducts(uniqueUID);
       if (response.success) {
         setFavoriteProducts(response.data);
       } else {
@@ -101,10 +101,9 @@ const ProductCard = ({ filterText, category }) => {
   const fetchDataAndUID = async () => {
     try {
       const uid = await SecureStore.getItemAsync("userUid");
-      console.log("UID:", uid);
       if (uid) {
         setUID(uid);
-        fetchDataFavoriteProduct();
+        fetchDataFavoriteProduct(uid);
       } else {
         console.log("El UID no está disponible en SecureStore");
       }
@@ -116,7 +115,6 @@ const ProductCard = ({ filterText, category }) => {
   useFocusEffect(
     React.useCallback(() => {
       fetchDataAndUID();
-      fetchDataFavoriteProduct();
       fetchData();
     }, [])
   );
@@ -157,7 +155,7 @@ const ProductCard = ({ filterText, category }) => {
                 style={styles.favoriteButton}
                 onPress={async () => {
                   await handleFavoritePress(productDetail);
-                  fetchDataFavoriteProduct();
+                  fetchDataFavoriteProduct(userUID);
                 }}
               >
                 <FontAwesome
