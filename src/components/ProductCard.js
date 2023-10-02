@@ -10,7 +10,7 @@ import {
 import React, { useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
-import { FavoriteServices } from "../data/services/favouriteServices";
+import { FavoriteServices } from "../data/services/favoriteServices";
 import { useFocusEffect } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
