@@ -69,8 +69,10 @@ const ProductCard = ({ filterText, category }) => {
 
       if (productIndex !== -1) {
         updatedFavoriteProducts[productIndex].isFavorite = false;
+        updatedFavoriteProducts[productIndex].userUID = userUID;
         console.log("Producto deseleccionado de favoritos:", product.title);
       } else {
+        product.userUID = userUID;
         product.isFavorite = true;
         updatedFavoriteProducts.push(product);
         console.log("Producto agregado a favoritos:", product.title);
