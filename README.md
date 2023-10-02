@@ -46,6 +46,11 @@ _Estas dos vistas estan conectadas a un BE el cual consume la base de datos NOSQ
 ![Screenshot_1696127349](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/9db1225f-c869-4325-8ae2-a5e4123c6057)
 
 
+_En este video se mostrará un poco de las funcionalidades hasta el momento del proyecto_
+
+https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/ab55d326-f4fe-4da1-a471-314a92260faa
+
+
 ## Autor ✒️
 
 - **Paul Guillen Acuña** - _Mi Repositorio_ - [PaulGuillen](https://github.com/PaulGuillen?tab=repositories)
