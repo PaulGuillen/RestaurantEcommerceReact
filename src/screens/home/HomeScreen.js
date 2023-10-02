@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Header headerText={"Feliz "} headerIcon={"shopping-bag"} />
+      <Header headerText={"Feliz "}/>
 
       <SearchFilter
         icon="search"

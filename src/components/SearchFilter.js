@@ -29,7 +29,7 @@ export default SearchFilter;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    marginTop: 16,
   },
   inputWrapper: {
     flexDirection: "row",

@@ -44,9 +44,9 @@ const Login = () => {
     try {
       const response = await LoginServices.login(email, password);
       if (response.success) {
-        navigation.navigate("HomeComponent", { screen: "HomeScreen" });
         const uid = response.data?.uid;
         await SecureStore.setItemAsync("userUid", uid);
+        navigation.navigate("HomeNavigator", { screen: "HomeScreen" });
       } else {
         Alert.alert("Error", response.error);
       }

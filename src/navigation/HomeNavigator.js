@@ -1,11 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import Promotions from "../screens/home/Promotions";
 import Perfil from "../screens/home/Perfil";
-import { Ionicons } from "@expo/vector-icons";
 import Favorites from "../screens/home/Favorites";
+import OrderNavigator from "./OrderNavigator";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const HomeIcon = ({ color, size }) => (
   <Ionicons name="home" color={color} size={size * 1} />
@@ -58,4 +61,13 @@ const HomeNavigator = () => {
   );
 };
 
-export default HomeNavigator;
+const MainNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={HomeNavigator} />
+      <Stack.Screen name="Order" component={OrderNavigator} />
+    </Stack.Navigator>
+  );
+};
+
+export default MainNavigator;
