@@ -18,7 +18,6 @@ const Promotions = () => {
       const response = await PromotionService.getAllPromotions();
       if (response.success) {
         setData(response.data);
-        console.log(response.data);
       } else {
         Alert.alert("Error", response.error);
       }
@@ -26,6 +25,7 @@ const Promotions = () => {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
   };
+
   useFocusEffect(
     React.useCallback(() => {
       fetchData();

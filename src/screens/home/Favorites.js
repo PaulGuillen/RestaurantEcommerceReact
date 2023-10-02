@@ -7,7 +7,7 @@ import {
   SafeAreaView,
   StyleSheet,
 } from "react-native";
-import { FavouriteServices } from "../../data/services/favouriteServices";
+import { FavoriteServices } from "../../data/services/favouriteServices";
 import { useFocusEffect } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
@@ -33,7 +33,7 @@ const Favorites = () => {
 
   const fetchData = async (uniqueID) => {
     try {
-      const response = await FavouriteServices.getFavoriteProducts(uniqueID);
+      const response = await FavoriteServices.getFavoriteProducts(uniqueID);
       if (response.success) {
         if (response.data.length === 0) {
           setShowImageCentered(true);
@@ -62,7 +62,7 @@ const Favorites = () => {
       ) : (
         <ScrollView>
           {data.map((favoriteProduct) => (
-            <View key={favoriteProduct.id} style={styles.card}>
+            <View key={favoriteProduct.productID} style={styles.card}>
               <Image
                 source={{ uri: favoriteProduct.image }}
                 style={styles.image}

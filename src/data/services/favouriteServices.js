@@ -1,8 +1,13 @@
 import { environment } from "../environments/environment";
 
-export const FavouriteServices = {
+export const FavoriteServices = {
   saveFavoriteProduct: async (productInfo) => {
     try {
+      const formattedData = {
+        userUID: productInfo.userUID,
+        listFavorites: productInfo.listFavorites,
+      };
+
       const response = await fetch(
         `${environment.apiPostFavorites}/favoriteProducts`,
         {
@@ -10,7 +15,7 @@ export const FavouriteServices = {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(productInfo),
+          body: JSON.stringify(formattedData),
         }
       );
 
@@ -47,6 +52,8 @@ export const FavouriteServices = {
           price: item.price || "",
           color: item.color || "",
           image: item.image || "",
+          userUID: item.userUID || "",
+          productID: item.productID || "",
           isFavorite: item.isFavorite || false,
         }));
 
