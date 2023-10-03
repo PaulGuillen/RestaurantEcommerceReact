@@ -6,11 +6,13 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Pressable,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { PromotionService } from "../../data/services/promotionServices";
 
 const Promotions = () => {
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
@@ -32,17 +34,23 @@ const Promotions = () => {
     }, [])
   );
 
+  const navigateToProductDetail = (productDetail) => {
+    navigation.navigate("ProductDetail", { productDetail });
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
         <View>
           {data.map((item) => (
-            <View
+            <Pressable
               key={item.id}
-              style={[
+              style={({ pressed }) => [
                 styles.cardPrincipal,
                 item.color ? { backgroundColor: item.color } : null,
+                pressed && { opacity: 0.7 },
               ]}
+              onPress={() => navigateToProductDetail(item)}
             >
               <View style={styles.cardLeftText}>
                 <Text style={styles.percetOfferText}>
@@ -54,7 +62,7 @@ const Promotions = () => {
               <View style={styles.cardImageContainer}>
                 <Image source={{ uri: item.image }} style={styles.cardImage} />
               </View>
-            </View>
+            </Pressable>
           ))}
         </View>
       </ScrollView>

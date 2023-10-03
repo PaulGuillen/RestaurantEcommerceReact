@@ -6,15 +6,17 @@ import {
   Image,
   TouchableOpacity,
   Alert,
+  Pressable,
 } from "react-native";
 import React, { useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
 import { FontAwesome } from "@expo/vector-icons";
 import { FavoriteServices } from "../data/services/favoriteServices";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
 const ProductCard = ({ filterText, category }) => {
+  const navigation = useNavigation();
   const [userUID, setUID] = useState([]);
   const [data, setData] = useState([]);
   const [favoriteProducts, setFavoriteProducts] = useState([]);
@@ -133,42 +135,48 @@ const ProductCard = ({ filterText, category }) => {
         );
 
         return (
-          <View
-            key={`${productDetail.id}-${isFavorite}`}
-            style={styles.containerBody}
+          <Pressable
+            key={productDetail.id}
+            onPress={() =>
+              navigation.navigate("ProductDetail", {
+                productDetail: productDetail,
+              })
+            }
           >
-            <View style={[styles.card]}>
-              <View style={styles.imageContainer}>
-                <Image
-                  source={{ uri: productDetail.image }}
-                  style={styles.image}
-                />
+            <View key={isFavorite} style={styles.containerBody}>
+              <View style={[styles.card]}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    source={{ uri: productDetail.image }}
+                    style={styles.image}
+                  />
+                </View>
+
+                <View style={styles.overlay}>
+                  <Text style={styles.priceText}>
+                    Precio S/.{productDetail.price}
+                  </Text>
+
+                  <Text style={styles.titleText}>{productDetail.title}</Text>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.favoriteButton}
+                  onPress={async () => {
+                    await handleFavoritePress(productDetail);
+                    fetchDataFavoriteProduct(userUID);
+                  }}
+                >
+                  <FontAwesome
+                    key={`${productDetail.id}-${isFavorite}`}
+                    name="heart"
+                    size={24}
+                    color={isFavorite ? "red" : "white"}
+                  />
+                </TouchableOpacity>
               </View>
-
-              <View style={styles.overlay}>
-                <Text style={styles.priceText}>
-                  Precio S/.{productDetail.price}
-                </Text>
-
-                <Text style={styles.titleText}>{productDetail.title}</Text>
-              </View>
-
-              <TouchableOpacity
-                style={styles.favoriteButton}
-                onPress={async () => {
-                  await handleFavoritePress(productDetail);
-                  fetchDataFavoriteProduct(userUID);
-                }}
-              >
-                <FontAwesome
-                  key={`${productDetail.id}-${isFavorite}`}
-                  name="heart"
-                  size={24}
-                  color={isFavorite ? "red" : "white"}
-                />
-              </TouchableOpacity>
             </View>
-          </View>
+          </Pressable>
         );
       })}
     </ScrollView>
@@ -228,6 +236,18 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 20,
     left: 20,
+  },
+  pressable: {
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    borderRadius: 12,
+    marginVertical: 8,
+    alignItems: "center",
+    paddingHorizontal: 12,
+    paddingVertical: 24,
   },
 });
 

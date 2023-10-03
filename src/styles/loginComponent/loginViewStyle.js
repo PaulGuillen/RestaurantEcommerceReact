@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const loginStyle = StyleSheet.create({
   container: {
@@ -6,31 +6,31 @@ export const loginStyle = StyleSheet.create({
   },
   backgroundImage: {
     flex: 1,
-    resizeMode: 'cover',
+    resizeMode: "cover",
   },
   containerBody: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 3,
-    width: '90%',
-    shadowColor: '#000',
+    width: "90%",
+    shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
     marginHorizontal: 10,
     marginVertical: 6,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   cardText: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   cardImage: {
     width: 120,
@@ -39,44 +39,44 @@ export const loginStyle = StyleSheet.create({
   },
   cardTitle: {
     fontSize: 26,
-    fontWeight: '600',
+    fontWeight: "600",
     padding: 4,
   },
   cardSubtitle: {
     fontSize: 16,
-    textAlign: 'center',
-    fontWeight: '400',
+    textAlign: "center",
+    fontWeight: "400",
     padding: 14,
   },
   inputText: {
     height: 50,
-    borderColor: 'gray',
+    borderColor: "gray",
     borderWidth: 2,
     borderRadius: 15,
-    width: '90%',
+    width: "90%",
     marginTop: 20,
     paddingLeft: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   roundedButton: {
-    backgroundColor: 'orange',
+    backgroundColor: "orange",
     paddingVertical: 14,
     borderRadius: 15,
     marginTop: 40,
-    alignItems: 'center',
-    width: '90%',
+    alignItems: "center",
+    width: "90%",
   },
   buttonText: {
-    color: 'white',
+    color: "white",
   },
   horizontalContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     padding: 60,
   },
   textRegister: {
     marginLeft: 10,
-    fontWeight: '600',
-    textDecorationLine: 'underline',
+    fontWeight: "600",
+    textDecorationLine: "underline",
   },
 });
