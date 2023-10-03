@@ -35,7 +35,7 @@ const Promotions = () => {
   );
 
   const navigateToProductDetail = (productDetail) => {
-    navigation.navigate("ProductDetail", { productDetail });
+    navigation.navigate("ProductDetailOffer", { productDetail });
   };
 
   return (

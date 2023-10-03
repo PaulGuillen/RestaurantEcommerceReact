@@ -7,6 +7,7 @@ import Perfil from "../screens/home/Perfil";
 import Favorites from "../screens/home/Favorites";
 import OrderNavigator from "./OrderNavigator";
 import ProductDetail from "../screens/product/ProductDetail";
+import ProductDetailOffer from "../screens/product/ProductDetailsOffer";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -67,6 +68,7 @@ const MainNavigator = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeNavigator} />
       <Stack.Screen name="ProductDetail" component={ProductDetail} />
+      <Stack.Screen name="ProductDetailOffer" component={ProductDetailOffer} />
       <Stack.Screen name="Order" component={OrderNavigator} />
     </Stack.Navigator>
   );
