@@ -14,7 +14,6 @@ const CardViewPromotion = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
 
-  console.log(data)
   const navigateToProductDetail = (productDetail) => {
     navigation.navigate("ProductDetailMainOffer", { productDetail });
   };
@@ -24,7 +23,6 @@ const CardViewPromotion = () => {
       const response = await HomeServices.mainPromotion();
       if (response.success) {
         setData(response.data);
-        console.log(response.data)
       } else {
         Alert.alert("Error", response.error);
       }

@@ -12,7 +12,6 @@ import {
 
 const ProductDetailOffer = ({ route }) => {
   const { productDetail } = route.params;
-  console.log(productDetail);
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(productDetail.price);
 
