@@ -11,4 +11,5 @@ export const environment = {
   apiGetMainUser: API_BASE_URL + "/perfil",
   apiGetAllPromotions: API_BASE_URL + "/promotion",
   apiPostProductInBag: API_BASE_URL + "/order",
+  apiGetProductsInBag: API_BASE_URL + "/order",
 };

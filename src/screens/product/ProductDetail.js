@@ -68,7 +68,6 @@ const ProductDetail = ({ route }) => {
         userUID: uid,
         listProducts: [productDescription],
       };
-      console.log("productToSaveInBag", productToSaveInBag);
       const response = await OrderService.saveProductInBag(productToSaveInBag);
 
       if (!response.success) {
