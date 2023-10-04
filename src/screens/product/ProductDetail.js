@@ -25,7 +25,7 @@ const ProductDetail = ({ route }) => {
     : descriptionParagraphs[0];
 
   const backHomeNavigator = () => {
-    navigation.navigate("Home", { screen: "HomeScreen" });
+    navigation.navigate("Home", { screen: "Inicio" });
   };
 
   const updateTotalPrice = () => {

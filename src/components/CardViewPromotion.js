@@ -1,17 +1,30 @@
-import { useState, useEffect } from "react";
-import { View, Alert, StyleSheet, Text, Image } from "react-native";
+import React, { useState} from "react";
+import {
+  View,
+  Alert,
+  StyleSheet,
+  Text,
+  Image,
+  TouchableOpacity
+} from "react-native";
 import { HomeServices } from "../data/services/homeServices";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
 const CardViewPromotion = () => {
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
-  const [hasFetchedData, setHasFetchedData] = useState(false);
+
+  console.log(data)
+  const navigateToProductDetail = (productDetail) => {
+    navigation.navigate("ProductDetailMainOffer", { productDetail });
+  };
 
   const fetchData = async () => {
     try {
       const response = await HomeServices.mainPromotion();
       if (response.success) {
         setData(response.data);
+        console.log(response.data)
       } else {
         Alert.alert("Error", response.error);
       }
@@ -21,26 +34,23 @@ const CardViewPromotion = () => {
     }
   };
 
-  useEffect(() => {
-    if (!hasFetchedData) {
+  useFocusEffect(
+    React.useCallback(() => {
       fetchData();
-      setHasFetchedData(true);
-    }
-  }, [hasFetchedData]);
+    }, [])
+  );
 
-  useFocusEffect(() => {
-    setHasFetchedData(false);
-  });
 
   return (
     <View>
       {data.map((item, index) => (
-        <View
-          key={index}
+        <TouchableOpacity
+          key={item.productID}
           style={[
             styles.cardPrincipal,
             item.color ? { backgroundColor: item.color } : null,
           ]}
+          onPress={() => navigateToProductDetail(item)}
         >
           <View style={styles.cardLeftText}>
             <Text style={styles.percetOfferText}>
@@ -52,7 +62,7 @@ const CardViewPromotion = () => {
           <View style={styles.cardImageContainer}>
             <Image source={{ uri: item.image }} style={styles.cardImage} />
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </View>
   );

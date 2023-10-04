@@ -14,7 +14,7 @@ import { PromotionService } from "../../data/services/promotionServices";
 const Promotions = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
-
+  console.log(data);
   const fetchData = async () => {
     try {
       const response = await PromotionService.getAllPromotions();

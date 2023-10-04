@@ -16,8 +16,12 @@ export const HomeServices = {
           title: item.title || "",
           image: item.image || "",
           color: item.color || "",
+          description: item.description || "",
+          rating: item.rating || "",
+          productID: item.productID || "",
           percentOffer: item.percentOffer || "",
           rangeDay: item.rangeDay || "",
+          totalPriceDiscount: item.totalPriceDiscount || 0,
         }));
 
         return { success: true, data: formattedData };

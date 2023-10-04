@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const ProductDetailOffer = ({ route }) => {
+const ProductDetailMainOffer = ({ route }) => {
   const { productDetail } = route.params;
   console.log(productDetail);
   const [quantity, setQuantity] = useState(1);
@@ -25,7 +25,7 @@ const ProductDetailOffer = ({ route }) => {
     : descriptionParagraphs[0];
 
   const backHomeNavigator = () => {
-    navigation.navigate("Home", { screen: "Promociones" });
+    navigation.navigate("Home", { screen: "Inicio" });
   };
 
   const updateTotalPrice = () => {
@@ -115,11 +115,11 @@ const ProductDetailOffer = ({ route }) => {
                 <View style={styles.rowHorizontal}>
                   <View style={styles.alignItemsCenter}>
                     <Text style={styles.textPriceBefore}>
-                      Antes: {parseFloat(productDetail.price).toFixed(1)}
+                      Antes: {productDetail.price.toFixed(2)}
                     </Text>
 
                     <Text style={styles.textPrice}>
-                      Ahora : S/.{productDetail.totalPriceDiscount.toFixed(1)}
+                      Precio : S/.{productDetail.totalPriceDiscount}
                     </Text>
 
                     <Text style={styles.textTotal}>
@@ -278,4 +278,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductDetailOffer;
+export default ProductDetailMainOffer;

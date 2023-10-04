@@ -21,6 +21,7 @@ export const PromotionService = {
           color: item.color || "",
           image: item.image || "",
           productID: item.productID || "",
+          price : item.price || "",
           rating: item.rating || "",
           totalPriceDiscount: item.totalPriceDiscount || 0,
         }));
