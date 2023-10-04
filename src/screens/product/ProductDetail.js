@@ -9,6 +9,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Alert,
+  BackHandler,
 } from "react-native";
 import { OrderService } from "../../data/services/orderServices";
 import * as SecureStore from "expo-secure-store";
@@ -103,6 +104,14 @@ const ProductDetail = ({ route }) => {
 
   useEffect(() => {
     updateTotalPrice();
+    const handleBackPress = () => {
+      backHomeNavigator();
+      return true;
+    };
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
   }, [quantity]);
 
   return (

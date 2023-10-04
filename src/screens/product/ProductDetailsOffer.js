@@ -8,6 +8,7 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { OrderService } from "../../data/services/orderServices";
@@ -71,7 +72,6 @@ const ProductDetailOffer = ({ route }) => {
         userUID: uid,
         listProducts: [productDescription],
       };
-      console.log("productToSaveInBagMainoffer", productToSaveInBag);
       const response = await OrderService.saveProductInBag(productToSaveInBag);
 
       if (!response.success) {
@@ -110,6 +110,14 @@ const ProductDetailOffer = ({ route }) => {
 
   useEffect(() => {
     updateTotalPrice();
+    const handleBackPress = () => {
+      backHomeNavigator();
+      return true;
+    };
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
   }, [quantity]);
 
   return (

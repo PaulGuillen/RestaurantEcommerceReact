@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ScrollView,
   View,
@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Alert,
   TouchableOpacity,
+  BackHandler,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { OrderService } from "../../data/services/orderServices";
@@ -17,6 +18,17 @@ const UserBag = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      backHomeNavigator();
+      return true;
+    };
+    BackHandler.addEventListener("hardwareBackPress", handleBackPress);
+    return () => {
+      BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
+    };
+  }, []);
 
   useFocusEffect(
     React.useCallback(() => {
