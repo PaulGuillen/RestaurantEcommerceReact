@@ -54,6 +54,7 @@ const ProductDetailMainOffer = ({ route }) => {
         productID: productSelected.productID,
         productInBag: true,
         isMainOffer: true,
+        isCommonOffer: false,
         rating: productSelected.rating,
         type: productSelected.type,
         description: productSelected.description,
