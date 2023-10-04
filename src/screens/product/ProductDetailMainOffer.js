@@ -8,7 +8,10 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { OrderService } from "../../data/services/orderServices";
 
 const ProductDetailMainOffer = ({ route }) => {
   const { productDetail } = route.params;
@@ -23,14 +26,68 @@ const ProductDetailMainOffer = ({ route }) => {
     ? descriptionParagraphs.join("\n")
     : descriptionParagraphs[0];
 
+  const handleSaveInBagProduct = async (productSelected) => {
+    try {
+      const uid = await SecureStore.getItemAsync("userUid");
+      if (uid) {
+        console.log("UID disponible en SecureStore", uid);
+        handleRequestOrderInBag(uid, productSelected);
+      } else {
+        console.log("El UID no está disponible en SecureStore");
+      }
+    } catch (error) {
+      console.error("Error al obtener el UID desde SecureStore:", error);
+    }
+  };
+
+  const handleRequestOrderInBag = async (uid, productSelected) => {
+    try {
+      if (!uid || !productSelected || !quantity || !totalPrice) {
+        throw new Error("Parámetros no válidos");
+      }
+
+      const productDescription = {
+        id: productSelected.id,
+        title: productSelected.title,
+        image: productSelected.image,
+        color: productSelected.color,
+        productID: productSelected.productID,
+        productInBag: true,
+        isMainOffer: true,
+        rating: productSelected.rating,
+        type: productSelected.type,
+        description: productSelected.description,
+        quantity: quantity,
+        percentOffer: productSelected.percentOffer,
+        productPriceUnit: parseFloat(productSelected.price),
+        productPriceUnitDiscount: parseFloat(
+          productSelected.totalPriceDiscount
+        ),
+        totalProductPriceToPay: totalPrice,
+      };
+
+      const productToSaveInBag = {
+        userUID: uid,
+        listProducts: [productDescription],
+      };
+      console.log("productToSaveInBagMainoffer", productToSaveInBag);
+      const response = await OrderService.saveProductInBag(productToSaveInBag);
+
+      if (!response.success) {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "Hubo un problema al realizar la solicitud");
+    }
+  };
+
   const backHomeNavigator = () => {
     navigation.navigate("Home", { screen: "Inicio" });
   };
 
   const updateTotalPrice = () => {
-    const newTotalPrice = (productDetail.totalPriceDiscount * quantity).toFixed(
-      1
-    );
+    const newTotalPrice = productDetail.totalPriceDiscount * quantity;
     setTotalPrice(parseFloat(newTotalPrice));
   };
 
@@ -118,11 +175,11 @@ const ProductDetailMainOffer = ({ route }) => {
                     </Text>
 
                     <Text style={styles.textPrice}>
-                      Precio : S/.{productDetail.totalPriceDiscount}
+                      Ahora : S/.{productDetail.totalPriceDiscount.toFixed(1)}
                     </Text>
 
                     <Text style={styles.textTotal}>
-                      Total a pagar : S/.{totalPrice}
+                      Total a pagar : S/.{totalPrice.toFixed(1)}
                     </Text>
                   </View>
                 </View>
@@ -130,6 +187,7 @@ const ProductDetailMainOffer = ({ route }) => {
 
               <View style={styles.centered}>
                 <TouchableOpacity
+                  onPress={() => handleSaveInBagProduct(productDetail)}
                   style={[
                     styles.roundedButton,
                     { backgroundColor: productDetail.color },

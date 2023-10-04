@@ -19,6 +19,7 @@ export const HomeServices = {
           description: item.description || "",
           rating: item.rating || "",
           productID: item.productID || "",
+          type: item.type || "",
           percentOffer: item.percentOffer || "",
           rangeDay: item.rangeDay || "",
           totalPriceDiscount: item.totalPriceDiscount || 0,

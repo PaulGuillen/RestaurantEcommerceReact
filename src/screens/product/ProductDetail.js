@@ -8,7 +8,10 @@ import {
   Text,
   SafeAreaView,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import { OrderService } from "../../data/services/orderServices";
+import * as SecureStore from "expo-secure-store";
 
 const ProductDetail = ({ route }) => {
   const { productDetail } = route.params;
@@ -23,6 +26,59 @@ const ProductDetail = ({ route }) => {
   const visibleDescription = showMore
     ? descriptionParagraphs.join("\n")
     : descriptionParagraphs[0];
+
+  const handleSaveInBagProduct = async (productSelected) => {
+    try {
+      const uid = await SecureStore.getItemAsync("userUid");
+      if (uid) {
+        console.log("UID disponible en SecureStore", uid);
+        handleRequestOrderInBag(uid, productSelected);
+      } else {
+        console.log("El UID no está disponible en SecureStore");
+      }
+    } catch (error) {
+      console.error("Error al obtener el UID desde SecureStore:", error);
+    }
+  };
+
+  const handleRequestOrderInBag = async (uid, productSelected) => {
+    try {
+      if (!uid || !productSelected || !quantity || !totalPrice) {
+        throw new Error("Parámetros no válidos");
+      }
+
+      const productDescription = {
+        id: productSelected.id,
+        title: productSelected.title,
+        productPriceUnit: parseFloat(productSelected.price),
+        quantity: quantity,
+        image: productSelected.image,
+        color: productSelected.color,
+        productID: productSelected.productID,
+        productInBag: true,
+        isCommonOffer: false,
+        isMainOffer: false,
+        rating: productSelected.rating,
+        type: productSelected.type,
+        description: productSelected.description,
+        totalProductPriceToPay: totalPrice,
+      };
+
+      const productToSaveInBag = {
+        userUID: uid,
+        listProducts: [productDescription],
+      };
+      console.log("productToSaveInBag", productToSaveInBag);
+      const response = await OrderService.saveProductInBag(productToSaveInBag);
+
+      if (!response.success) {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      Alert.alert("Error", "Hubo un problema al realizar la solicitud");
+    }
+  };
 
   const backHomeNavigator = () => {
     navigation.navigate("Home", { screen: "Inicio" });
@@ -123,6 +179,7 @@ const ProductDetail = ({ route }) => {
 
               <View style={styles.centered}>
                 <TouchableOpacity
+                  onPress={() => handleSaveInBagProduct(productDetail)}
                   style={[
                     styles.roundedButton,
                     { backgroundColor: productDetail.color },
