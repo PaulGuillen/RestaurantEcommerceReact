@@ -32,7 +32,6 @@ const ProductDetail = ({ route }) => {
     try {
       const uid = await SecureStore.getItemAsync("userUid");
       if (uid) {
-        console.log("UID disponible en SecureStore", uid);
         handleRequestOrderInBag(uid, productSelected);
       } else {
         console.log("El UID no está disponible en SecureStore");

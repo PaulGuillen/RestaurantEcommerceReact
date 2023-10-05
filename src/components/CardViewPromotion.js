@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import { useCallback, useState} from "react";
 import {
   View,
   Alert,
@@ -33,7 +33,7 @@ const CardViewPromotion = () => {
   };
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       fetchData();
     }, [])
   );

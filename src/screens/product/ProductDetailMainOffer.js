@@ -31,7 +31,6 @@ const ProductDetailMainOffer = ({ route }) => {
     try {
       const uid = await SecureStore.getItemAsync("userUid");
       if (uid) {
-        console.log("UID disponible en SecureStore", uid);
         handleRequestOrderInBag(uid, productSelected);
       } else {
         console.log("El UID no está disponible en SecureStore");
@@ -72,7 +71,7 @@ const ProductDetailMainOffer = ({ route }) => {
         userUID: uid,
         listProducts: [productDescription],
       };
-      console.log("productToSaveInBagMainoffer", productToSaveInBag);
+  
       const response = await OrderService.saveProductInBag(productToSaveInBag);
 
       if (!response.success) {
@@ -89,7 +88,9 @@ const ProductDetailMainOffer = ({ route }) => {
   };
 
   const updateTotalPrice = () => {
-    const newTotalPrice = productDetail.totalPriceDiscount * quantity;
+    const newTotalPrice = (productDetail.totalPriceDiscount * quantity).toFixed(
+      1
+    );
     setTotalPrice(parseFloat(newTotalPrice));
   };
 
