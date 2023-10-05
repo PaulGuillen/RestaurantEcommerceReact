@@ -12,4 +12,5 @@ export const environment = {
   apiGetAllPromotions: API_BASE_URL + "/promotion",
   apiPostProductInBag: API_BASE_URL + "/order",
   apiGetProductsInBag: API_BASE_URL + "/order",
+  apiDeleterProductInBag: API_BASE_URL + "/order",
 };

@@ -86,4 +86,28 @@ export const OrderService = {
       return { success: false, error: "Error en la solicitud" };
     }
   },
+
+  deleteProductInBag: async (userUID, productID) => {
+    try {
+      const response = await fetch(
+        `${environment.apiDeleterProductInBag}/deleteProductInBag`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userUID, productID }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return { success: true, data };
+      } else {
+        return { success: false, error: "Error en la solicitud" };
+      }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  },
 };

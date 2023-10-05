@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   ScrollView,
   View,
@@ -17,6 +17,7 @@ import { PerfilServices } from "../../data/services/perfilServices";
 
 const UserBag = () => {
   const navigation = useNavigation();
+  const [userUID, setUID] = useState([]);
   const [data, setData] = useState([]);
   const [mainUser, setMainUser] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
@@ -66,11 +67,12 @@ const UserBag = () => {
   }, [totalPriceMap]);
 
   useFocusEffect(
-    React.useCallback(() => {
+    useCallback(() => {
       SecureStore.getItemAsync("userUid")
         .then((uid) => {
           if (uid) {
             fetchData(uid);
+            setUID(uid);
           } else {
             console.log("El UID no está disponible en SecureStore");
           }
@@ -175,6 +177,23 @@ const UserBag = () => {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
   };
+
+  const deleteDataInBag = async (userUID, productID) => {
+    try {
+      const response = await OrderService.deleteProductInBag(
+        userUID,
+        productID
+      );
+      if (response.success) {
+        fetchData(userUID);
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    }
+  };
+
   const backHomeNavigator = () => {
     navigation.navigate("Home", { screen: "HomeScreen" });
   };
@@ -188,8 +207,8 @@ const UserBag = () => {
             style={styles.imageButton}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={backHomeNavigator}>
-          <Text>Limpiar todo</Text>
+        <TouchableOpacity>
+          <Text style={styles.titleOrder}>Tu orden</Text>
         </TouchableOpacity>
       </View>
       {showImageCentered ? (
@@ -267,6 +286,9 @@ const UserBag = () => {
                     </Text>
                     <View style={styles.bottomLeft}>
                       <TouchableOpacity
+                        onPress={() =>
+                          deleteDataInBag(userUID, favoriteProduct.productID)
+                        }
                         style={[
                           styles.roundedButtonIcon,
                           { backgroundColor: favoriteProduct.color },
@@ -310,7 +332,7 @@ const UserBag = () => {
 
             <View style={styles.bottomButton}>
               <TouchableOpacity style={styles.roundedButtonBottom}>
-                <Text style={styles.textColorBtn}>Confirmar pedido</Text>
+                <Text style={styles.textColorBtn}>Continuar</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -336,6 +358,10 @@ const styles = StyleSheet.create({
   imageButton: {
     width: 24,
     height: 24,
+  },
+  titleOrder: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
   centeredContainer: {
     flex: 1,
