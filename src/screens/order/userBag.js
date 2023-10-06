@@ -193,9 +193,60 @@ const UserBag = () => {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
   };
+  
+  const updateProductList = async (productsToUpdate) => {
+    try {
+      const response = await OrderService.updateProductsInBag(
+        productsToUpdate
+      );
+      if (response.success) {
+        console.log("Se actualizó la lista de productos");
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    }
+  };
 
   const backHomeNavigator = () => {
     navigation.navigate("Home", { screen: "HomeScreen" });
+  };
+
+  const goToAddressValidation = () => {
+    const updatedSelectedProducts = data.map((product) => {
+      const productID = product.productID;
+      const newQuantity = quantityMap[productID] || 0;
+      let productPriceUnit = 0;
+
+      if (!product.isCommonOffer && !product.isMainOffer) {
+        productPriceUnit = parseFloat(product.productPriceUnit) || 0;
+      } else {
+        productPriceUnit = parseFloat(product.productPriceUnitDiscount) || 0;
+      }
+
+      const newTotalProductPriceToPay = (
+        newQuantity * productPriceUnit
+      ).toFixed(1);
+
+      return {
+        ...product,
+        quantity: newQuantity,
+        totalProductPriceToPay: parseFloat(newTotalProductPriceToPay),
+      };
+    });
+    const productsToUpdate = {
+      userUID: userUID,
+      totalPrice: parseFloat(totalPrice),
+      listProducts: updatedSelectedProducts,
+    };
+
+    updateProductList(productsToUpdate);
+
+    navigation.navigate("Order", {
+      screen: "Address",
+      params: productsToUpdate,
+    });
   };
 
   return (
@@ -214,7 +265,6 @@ const UserBag = () => {
       {showImageCentered ? (
         <View style={styles.centeredContainer}>
           <Image
-            onPress={backHomeNavigator}
             source={require("../../../assets/images/eating_2.png")}
             style={styles.centeredImage}
           />
@@ -331,7 +381,10 @@ const UserBag = () => {
             </View>
 
             <View style={styles.bottomButton}>
-              <TouchableOpacity style={styles.roundedButtonBottom}>
+              <TouchableOpacity
+                onPress={goToAddressValidation}
+                style={styles.roundedButtonBottom}
+              >
                 <Text style={styles.textColorBtn}>Continuar</Text>
               </TouchableOpacity>
             </View>
@@ -520,6 +573,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
     borderColor: "black",
+    width: "80%",
   },
   textColorBtn: {
     color: "black",

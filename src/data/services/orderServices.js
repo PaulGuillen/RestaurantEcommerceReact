@@ -110,4 +110,34 @@ export const OrderService = {
       return { success: false, error: "Error en la solicitud" };
     }
   },
+
+  updateProductsInBag: async (productInfo) => {
+    try {
+      const formattedData = {
+        userUID: productInfo.userUID,
+        totalPrice: productInfo.totalPrice,
+        listProducts: productInfo.listProducts,
+      };
+
+      const response = await fetch(
+        `${environment.apiPutProductInBag}/updateProductInBag`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formattedData),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return { success: true, data };
+      } else {
+        return { success: false, error: "Error en la solicitud" };
+      }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  },
 };
