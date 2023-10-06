@@ -1,22 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BackHandler,
   StyleSheet,
-  View,
-  SafeAreaView,
   Text,
+  SafeAreaView,
   Image,
   TouchableOpacity,
-  ScrollView,
+  View,
 } from "react-native";
+import { TextInput } from "react-native-paper";
 
-const Address = ({ route }) => {
+const CreateAddress = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
     const handleBackPress = () => {
-      backUserBag();
+      backAddress();
       return true;
     };
 
@@ -26,56 +26,43 @@ const Address = ({ route }) => {
     };
   }, []);
 
-  const backUserBag = () => {
-    navigation.navigate("Order", { screen: "UserBag" });
+  const [isEditable, setIsEditable] = useState(false);
+
+  const handlePress = () => {
+    selectPositionMaps();
   };
 
-  const goTocreateAddress = () => {
-    navigation.navigate("Order", { screen: "CreateAddress" });
+  const backAddress = () => {
+    navigation.navigate("Order", { screen: "Address" });
   };
 
+  const selectPositionMaps = () => {
+    navigation.navigate("Order", { screen: "Maps" });
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.rowHorizontalHeader}>
-        <TouchableOpacity onPress={backUserBag}>
+        <TouchableOpacity onPress={backAddress}>
           <Image
             source={require("../../../assets/images/back_view.png")}
             style={styles.imageButton}
           />
         </TouchableOpacity>
-        <Text style={styles.titleOrder}>Tus direcciones</Text>
+        <Text style={styles.titleOrder}>Nueva direccion</Text>
       </View>
 
       <View style={styles.bodyContainer}>
-        <View style={styles.centeredContainer}>
-          <Image
-            source={require("../../../assets/images/mapa.png")}
-            style={styles.centeredImage}
-          />
-          <Text style={styles.centeresTitle}>
-            Aun no tienes direcciones guardadas
-          </Text>
-        </View>
-
-        <ScrollView style={styles.limitScrollView}></ScrollView>
-
-        <View style={styles.positionRight}>
-          <TouchableOpacity
-            onPress={goTocreateAddress}
-            style={styles.roundedButtonIcon}
-          >
-            <Image
-              source={require("../../../assets/images/add_address.png")}
-              style={styles.iconPlus}
-            />
-          </TouchableOpacity>
-        </View>
+        <TextInput placeholder="Direccion" />
+        <TouchableOpacity onPress={handlePress}>
+          <TextInput placeholder="Escribe algo" editable={isEditable} />
+        </TouchableOpacity>
+        <TextInput placeholder="Referencia" />
       </View>
 
       <View style={styles.footer}>
         <View style={styles.footerContainer}>
           <TouchableOpacity style={styles.roundedButtonBottom}>
-            <Text style={styles.textColorBtn}>Continuar</Text>
+            <Text style={styles.textColorBtn}>Crear direccion</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -83,7 +70,7 @@ const Address = ({ route }) => {
   );
 };
 
-export default Address;
+export default CreateAddress;
 
 const styles = StyleSheet.create({
   container: {
@@ -107,56 +94,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 
-  /**Caso de que no tiene data */
-  centeredContainer: {
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  centeresTitle: {
-    top: 20,
-    fontWeight: "600",
-    fontSize: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  centeredImage: {
-    width: 200,
-    height: 200,
-  },
-
   /*Body principal**/
   bodyContainer: {
     flex: 1,
     marginHorizontal: 12,
     marginVertical: 8,
-  },
-  limitScrollView: {
-    maxHeight: "100%",
-  },
-  positionRight: {
-    bottom: 0,
-    end: 0,
-    position: "absolute",
-    alignItems: "flex-end",
-  },
-  roundedButtonIcon: {
-    width: 46,
-    height: 46,
-    borderRadius: 10,
-    borderWidth: 2,
-    elevation: 4,
-    margin: 16,
-    backgroundColor: "white",
-    borderColor: "black",
-    padding: 2,
-    alignContent: "center",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  iconPlus: {
-    width: 32,
-    height: 32,
   },
 
   /** Bottom Container */
