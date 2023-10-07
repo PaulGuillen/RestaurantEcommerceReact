@@ -193,12 +193,10 @@ const UserBag = () => {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
   };
-  
+
   const updateProductList = async (productsToUpdate) => {
     try {
-      const response = await OrderService.updateProductsInBag(
-        productsToUpdate
-      );
+      const response = await OrderService.updateProductsInBag(productsToUpdate);
       if (response.success) {
         console.log("Se actualizó la lista de productos");
       } else {

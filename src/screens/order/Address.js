@@ -14,10 +14,15 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { AddressServices } from "../../data/services/addressServices";
 
-const Address = () => {
+const Address = ({ route }) => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
+  const [selectedAddressID, setSelectedAddressID] = useState(null);
+
+  const { params } = route;
+
+  console.log("Parametros", params);
 
   useEffect(() => {
     const handleBackPress = () => {
@@ -47,12 +52,29 @@ const Address = () => {
     }, [])
   );
 
+  const handleCardPress = (addressID) => {
+    setSelectedAddressID(addressID);
+  };
+
   const backUserBag = () => {
     navigation.navigate("Order", { screen: "UserBag" });
   };
 
   const goTocreateAddress = () => {
     navigation.navigate("Order", { screen: "CreateAddress" });
+  };
+
+  const goToPayView = () => {
+    if (selectedAddressID) {
+      // El usuario seleccionó una dirección, puedes navegar a la vista de pago
+      // o realizar cualquier acción adicional que necesites.
+    } else {
+      // El usuario no seleccionó ninguna dirección, muestra un alert.
+      Alert.alert(
+        "Selecciona una dirección",
+        "Por favor selecciona una dirección antes de continuar."
+      );
+    }
   };
 
   const fetchData = async (uniqueID) => {
@@ -99,9 +121,24 @@ const Address = () => {
         ) : (
           <ScrollView style={styles.limitScrollView}>
             {data.map((addressData) => (
-              <View key={addressData.addressID} style={styles.card}>
-                <Text style={styles.title}>{addressData.direction}</Text>
-              </View>
+              <TouchableOpacity
+                key={addressData.addressID}
+                style={styles.card}
+                onPress={() => handleCardPress(addressData.addressID)}
+              >
+                <View style={styles.containerText}>
+                  <Text style={styles.title}>{addressData.direction}</Text>
+                </View>
+
+                <View style={styles.containerIcon}>
+                  {selectedAddressID === addressData.addressID && (
+                    <Image
+                      source={require("../../../assets/images/check.png")}
+                      style={styles.checkIcon}
+                    />
+                  )}
+                </View>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         )}
@@ -120,7 +157,10 @@ const Address = () => {
 
       <View style={styles.footer}>
         <View style={styles.footerContainer}>
-          <TouchableOpacity style={styles.roundedButtonBottom}>
+          <TouchableOpacity
+            onPress={goToPayView}
+            style={styles.roundedButtonBottom}
+          >
             <Text style={styles.textColorBtn}>Continuar</Text>
           </TouchableOpacity>
         </View>
@@ -204,9 +244,13 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  containerText: {
+    width: "86%",
+    textAlign: "left",
+    justifyContent: "center",
+  },
   card: {
     flexDirection: "row",
-    alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
     elevation: 3,
@@ -217,12 +261,29 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
+    height: 100,
   },
-
+  cardContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flex: 1,
+  },
   title: {
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "justify",
   },
+  containerIcon: {
+    width: "20%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  checkIcon: {
+    width: 32,
+    height: 32,
+  },
+
   /** Bottom Container */
   footer: {
     height: 140,

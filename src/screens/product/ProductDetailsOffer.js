@@ -254,10 +254,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   descriptionStyle: {
+    padding : 10,
+    textAlign: 'justify', 
     fontSize: 20,
     marginVertical: 16,
     width: "100%",
-    textAlign: "center",
   },
   textTitle: {
     fontSize: 22,
