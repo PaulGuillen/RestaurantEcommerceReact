@@ -13,15 +13,16 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "expo": "~49.0.11",
+    "expo-location": "~16.1.0",
     "expo-secure-store": "~12.3.1",
     "expo-status-bar": "~1.6.0",
     "react": "18.2.0",
     "react-native": "0.72.5",
     "react-native-android-taskdescription": "^1.0.5",
     "react-native-loading-spinner-overlay": "^3.0.1",
-    "react-native-paper": "^5.10.6",
+    "react-native-locationiq": "^0.2.0",
     "react-native-maps": "1.7.1",
-    "expo-location": "~16.1.0"
+    "react-native-paper": "^5.10.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

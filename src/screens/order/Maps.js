@@ -12,13 +12,26 @@ const Maps = () => {
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [selectedMarkerCoordinates, setSelectedMarkerCoordinates] =
     useState(null);
-  const [updatedCoordinates, setUpdatedCoordinates] = useState(null);
+  const [selectedMarkerAddress, setSelectedMarkerAddress] = useState("");
+
+  const updateSelectedMarkerAddress = async (coordinate) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${coordinate.latitude}&lon=${coordinate.longitude}`
+      );
+      const data = await response.json();
+      const display_name = data.display_name;
+      setSelectedMarkerAddress(display_name);
+    } catch (error) {
+      console.error("Error al obtener la dirección:", error);
+    }
+  };
 
   useEffect(() => {
     const backHandler = BackHandler.addEventListener(
       "hardwareBackPress",
       () => {
-        backNewAddress();
+        saveLocation();
         return true;
       }
     );
@@ -28,7 +41,7 @@ const Maps = () => {
     };
   }, []);
 
-  const handleDoublePress = (event) => {
+  const handleDoublePress = async (event) => {
     const newMarker = {
       coordinate: event.coordinate,
     };
@@ -40,6 +53,14 @@ const Maps = () => {
     setSelectedMarkerCoordinates(newMarker.coordinate);
 
     setMarkers([...updatedMarkers, newMarker]);
+    mapRef.current.animateCamera(
+      {
+        center: newMarker.coordinate,
+      },
+      { duration: 250 }
+    );
+
+    updateSelectedMarkerAddress(newMarker.coordinate);
   };
 
   useEffect(() => {
@@ -60,8 +81,7 @@ const Maps = () => {
     if (selectedMarker) {
       const coordinates = selectedMarker.coordinate;
       setSelectedMarkerCoordinates(coordinates);
-      setUpdatedCoordinates(coordinates);
-      console.log("Coordenadas actualizadas:", coordinates);
+      updateSelectedMarkerAddress(coordinates);
     }
   }, [selectedMarker]);
 
@@ -70,17 +90,7 @@ const Maps = () => {
       screen: "CreateAddress",
       params: {
         selectedCoordinates: selectedMarkerCoordinates || null,
-      },
-    });
-
-    console.log("Pasando como parametros", updatedCoordinates);
-  };
-
-  const backNewAddress = () => {
-    navigation.navigate("Order", {
-      screen: "CreateAddress",
-      params: {
-        selectedCoordinates: selectedMarkerCoordinates || null,
+        selectedMarkerAddress: selectedMarkerAddress || null,
       },
     });
   };
