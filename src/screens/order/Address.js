@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { useEffect } from "react";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useCallback, useEffect, useState } from "react";
 import {
   BackHandler,
   StyleSheet,
@@ -9,10 +9,15 @@ import {
   Image,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
+import * as SecureStore from "expo-secure-store";
+import { AddressServices } from "../../data/services/addressServices";
 
-const Address = ({ route }) => {
+const Address = () => {
   const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  const [showImageCentered, setShowImageCentered] = useState(false);
 
   useEffect(() => {
     const handleBackPress = () => {
@@ -26,12 +31,46 @@ const Address = ({ route }) => {
     };
   }, []);
 
+  useFocusEffect(
+    useCallback(() => {
+      SecureStore.getItemAsync("userUid")
+        .then((uid) => {
+          if (uid) {
+            fetchData(uid);
+          } else {
+            console.log("El UID no está disponible en SecureStore");
+          }
+        })
+        .catch((error) => {
+          console.error("Error al obtener el UID desde SecureStore:", error);
+        });
+    }, [])
+  );
+
   const backUserBag = () => {
     navigation.navigate("Order", { screen: "UserBag" });
   };
 
   const goTocreateAddress = () => {
     navigation.navigate("Order", { screen: "CreateAddress" });
+  };
+
+  const fetchData = async (uniqueID) => {
+    try {
+      const response = await AddressServices.getAllAddreses(uniqueID);
+      if (response.success) {
+        if (response.data.length === 0) {
+          setShowImageCentered(true);
+        } else {
+          setShowImageCentered(false);
+          setData(response.data);
+        }
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    }
   };
 
   return (
@@ -47,18 +86,25 @@ const Address = ({ route }) => {
       </View>
 
       <View style={styles.bodyContainer}>
-        <View style={styles.centeredContainer}>
-          <Image
-            source={require("../../../assets/images/mapa.png")}
-            style={styles.centeredImage}
-          />
-          <Text style={styles.centeresTitle}>
-            Aun no tienes direcciones guardadas
-          </Text>
-        </View>
-
-        <ScrollView style={styles.limitScrollView}></ScrollView>
-
+        {showImageCentered ? (
+          <View style={styles.centeredContainer}>
+            <Image
+              source={require("../../../assets/images/mapa.png")}
+              style={styles.centeredImage}
+            />
+            <Text style={styles.centeresTitle}>
+              Aun no tienes direcciones guardadas
+            </Text>
+          </View>
+        ) : (
+          <ScrollView style={styles.limitScrollView}>
+            {data.map((addressData) => (
+              <View key={addressData.addressID} style={styles.card}>
+                <Text style={styles.title}>{addressData.direction}</Text>
+              </View>
+            ))}
+          </ScrollView>
+        )}
         <View style={styles.positionRight}>
           <TouchableOpacity
             onPress={goTocreateAddress}
@@ -158,7 +204,25 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
   },
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    elevation: 3,
+    marginHorizontal: 10,
+    marginVertical: 6,
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+  },
 
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   /** Bottom Container */
   footer: {
     height: 140,
