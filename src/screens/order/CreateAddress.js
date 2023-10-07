@@ -11,22 +11,25 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 
-const CreateAddress = () => {
+const CreateAddress = ({ route }) => {
   const navigation = useNavigation();
+  const [isEditable, setIsEditable] = useState(false);
+
+  const selectedCoordinates = route.params?.selectedCoordinates;
+  if (selectedCoordinates !== undefined && selectedCoordinates !== null) {
+    console.log("Recibiendo parámetros", selectedCoordinates);
+  } else {
+    console.log("No se han proporcionado coordenadas seleccionadas");
+  }
 
   useEffect(() => {
     const handleBackPress = () => {
       backAddress();
-      return true;
     };
-
     BackHandler.addEventListener("hardwareBackPress", handleBackPress);
-    return () => {
+    return () =>
       BackHandler.removeEventListener("hardwareBackPress", handleBackPress);
-    };
   }, []);
-
-  const [isEditable, setIsEditable] = useState(false);
 
   const handlePress = () => {
     selectPositionMaps();
