@@ -46,6 +46,16 @@ _Estas dos vistas estan conectadas a un BE el cual consume la base de datos NOSQ
 ![Screenshot_1696127347](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/ee535973-2f37-47a3-b764-d3a0b995898b)
 ![Screenshot_1696127349](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/9db1225f-c869-4325-8ae2-a5e4123c6057)
 
+_\* Vistas Descripcion de ofetas (Producto sin oferta, Product oferta principal , Producto oferta comun)_
+
+_Estas vistas muestran como se reserva un producto visualziando en tu bolsa de productos._
+
+![Screenshot_1696718436](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/484aec3c-df4a-496f-8a1f-b9e4f95e57f6)
+![Screenshot_1696718455](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/9cb2b5d3-d66e-4835-9afe-bfa709714930)
+![Screenshot_1696718463](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/6d522d1a-835a-487d-9c35-2149e8348150)
+![Screenshot_1696718473](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/6ed92f08-7402-4d65-8956-4c3931c67860)
+![Screenshot_1696718481](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/0e367fa5-0725-4441-b74c-f8ac93a5b776)
+
 
 _En este video se mostrará un poco de las funcionalidades hasta el momento del proyecto_
 
