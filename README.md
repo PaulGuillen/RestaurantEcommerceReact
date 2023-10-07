@@ -56,6 +56,18 @@ _Estas vistas muestran como se reserva un producto visualziando en tu bolsa de p
 ![Screenshot_1696718473](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/6ed92f08-7402-4d65-8956-4c3931c67860)
 ![Screenshot_1696718481](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/0e367fa5-0725-4441-b74c-f8ac93a5b776)
 
+_\* Vistas creacion de una direccion y previsualizacion a nivel de UI_
+
+_Como se registra una direccion en caso de que el cliente no tenga una._
+
+![Screenshot_1696718690](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/f8d28404-7e23-4cd4-b219-5eb0c9419a16)
+![Screenshot_1696718693](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/eab67bc3-9bcf-4fb7-878e-92c613b6fc9f)
+![Screenshot_1696718735](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/6093a89e-30b9-4fcb-aff7-b8d479c9ba10)
+![Screenshot_1696718760](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/693b28dc-1984-4b4f-bf15-c3f973e0d28e)
+![Screenshot_1696718772](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/442c26e1-3b50-418e-b0eb-f3bbdf77083b)
+![Screenshot_1696718776](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/983a81d7-bb9f-4fc6-9772-c7c2933c3f66)
+![Screenshot_1696718780](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/c277cf2e-2235-4644-a45f-3e74980a8a8d)
+
 
 _En este video se mostrará un poco de las funcionalidades hasta el momento del proyecto_
 
