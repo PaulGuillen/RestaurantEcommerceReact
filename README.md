@@ -71,7 +71,8 @@ _Como se registra una direccion en caso de que el cliente no tenga una._
 
 _En este video se mostrará un poco de las funcionalidades hasta el momento del proyecto_
 
-https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/9dd7374a-7245-4eb4-8bc3-f5b9f31187d8
+https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/215e7dcb-16bd-44c3-96d7-4ba00cfe6344
+
 
 ## Autor ✒️
 
