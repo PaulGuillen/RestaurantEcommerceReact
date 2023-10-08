@@ -13,16 +13,13 @@ import {
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { AddressServices } from "../../data/services/addressServices";
+import { loadData } from "../../util/AsyncStorage";
 
-const Address = ({ route }) => {
+const Address = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
   const [selectedAddressID, setSelectedAddressID] = useState(null);
-
-  const { params } = route;
-
-  console.log("Parametros", params);
 
   useEffect(() => {
     const handleBackPress = () => {
@@ -42,6 +39,7 @@ const Address = ({ route }) => {
         .then((uid) => {
           if (uid) {
             fetchData(uid);
+            getProductInBag();
           } else {
             console.log("El UID no está disponible en SecureStore");
           }
@@ -66,10 +64,8 @@ const Address = ({ route }) => {
 
   const goToPayView = () => {
     if (selectedAddressID) {
-      // El usuario seleccionó una dirección, puedes navegar a la vista de pago
-      // o realizar cualquier acción adicional que necesites.
+      navigation.navigate("Order", { screen: "Payment" });
     } else {
-      // El usuario no seleccionó ninguna dirección, muestra un alert.
       Alert.alert(
         "Selecciona una dirección",
         "Por favor selecciona una dirección antes de continuar."
@@ -93,6 +89,10 @@ const Address = ({ route }) => {
     } catch (error) {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
+  };
+
+  const getProductInBag = async () => {
+    const data = await loadData('productUpdated');
   };
 
   return (

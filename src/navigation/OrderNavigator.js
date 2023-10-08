@@ -3,6 +3,7 @@ import UserBag from "../screens/order/userBag";
 import Address from "../screens/order/Address";
 import CreateAddress from "../screens/order/CreateAddress";
 import Maps from "../screens/order/Maps";
+import Payment from "../screens/order/Payment";
 
 const Stack = createNativeStackNavigator();
 
@@ -13,6 +14,7 @@ const OrderNavigator = () => {
       <Stack.Screen name="Address" component={Address} />
       <Stack.Screen name="CreateAddress" component={CreateAddress} />
       <Stack.Screen name="Maps" component={Maps} />
+      <Stack.Screen name="Payment" component={Payment} />
     </Stack.Navigator>
   );
 };

@@ -14,6 +14,7 @@ import {
 import * as SecureStore from "expo-secure-store";
 import { OrderService } from "../../data/services/orderServices";
 import { PerfilServices } from "../../data/services/perfilServices";
+import { saveData } from "../../util/AsyncStorage";
 
 const UserBag = () => {
   const navigation = useNavigation();
@@ -211,7 +212,7 @@ const UserBag = () => {
     navigation.navigate("Home", { screen: "HomeScreen" });
   };
 
-  const goToAddressValidation = () => {
+  const goToAddressValidation = async () => {
     const updatedSelectedProducts = data.map((product) => {
       const productID = product.productID;
       const newQuantity = quantityMap[productID] || 0;
@@ -243,8 +244,9 @@ const UserBag = () => {
 
     navigation.navigate("Order", {
       screen: "Address",
-      params: productsToUpdate,
     });
+
+    saveData("productUpdated", productsToUpdate);
   };
 
   return (
