@@ -31,7 +31,7 @@ export const LoginServices = {
     }
   },
 
-  register: async (name, lastname, email, password) => {
+  register: async (name, lastname, email, password,phone) => {
     try {
       const response = await fetch(`${environment.apiCreateUser}/createUser`, {
         method: "POST",
@@ -43,6 +43,7 @@ export const LoginServices = {
           lastname: lastname,
           email: email,
           password: password,
+          phone : phone,
         }),
       });
 

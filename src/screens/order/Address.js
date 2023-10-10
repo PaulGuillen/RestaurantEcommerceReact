@@ -13,13 +13,14 @@ import {
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
 import { AddressServices } from "../../data/services/addressServices";
-import { loadData } from "../../util/AsyncStorage";
+import { saveData } from "../../util/AsyncStorage";
 
 const Address = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
   const [selectedAddressID, setSelectedAddressID] = useState(null);
+  const [selectedAddress, setSelectedAddress] = useState(null);
 
   useEffect(() => {
     const handleBackPress = () => {
@@ -39,7 +40,6 @@ const Address = () => {
         .then((uid) => {
           if (uid) {
             fetchData(uid);
-            getProductInBag();
           } else {
             console.log("El UID no está disponible en SecureStore");
           }
@@ -51,6 +51,10 @@ const Address = () => {
   );
 
   const handleCardPress = (addressID) => {
+    const selected = data.find(
+      (addressData) => addressData.addressID === addressID
+    );
+    setSelectedAddress(selected);
     setSelectedAddressID(addressID);
   };
 
@@ -63,7 +67,10 @@ const Address = () => {
   };
 
   const goToPayView = () => {
-    if (selectedAddressID) {
+    if (selectedAddress) {
+      // You can access the selected address data like this:
+      saveData("AdddressSelected", selectedAddress);
+      // Proceed to the payment view or perform other actions.
       navigation.navigate("Order", { screen: "Payment" });
     } else {
       Alert.alert(
@@ -89,10 +96,6 @@ const Address = () => {
     } catch (error) {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
     }
-  };
-
-  const getProductInBag = async () => {
-    const data = await loadData('productUpdated');
   };
 
   return (

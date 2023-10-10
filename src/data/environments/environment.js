@@ -16,4 +16,5 @@ export const environment = {
   apiPutProductInBag: API_BASE_URL + "/order",
   apiPostCreateAddress: API_BASE_URL + "/address",
   apiGetAllAdresses: API_BASE_URL + "/address",
+  apiPostPayment: API_BASE_URL + "/payment",
 };

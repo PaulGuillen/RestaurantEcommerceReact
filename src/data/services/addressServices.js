@@ -21,6 +21,8 @@ const formatAddresData = (item) => ({
   district: item.district || "",
   direction: item.direction || "",
   addressID: item.addressID || "",
+  latitude : item.latitude || "",
+  longitude : item.longitude || "",
 });
 
 export const AddressServices = {

@@ -199,7 +199,7 @@ const UserBag = () => {
     try {
       const response = await OrderService.updateProductsInBag(productsToUpdate);
       if (response.success) {
-        console.log("Se actualizó la lista de productos");
+        saveData("productUpdated", productsToUpdate);
       } else {
         Alert.alert("Error", response.error);
       }
@@ -245,8 +245,6 @@ const UserBag = () => {
     navigation.navigate("Order", {
       screen: "Address",
     });
-
-    saveData("productUpdated", productsToUpdate);
   };
 
   return (

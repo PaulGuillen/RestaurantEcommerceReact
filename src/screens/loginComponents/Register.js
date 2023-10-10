@@ -21,6 +21,7 @@ const Register = () => {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleBack = () => {
@@ -44,7 +45,8 @@ const Register = () => {
         name,
         lastname,
         email,
-        password
+        password,
+        phone
       );
       if (response.success) {
         Alert.alert("Exitoso", response.data.message);
@@ -52,6 +54,7 @@ const Register = () => {
         setLastname("");
         setEmail("");
         setPassword("");
+        setPhone("");
 
         navigation.navigate("Login");
       } else {
@@ -97,6 +100,11 @@ const Register = () => {
                 style={registerStyle.inputText}
                 placeholder="Apellidos"
                 onChangeText={(text) => setLastname(text)}
+              />
+              <TextInput
+                style={registerStyle.inputText}
+                placeholder="Telefono"
+                onChangeText={(text) => setPhone(text)}
               />
               <TextInput
                 style={registerStyle.inputText}
