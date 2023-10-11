@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react"; // Importa useState
+import { useEffect, useState } from "react";
 import {
   BackHandler,
   StyleSheet,
@@ -7,12 +7,16 @@ import {
   Alert,
   TouchableOpacity,
   Text,
+  SafeAreaView,
+  Image,
 } from "react-native";
 import { PaymentService } from "../../data/services/paymentServices";
 import { Card, TextInput } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
 import { PerfilServices } from "../../data/services/perfilServices";
 import { loadData } from "../../util/AsyncStorage";
+import { OrderService } from "../../data/services/orderServices";
+import Spinner from "react-native-loading-spinner-overlay";
 
 function generateAddressRandomID(n) {
   const characters =
@@ -34,6 +38,7 @@ const Payment = () => {
   const [cvc, setCvc] = useState("");
   const [expiration, setExpiration] = useState("");
 
+  const [loading, setLoading] = useState(false);
   const [userMainData, setUserMainData] = useState([]);
   const [dataOrder, setDataOrder] = useState("");
   const [addressOrder, setAddressOrder] = useState("");
@@ -103,15 +108,18 @@ const Payment = () => {
       payment_method_types: ["card"],
     };
 
+    setLoading(true);
     try {
       const response = await paymentStripe(paymentData);
       if (response.success) {
         savingOrderGenerated(orderID);
       } else {
         Alert.alert("Error", response.error);
+        setLoading(false);
       }
     } catch (error) {
       Alert.alert("Error", "Ocurrió un error en la solicitud.");
+      setLoading(false);
     }
   };
 
@@ -121,24 +129,60 @@ const Payment = () => {
   };
 
   const savingOrderGenerated = async (orderIDGenerated) => {
-    if (dataOrder && addressOrder) {
-      const listProducts = dataOrder.listProducts;
-      const totalPrice = dataOrder.totalPrice;
-      const userUID = dataOrder.userUID;
+    try {
+      if (dataOrder && addressOrder) {
+        const listProducts = dataOrder.listProducts;
+        const totalPrice = dataOrder.totalPrice;
+        const userUID = dataOrder.userUID;
 
-      const orderData = {
-        listProducts: listProducts,
-        addressSelected: addressOrder,
-        totalPrice: totalPrice,
-        userUID: userUID,
-        orderID: orderIDGenerated,
-        isPayed: true,
-      };
+        const orderData = {
+          userUID: userUID,
+          orders: [
+            {
+              listProducts: listProducts,
+              addressSelected: addressOrder,
+              totalPrice: totalPrice,
+              orderID: orderIDGenerated,
+              isPayed: true,
+            },
+          ],
+        };
 
-      console.log("Request final", orderData);
-    } else {
-      console.log("Data not found in storage");
+        const response = await OrderService.createOrder(orderData);
+
+        if (!response.success) {
+          setLoading(false);
+          Alert.alert("Error", response.error);
+        } else {
+          cleanProductInBag(userUID);
+        }
+      } else {
+        setLoading(false);
+        console.log("Data not found in storage");
+      }
+    } catch (error) {
+      setLoading(false);
+      Alert.alert("Error", "Hubo un problema al realizar la solicitud");
     }
+  };
+
+  const cleanProductInBag = async (userUID) => {
+    try {
+      const response = await OrderService.cleanProductInBag(userUID);
+      if (response.success) {
+        goToSuccessOrder();
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const goToSuccessOrder = () => {
+    navigation.navigate("SuccessOrder");
   };
 
   const getDataInStorage = async () => {
@@ -165,7 +209,16 @@ const Payment = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.rowHorizontalHeader}>
+        <TouchableOpacity onPress={backAddress}>
+          <Image
+            source={require("../../../assets/images/back_view.png")}
+            style={styles.imageButton}
+          />
+        </TouchableOpacity>
+      </View>
+
       <Card style={styles.card}>
         <TextInput
           label="Nombre"
@@ -207,7 +260,12 @@ const Payment = () => {
       <TouchableOpacity style={styles.payButton} onPress={handleSubmit}>
         <Text style={styles.payButtonText}>Pagar</Text>
       </TouchableOpacity>
-    </View>
+      <Spinner
+        visible={loading}
+        textContent={"Cargando..."}
+        textStyle={{ color: "#FFF" }}
+      />
+    </SafeAreaView>
   );
 };
 
@@ -216,10 +274,22 @@ export default Payment;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
     padding: 16,
   },
+  rowHorizontalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 60,
+    alignItems: "center",
+    marginHorizontal: 12,
+    marginVertical: 8,
+  },
+  imageButton: {
+    width: 24,
+    height: 24,
+  },
   card: {
+    marginTop: 20,
     padding: 16,
     elevation: 4,
   },

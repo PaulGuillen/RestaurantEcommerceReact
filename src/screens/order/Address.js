@@ -68,9 +68,7 @@ const Address = () => {
 
   const goToPayView = () => {
     if (selectedAddress) {
-      // You can access the selected address data like this:
       saveData("AdddressSelected", selectedAddress);
-      // Proceed to the payment view or perform other actions.
       navigation.navigate("Order", { screen: "Payment" });
     } else {
       Alert.alert(

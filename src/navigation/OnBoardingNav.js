@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FirstView from "../screens/onBoarding/FirstView";
-
 import LoginNavigator from "./LoginNavigator";
 import SecondView from "../screens/onBoarding/SecondView";
 import ThirdView from "../screens/onBoarding/ThirdView";

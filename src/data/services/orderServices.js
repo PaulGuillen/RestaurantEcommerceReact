@@ -140,4 +140,57 @@ export const OrderService = {
       return { success: false, error: "Error en la solicitud" };
     }
   },
+
+  createOrder: async (orderInfo) => {
+    try {
+      const formattedData = {
+        userUID: orderInfo.userUID,
+        orders: orderInfo.orders,
+      };
+
+      const response = await fetch(
+        `${environment.apiCreateOrder}/productPayed`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formattedData),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return { success: true, data };
+      } else {
+        return { success: false, error: "Error en la solicitud" };
+      }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  },
+
+  cleanProductInBag: async (userUID) => {
+    try {
+      const response = await fetch(
+        `${environment.apiCleanProductsInBag}/cleanProducts`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userUID }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        return { success: true, data };
+      } else {
+        return { success: false, error: "Error en la solicitud" };
+      }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  },
 };
