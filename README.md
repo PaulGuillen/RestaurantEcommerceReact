@@ -13,6 +13,7 @@ _Para comenzar debes instalar las siguientes librerias._
 . npm install react-native-paper
 . npm install react-native-locationiq
 . npm install @react-native-async-storage/async-storage
+. npm install stripe....
 ```
 
 ### Pre-requisitos 📋
