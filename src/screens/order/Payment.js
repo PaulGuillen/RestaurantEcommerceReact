@@ -34,6 +34,7 @@ function generateAddressRandomID(n) {
 const Payment = () => {
   const navigation = useNavigation();
 
+  const [name, setName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [cvc, setCvc] = useState("");
   const [expiration, setExpiration] = useState("");
@@ -42,7 +43,6 @@ const Payment = () => {
   const [userMainData, setUserMainData] = useState([]);
   const [dataOrder, setDataOrder] = useState("");
   const [addressOrder, setAddressOrder] = useState("");
-  const [orderID, setOrderID] = useState("");
   const [totalToPay, setTotalToPay] = useState("");
 
   useEffect(() => {
@@ -90,6 +90,18 @@ const Payment = () => {
   };
 
   const handleSubmit = async () => {
+    const inputsAreValid = isValidInput(cardNumber, cvc, expiration, name);
+
+    if (!inputsAreValid) {
+      Alert.alert(
+        "Error",
+        "Por favor, complete todos los campos correctamente."
+      );
+      return;
+    }
+
+    validateCardNumber(cardNumber);
+
     const orderID = generateAddressRandomID(16);
 
     const currency = "PEN";
@@ -121,6 +133,20 @@ const Payment = () => {
       Alert.alert("Error", "Ocurrió un error en la solicitud.");
       setLoading(false);
     }
+  };
+
+  const isValidInput = (cardNumber, cvc, expiration, name) => {
+    return (
+      cardNumber.trim().length > 0 &&
+      cvc.trim().length > 0 &&
+      expiration.trim().length > 0 &&
+      name.trim().length > 0
+    );
+  };
+
+  const validateCardNumber = (cardNumber) => {
+    const regex = new RegExp("^[0-9]{16}$");
+    return regex.test(cardNumber);
   };
 
   const paymentStripe = async (paymentData) => {
@@ -158,7 +184,6 @@ const Payment = () => {
         }
       } else {
         setLoading(false);
-        console.log("Data not found in storage");
       }
     } catch (error) {
       setLoading(false);
@@ -223,6 +248,8 @@ const Payment = () => {
         <TextInput
           label="Nombre"
           style={styles.textInputCard}
+          value={name}
+          onChangeText={(text) => setName(text)}
           keyboardType="name-phone-pad"
         />
         <TextInput

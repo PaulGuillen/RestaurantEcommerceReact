@@ -43,6 +43,61 @@ const formatProductData = (item) => {
   return formattedData;
 };
 
+const handleFetchOrderData = async (response) => {
+  if (response.status === 200 || response.status === 304) {
+    const data = await response.json();
+    const formatOrderData = data.map(formatOrderDataRes);
+    return { success: true, data: formatOrderData };
+  } else if (response.status === 404) {
+    return { success: true, data: [] };
+  } else {
+    console.error("Error en la solicitud. Código de estado:", response.status);
+    return {
+      success: false,
+      error: `Error en la solicitud. Código de estado: ${response.status}`,
+    };
+  }
+};
+
+const formatOrderDataRes = (order) => {
+  const formatOrderData = {
+    totalPrice: setDefault(order.totalPrice, 0),
+    orderID: setDefault(order.orderID, ""),
+    isPayed: setDefault(order.isPayed, false),
+
+    listProducts: order.listProducts.map((product) => ({
+      image: setDefault(product.image, ""),
+      quantity: setDefault(product.quantity, 0),
+      color: setDefault(product.color, ""),
+      productID: setDefault(product.productID, ""),
+      productPriceUnitDiscount: setDefault(
+        product.productPriceUnitDiscount,
+        0.0
+      ),
+      isMainOffer: setDefault(product.isMainOffer, false),
+      rating: setDefault(product.rating, ""),
+      percentOffer: setDefault(product.percentOffer, ""),
+      productInBag: setDefault(product.productInBag, false),
+      title: setDefault(product.title, ""),
+      type: setDefault(product.type, ""),
+      totalProductPriceToPay: setDefault(product.totalProductPriceToPay, 0.0),
+      isCommonOffer: setDefault(product.isCommonOffer, false),
+      productPriceUnit: setDefault(product.productPriceUnit, 0.0),
+      id: setDefault(product.id, ""),
+    })),
+
+    addressSelected: {
+      ref: setDefault(order.addressSelected.ref, ""),
+      district: setDefault(order.addressSelected.district, ""),
+      latitude: setDefault(order.addressSelected.latitude, 0.0),
+      direction: setDefault(order.addressSelected.direction, ""),
+      addressID: setDefault(order.addressSelected.addressID, ""),
+      longitude: setDefault(order.addressSelected.longitude, 0.0),
+    },
+  };
+  return formatOrderData;
+};
+
 export const OrderService = {
   saveProductInBag: async (productInfo) => {
     try {
@@ -165,6 +220,21 @@ export const OrderService = {
       } else {
         return { success: false, error: "Error en la solicitud" };
       }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  },
+
+  allOrders: async (uid) => {
+    try {
+      const response = await fetch(
+        `${environment.apiGetAllOrders}/allOrders?uid=${uid}`,
+        {
+          method: "GET",
+        }
+      );
+
+      return handleFetchOrderData(response);
     } catch (error) {
       return { success: false, error: "Error en la solicitud" };
     }

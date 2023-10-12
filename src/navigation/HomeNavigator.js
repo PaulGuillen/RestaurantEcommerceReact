@@ -4,11 +4,11 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/home/HomeScreen";
 import Promotions from "../screens/home/Promotions";
 import Perfil from "../screens/home/Perfil";
-import Favorites from "../screens/home/Favorites";
 import OrderNavigator from "./OrderNavigator";
 import ProductDetail from "../screens/product/ProductDetail";
 import ProductDetailOffer from "../screens/product/ProductDetailsOffer";
 import ProductDetailMainOffer from "../screens/product/ProductDetailMainOffer";
+import Order from "../screens/home/Order";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -19,6 +19,10 @@ const HomeIcon = ({ color, size }) => (
 
 const NotificationsIcon = ({ color, size }) => (
   <Ionicons name="notifications" color={color} size={size * 1} />
+);
+
+const OrderIcon = ({ color, size }) => (
+  <Ionicons name="globe-sharp" color={color} size={size * 1} />
 );
 
 const HeartIcon = ({ color, size }) => (
@@ -47,10 +51,10 @@ const HomeNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Favoritos"
-        component={Favorites}
+        name="Ordenes"
+        component={Order}
         options={{
-          tabBarIcon: HeartIcon,
+          tabBarIcon: OrderIcon,
         }}
       />
       <Tab.Screen
