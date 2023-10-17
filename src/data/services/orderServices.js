@@ -64,7 +64,8 @@ const formatOrderDataRes = (order) => {
     totalPrice: setDefault(order.totalPrice, 0),
     orderID: setDefault(order.orderID, ""),
     isPayed: setDefault(order.isPayed, false),
-
+    fullName : setDefault(order.fullName, ""),
+    orderDate : setDefault(order.orderDate, ""),
     listProducts: order.listProducts.map((product) => ({
       image: setDefault(product.image, ""),
       quantity: setDefault(product.quantity, 0),

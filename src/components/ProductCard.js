@@ -1,5 +1,4 @@
 import {
-  ScrollView,
   StyleSheet,
   View,
   Text,
@@ -7,6 +6,7 @@ import {
   TouchableOpacity,
   Alert,
   Pressable,
+  FlatList,
 } from "react-native";
 import React, { useState } from "react";
 import { HomeServices } from "../data/services/homeServices";
@@ -116,6 +116,12 @@ const ProductCard = ({ filterText, category }) => {
     }
   };
 
+  const isFavorite = (product) => {
+    return favoriteProducts.some(
+      (favoriteProduct) => favoriteProduct.id === product.id
+    );
+  };
+
   useFocusEffect(
     React.useCallback(() => {
       fetchDataAndUID();
@@ -124,62 +130,51 @@ const ProductCard = ({ filterText, category }) => {
   );
 
   return (
-    <ScrollView
-      horizontal
+    <FlatList
+      data={filteredData}
+      keyExtractor={(item) => item.id.toString()}
+      horizontal={true}
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={styles.container}
-    >
-      {filteredData.map((productDetail) => {
-        const isFavorite = favoriteProducts.some(
-          (favoriteProduct) => favoriteProduct.id === productDetail.id
-        );
-
-        return (
-          <Pressable
-            key={productDetail.id}
-            onPress={() =>
-              navigation.navigate("ProductDetail", {
-                productDetail: productDetail,
-              })
-            }
-          >
-            <View key={isFavorite} style={styles.containerBody}>
-              <View style={[styles.card]}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={{ uri: productDetail.image }}
-                    style={styles.image}
-                  />
-                </View>
-
-                <View style={styles.overlay}>
-                  <Text style={styles.priceText}>
-                    Precio S/.{productDetail.price}
-                  </Text>
-
-                  <Text style={styles.titleText}>{productDetail.title}</Text>
-                </View>
-
-                <TouchableOpacity
-                  style={styles.favoriteButton}
-                  onPress={async () => {
-                    await handleFavoritePress(productDetail);
-                    fetchDataFavoriteProduct(userUID);
-                  }}
-                >
-                  <FontAwesome
-                    key={`${productDetail.id}-${isFavorite}`}
-                    name="heart"
-                    size={24}
-                    color={isFavorite ? "red" : "white"}
-                  />
-                </TouchableOpacity>
+      renderItem={({ item }) => (
+        <Pressable
+          key={item.id}
+          onPress={() =>
+            navigation.navigate("ProductDetail", {
+              productDetail: item,
+            })
+          }
+        >
+          <View key={item.id} style={styles.containerBody}>
+            <View style={styles.card}>
+              <View style={styles.imageContainer}>
+                <Image source={{ uri: item.image }} style={styles.image} />
               </View>
+
+              <View style={styles.overlay}>
+                <Text style={styles.priceText}>Precio S/.{item.price}</Text>
+
+                <Text style={styles.titleText}>{item.title}</Text>
+              </View>
+
+              <TouchableOpacity
+                style={styles.favoriteButton}
+                onPress={async () => {
+                  await handleFavoritePress(item);
+                  fetchDataFavoriteProduct(userUID);
+                }}
+              >
+                <FontAwesome
+                  key={`${item.id}`}
+                  name="heart"
+                  size={24}
+                  color={isFavorite(item) ? "red" : "white"}
+                />
+              </TouchableOpacity>
             </View>
-          </Pressable>
-        );
-      })}
-    </ScrollView>
+          </View>
+        </Pressable>
+      )}
+    />
   );
 };
 

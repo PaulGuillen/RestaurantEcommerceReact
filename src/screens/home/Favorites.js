@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import {
-  ScrollView,
   View,
   Text,
   Image,
   SafeAreaView,
   StyleSheet,
+  FlatList,
 } from "react-native";
 import { FavoriteServices } from "../../data/services/favoriteServices";
 import { useFocusEffect } from "@react-navigation/native";
@@ -60,17 +60,16 @@ const Favorites = () => {
           <Text style={styles.centeresTitle}>Aun no tienes favoritos</Text>
         </View>
       ) : (
-        <ScrollView>
-          {data.map((favoriteProduct) => (
-            <View key={favoriteProduct.productID} style={styles.card}>
-              <Image
-                source={{ uri: favoriteProduct.image }}
-                style={styles.image}
-              />
-              <Text style={styles.title}>{favoriteProduct.title}</Text>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.productID}
+          renderItem={({ item }) => (
+            <View key={item.productID} style={styles.card}>
+              <Image source={{ uri: item.image }} style={styles.image} />
+              <Text style={styles.title}>{item.title}</Text>
             </View>
-          ))}
-        </ScrollView>
+          )}
+        />
       )}
     </SafeAreaView>
   );

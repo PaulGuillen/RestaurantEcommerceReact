@@ -1,20 +1,22 @@
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import {
-  ScrollView,
   View,
   Text,
   Image,
   SafeAreaView,
   StyleSheet,
   Alert,
+  FlatList,
 } from "react-native";
 import { OrderService } from "../../data/services/orderServices";
 import * as SecureStore from "expo-secure-store";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const Order = () => {
   const [data, setData] = useState([]);
   const [showImageCentered, setShowImageCentered] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useFocusEffect(
     useCallback(() => {
@@ -33,20 +35,63 @@ const Order = () => {
   );
 
   const fetchData = async (uniqueID) => {
+    setLoading(true);
     try {
       const response = await OrderService.allOrders(uniqueID);
       if (response.success) {
         if (response.data.length === 0) {
           setShowImageCentered(true);
+          setData([]);
         } else {
-          setShowImageCentered(false);
+          response.data.sort((a, b) => {
+            const dateA = new Date(a.orderDate).getTime();
+            const dateB = new Date(b.orderDate).getTime();
+            return dateB - dateA;
+          });
           setData(response.data);
+          setShowImageCentered(false);
         }
       } else {
         Alert.alert("Error", response.error);
       }
     } catch (error) {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatTimeSinceOrder = (orderDate) => {
+    const fechaPedido = new Date(orderDate);
+    const fechaActual = new Date();
+    const diferenciaEnMilisegundos = fechaActual - fechaPedido;
+    const minutosTranscurridos = Math.floor(
+      diferenciaEnMilisegundos / (1000 * 60)
+    );
+    const segundosTranscurridos = Math.floor(diferenciaEnMilisegundos / 1000);
+
+    if (minutosTranscurridos === 0) {
+      return `${
+        segundosTranscurridos === 1
+          ? "1 segundo"
+          : `${segundosTranscurridos} segundos`
+      }`;
+    } else if (minutosTranscurridos === 1) {
+      return "1 minuto";
+    } else if (minutosTranscurridos < 60) {
+      return `${minutosTranscurridos} minutos`;
+    } else {
+      const horas = Math.floor(minutosTranscurridos / 60);
+      const minutosRestantes = minutosTranscurridos % 60;
+      if (horas === 1) {
+        return `1 hora y ${
+          minutosRestantes === 1 ? "1 minuto" : `${minutosRestantes} minutos`
+        }`;
+      } else {
+        return `${horas} horas y ${
+          minutosRestantes === 1 ? "1 minuto" : `${minutosRestantes} minutos`
+        }`;
+      }
     }
   };
 
@@ -59,22 +104,45 @@ const Order = () => {
             style={styles.centeredImage}
           />
           <Text style={styles.centeresTitle}>
-            Oops, parce que no tienes ordenes registadas.
+            Oops, parce que no tienes ordenes registrados.
           </Text>
         </View>
       ) : (
-        <ScrollView>
-          {data.map((orderData) => (
-            <View key={orderData.orderID} style={styles.card}>
-              <View>
-                <Text style={styles.price}>{orderData.orderID}</Text>
+        <FlatList
+          data={data}
+          keyExtractor={(item) => item.orderID}
+          renderItem={({ item }) => (
+            <View style={styles.card}>
+              <View style={styles.titleOrderContainer}>
+                <Text style={styles.title}>Orden # {item.orderID}</Text>
               </View>
-
-              <Text style={styles.price}>{orderData.totalPrice}</Text>
+              <View style={styles.containerDescription}>
+                <View style={styles.containerDate}>
+                  <Text style={styles.titleDate}>
+                    {"Fecha de pedido: Hace "}
+                    {formatTimeSinceOrder(item.orderDate)}
+                  </Text>
+                </View>
+                <View style={styles.containerDistrict}>
+                  <Text style={styles.titleDistrict}>
+                    Entregar en : {item.addressSelected.district}
+                  </Text>
+                </View>
+                <View style={styles.containerClient}>
+                  <Text style={styles.titleClient}>
+                    Cliente : {item.fullName}
+                  </Text>
+                </View>
+              </View>
             </View>
-          ))}
-        </ScrollView>
+          )}
+        />
       )}
+      <Spinner
+        visible={loading}
+        textContent={"Cargando..."}
+        textStyle={{ color: "#FFF" }}
+      />
     </SafeAreaView>
   );
 };
@@ -86,6 +154,7 @@ const styles = StyleSheet.create({
     top: 60,
     flex: 1,
     backgroundColor: "#fff",
+    paddingBottom: 60,
   },
   centeredContainer: {
     flex: 1,
@@ -106,22 +175,62 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
   },
+
+  /**Body */
   card: {
-    flexDirection: "row",
+    margin: 10,
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
-    elevation: 3,
+    elevation: 6,
     marginHorizontal: 10,
-    marginVertical: 6,
-    padding: 20,
     shadowColor: "#000",
     shadowOffset: { width: 1, height: 1 },
     shadowOpacity: 0.3,
     shadowRadius: 2,
   },
+
+  titleOrderContainer: {
+    borderRadius: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    backgroundColor: "#e0e0e0",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   title: {
     fontSize: 16,
     fontWeight: "bold",
+  },
+
+  containerDescription: {
+    width: "100%",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingVertical: 14,
+    paddingHorizontal: 14,
+  },
+  containerDate: {},
+  containerDistrict: {
+    paddingTop: 10,
+  },
+  containerClient: {
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
+
+  titleDate: {
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  titleDistrict: {
+    fontSize: 16,
+    fontWeight: "400",
+  },
+  titleClient: {
+    fontSize: 16,
+    fontWeight: "400",
   },
 });

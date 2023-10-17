@@ -108,15 +108,19 @@ const Payment = () => {
     const roundedAmount = Math.round(totalToPay);
     const finalAmount = (roundedAmount * 100).toFixed(0);
     const address = addressOrder.direction;
+    const fullName = `${userMainData.name} ${userMainData.lastname}`;
+    const orderDate = new Date().toISOString();
+    const principalPhoneNumber = userMainData.phone;
 
     const paymentData = {
       amount: finalAmount,
       currency: currency,
       email: userMainData.email,
-      fullName: `${userMainData.name} ${userMainData.lastname}`,
+      fullName: fullName,
       orderID: orderID,
-      phone: userMainData.phone,
+      phone: principalPhoneNumber,
       address: address,
+      orderDate: orderDate,
       payment_method_types: ["card"],
     };
 
@@ -124,7 +128,12 @@ const Payment = () => {
     try {
       const response = await paymentStripe(paymentData);
       if (response.success) {
-        savingOrderGenerated(orderID);
+        savingOrderGenerated(
+          orderID,
+          fullName,
+          orderDate,
+          principalPhoneNumber
+        );
       } else {
         Alert.alert("Error", response.error);
         setLoading(false);
@@ -154,7 +163,12 @@ const Payment = () => {
     return response;
   };
 
-  const savingOrderGenerated = async (orderIDGenerated) => {
+  const savingOrderGenerated = async (
+    orderIDGenerated,
+    fullName,
+    orderDate,
+    principalPhoneNumber
+  ) => {
     try {
       if (dataOrder && addressOrder) {
         const listProducts = dataOrder.listProducts;
@@ -170,6 +184,9 @@ const Payment = () => {
               totalPrice: totalPrice,
               orderID: orderIDGenerated,
               isPayed: true,
+              fullName: fullName,
+              orderDate: orderDate,
+              phoneNumber : principalPhoneNumber,
             },
           ],
         };

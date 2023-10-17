@@ -5,16 +5,21 @@ import {
   Image,
   SafeAreaView,
   StyleSheet,
-  ScrollView,
   Pressable,
+  Alert,
+  FlatList
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { PromotionService } from "../../data/services/promotionServices";
+import Spinner from "react-native-loading-spinner-overlay";
 
 const Promotions = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
   const fetchData = async () => {
+    setLoading(true);
     try {
       const response = await PromotionService.getAllPromotions();
       if (response.success) {
@@ -24,6 +29,8 @@ const Promotions = () => {
       }
     } catch (error) {
       Alert.alert("Error", "Hubo un problema al cargar los datos");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,32 +46,37 @@ const Promotions = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View>
-          {data.map((item) => (
-            <Pressable
-              key={item.id}
-              style={({ pressed }) => [
-                styles.cardPrincipal,
-                item.color ? { backgroundColor: item.color } : null,
-                pressed && { opacity: 0.7 },
-              ]}
-              onPress={() => navigateToProductDetail(item)}
-            >
-              <View style={styles.cardLeftText}>
-                <Text style={styles.percetOfferText}>
-                  {item.percentOffer}% DESCUENTO
-                </Text>
-                <Text style={styles.rangeDayText}>{item.rangeDay}</Text>
-              </View>
+      <FlatList
+        data={data}
+        keyExtractor={(item) => item.productID}
+        renderItem={({ item }) => (
+          <Pressable
+            style={({ pressed }) => [
+              styles.cardPrincipal,
+              item.color ? { backgroundColor: item.color } : null,
+              pressed && { opacity: 0.7 },
+            ]}
+            onPress={() => navigateToProductDetail(item)}
+          >
+            <View style={styles.cardLeftText}>
+              <Text style={styles.percetOfferText}>
+                {item.percentOffer}% DESCUENTO
+              </Text>
+              <Text style={styles.rangeDayText}>{item.rangeDay}</Text>
+            </View>
 
-              <View style={styles.cardImageContainer}>
-                <Image source={{ uri: item.image }} style={styles.cardImage} />
-              </View>
-            </Pressable>
-          ))}
-        </View>
-      </ScrollView>
+            <View style={styles.cardImageContainer}>
+              <Image source={{ uri: item.image }} style={styles.cardImage} />
+            </View>
+          </Pressable>
+        )}
+      />
+
+      <Spinner
+        visible={loading}
+        textContent={"Cargando..."}
+        textStyle={{ color: "#FFF" }}
+      />
     </SafeAreaView>
   );
 };

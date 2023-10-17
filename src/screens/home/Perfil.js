@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Alert,
+  SafeAreaView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
@@ -36,8 +37,8 @@ const Perfil = () => {
     try {
       const response = await PerfilServices.mainUser(uniqueID);
       if (response.success) {
-        const { name, lastname, email } = response.data;
-        setData({ name, lastname, email });
+        const { name, lastname, email, phone } = response.data;
+        setData({ name, lastname, email, phone });
       } else {
         Alert.alert("Error", response.error);
       }
@@ -53,41 +54,63 @@ const Perfil = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../../../assets/images/eating.png")}
-        style={styles.profileImage}
-      />
-      <Text style={styles.fullName}>
-        {data.name} {data.lastname}
-      </Text>
-      <Text style={styles.email}>{data.email}</Text>
+    <SafeAreaView style={styles.container}>
+      <View style={styles.body}>
+        <View syle={styles.containerImage}>
+          <Image
+            source={require("../../../assets/images/eating.png")}
+            style={styles.profileImage}
+          />
+        </View>
+
+        <Text style={styles.fullName}>
+          {data.name} {data.lastname}
+        </Text>
+        <Text style={styles.email}>{data.email}</Text>
+        <View style={styles.phoneContainer}>
+          <Text style={styles.phone}>{data.phone}</Text>
+          <TouchableOpacity style={styles.button}>
+            <Image
+              source={require("../../../assets/images/update_phone.png")}
+              style={styles.image}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
+
       <View style={styles.containerBottom}>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
           <Text style={styles.logoutText}>Salir sesión</Text>
         </TouchableOpacity>
       </View>
+
       <Spinner
         visible={loading}
         textContent={"Cargando..."}
         textStyle={{ color: "#FFF" }}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  body: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#F5F5F5",
   },
+
   profileImage: {
-    width: 160,
+    width: 180,
     height: 180,
     borderRadius: 60,
     marginBottom: 20,
   },
+
   fullName: {
     fontSize: 24,
     fontWeight: "bold",
@@ -95,7 +118,34 @@ const styles = StyleSheet.create({
   },
   email: {
     fontSize: 18,
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+
+   /** Phone container */
+   phoneContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  phone: {
+    fontSize: 18,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  image: {
+    width: 28,
+    height: 28,
+  },
+
+  /**Bottom button logOut */
+  containerBottom: {
+    alignItems: "center", 
+    bottom: 20,
   },
   logoutButton: {
     backgroundColor: "red",
@@ -107,10 +157,7 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
   },
-  containerBottom: {
-    position: "absolute",
-    bottom: 40,
-  },
+
 });
 
 export default Perfil;
