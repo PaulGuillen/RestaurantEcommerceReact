@@ -11,7 +11,7 @@ import {
   BackHandler,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { OrderService } from "../../data/services/orderServices";
+import { OrderService } from "../../../data/services/orderServices";
 import { Alert } from "react-native/Libraries/Alert/Alert";
 
 const ProductDetailOffer = ({ route }) => {
@@ -125,7 +125,7 @@ const ProductDetailOffer = ({ route }) => {
         <SafeAreaView style={styles.safeAreaView}>
           <TouchableOpacity style={styles.button} onPress={backHomeNavigator}>
             <Image
-              source={require("../../../assets/images/back_view.png")}
+              source={require("../../../../assets/images/back_view.png")}
               style={styles.imageButton}
             />
           </TouchableOpacity>
@@ -159,7 +159,7 @@ const ProductDetailOffer = ({ route }) => {
                     onPress={increaseQuantity}
                   >
                     <Image
-                      source={require("../../../assets/images/mas.png")}
+                      source={require("../../../../assets/images/mas.png")}
                       style={styles.iconPlus}
                     />
                   </TouchableOpacity>
@@ -172,7 +172,7 @@ const ProductDetailOffer = ({ route }) => {
                     onPress={decreaseQuantity}
                   >
                     <Image
-                      source={require("../../../assets/images/menos.png")}
+                      source={require("../../../../assets/images/menos.png")}
                       style={styles.iconMinus}
                     />
                   </TouchableOpacity>

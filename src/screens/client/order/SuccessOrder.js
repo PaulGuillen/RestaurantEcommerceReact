@@ -34,7 +34,7 @@ const SuccessOrder = () => {
       <View style={styles.bodyContainer}>
         <View style={styles.imageContainer}>
           <Image
-            source={require("../../../assets/images/check_success.png")}
+            source={require("../../../../assets/images/check_success.png")}
             style={styles.centeredImage}
           />
         </View>

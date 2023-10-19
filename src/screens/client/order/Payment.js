@@ -10,12 +10,12 @@ import {
   SafeAreaView,
   Image,
 } from "react-native";
-import { PaymentService } from "../../data/services/paymentServices";
+import { PaymentService } from "../../../data/services/paymentServices";
 import { Card, TextInput } from "react-native-paper";
 import * as SecureStore from "expo-secure-store";
-import { PerfilServices } from "../../data/services/perfilServices";
-import { loadData } from "../../util/AsyncStorage";
-import { OrderService } from "../../data/services/orderServices";
+import { PerfilServices } from "../../../data/services/perfilServices";
+import { loadData } from "../../../util/AsyncStorage";
+import { OrderService } from "../../../data/services/orderServices";
 import Spinner from "react-native-loading-spinner-overlay";
 
 function generateAddressRandomID(n) {
@@ -255,7 +255,7 @@ const Payment = () => {
       <View style={styles.rowHorizontalHeader}>
         <TouchableOpacity onPress={backAddress}>
           <Image
-            source={require("../../../assets/images/back_view.png")}
+            source={require("../../../../assets/images/back_view.png")}
             style={styles.imageButton}
           />
         </TouchableOpacity>

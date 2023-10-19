@@ -9,9 +9,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Spinner from "react-native-loading-spinner-overlay";
-import { registerStyle } from "../../styles/loginComponent/registerViewStyle";
+import { registerStyle } from "../../../styles/loginComponent/registerViewStyle";
 import { useState } from "react";
-import { LoginServices } from "../../data/services/loginServices";
+import { LoginServices } from "../../../data/services/loginServices";
 import { useNavigation } from "@react-navigation/native";
 
 const Register = () => {
@@ -79,14 +79,14 @@ const Register = () => {
   return (
     <View style={registerStyle.container}>
       <ImageBackground
-        source={require("../../../assets/images/backgroundLogin.png")}
+        source={require("../../../../assets/images/backgroundLogin.png")}
         style={registerStyle.backgroundImage}
       >
         <ScrollView>
           <View style={registerStyle.containerBody}>
             <View style={registerStyle.card}>
               <Image
-                source={require("../../../assets/images/icon_login.png")}
+                source={require("../../../../assets/images/icon_login.png")}
                 style={registerStyle.cardImage}
               />
               <Text style={registerStyle.cardTitle}>

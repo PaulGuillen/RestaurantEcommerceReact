@@ -8,10 +8,10 @@ import {
   ImageBackground,
   Alert,
 } from "react-native";
-import { useBackButtonHandler } from "../../util/LifeCycle";
-import { loginStyle } from "../../styles/loginComponent/loginViewStyle.js";
+import { useBackButtonHandler } from "../../../util/LifeCycle";
+import { loginStyle } from "../../../styles/loginComponent/loginViewStyle.js";
 import { useCallback, useState } from "react";
-import { LoginServices } from "../../data/services/loginServices";
+import { LoginServices } from "../../../data/services/loginServices";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
@@ -75,13 +75,13 @@ const Login = () => {
   return (
     <ScrollView contentContainerStyle={loginStyle.container}>
       <ImageBackground
-        source={require("../../../assets/images/backgroundLogin.png")}
+        source={require("../../../../assets/images/backgroundLogin.png")}
         style={loginStyle.backgroundImage}
       >
         <View style={loginStyle.containerBody}>
           <View style={loginStyle.card}>
             <Image
-              source={require("../../../assets/images/icon_login.png")}
+              source={require("../../../../assets/images/icon_login.png")}
               style={loginStyle.cardImage}
             />
             <Text style={loginStyle.cardTitle}>Bienvenido a Pa'Comer</Text>

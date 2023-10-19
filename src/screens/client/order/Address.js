@@ -12,8 +12,8 @@ import {
   Alert,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { AddressServices } from "../../data/services/addressServices";
-import { saveData } from "../../util/AsyncStorage";
+import { AddressServices } from "../../../data/services/addressServices";
+import { saveData } from "../../../util/AsyncStorage";
 
 const Address = () => {
   const navigation = useNavigation();
@@ -101,7 +101,7 @@ const Address = () => {
       <View style={styles.rowHorizontalHeader}>
         <TouchableOpacity onPress={backUserBag}>
           <Image
-            source={require("../../../assets/images/back_view.png")}
+            source={require("../../../../assets/images/back_view.png")}
             style={styles.imageButton}
           />
         </TouchableOpacity>
@@ -112,7 +112,7 @@ const Address = () => {
         {showImageCentered ? (
           <View style={styles.centeredContainer}>
             <Image
-              source={require("../../../assets/images/mapa.png")}
+              source={require("../../../../assets/images/mapa.png")}
               style={styles.centeredImage}
             />
             <Text style={styles.centeresTitle}>
@@ -134,7 +134,7 @@ const Address = () => {
                 <View style={styles.containerIcon}>
                   {selectedAddressID === addressData.addressID && (
                     <Image
-                      source={require("../../../assets/images/check.png")}
+                      source={require("../../../../assets/images/check.png")}
                       style={styles.checkIcon}
                     />
                   )}
@@ -149,7 +149,7 @@ const Address = () => {
             style={styles.roundedButtonIcon}
           >
             <Image
-              source={require("../../../assets/images/add_address.png")}
+              source={require("../../../../assets/images/add_address.png")}
               style={styles.iconPlus}
             />
           </TouchableOpacity>

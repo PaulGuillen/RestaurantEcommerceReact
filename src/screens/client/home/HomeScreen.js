@@ -1,9 +1,9 @@
 import { ScrollView, StyleSheet, View, Keyboard } from "react-native";
-import SearchFilter from "../../components/SearchFilter";
-import Header from "../../components/Header";
-import CardViewPromotion from "../../components/CardViewPromotion";
-import CategoriesFilter from "../../components/CategoriesFilter";
-import ProductCard from "../../components/ProductCard";
+import SearchFilter from "../../../components/SearchFilter";
+import Header from "../../../components/Header";
+import CardViewPromotion from "../../../components/CardViewPromotion";
+import CategoriesFilter from "../../../components/CategoriesFilter";
+import ProductCard from "../../../components/ProductCard";
 import { useState, useEffect } from "react";
 
 const HomeScreen = () => {

@@ -10,7 +10,7 @@ import {
   FlatList
 } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { PromotionService } from "../../data/services/promotionServices";
+import { PromotionService } from "../../../data/services/promotionServices";
 import Spinner from "react-native-loading-spinner-overlay";
 
 const Promotions = () => {

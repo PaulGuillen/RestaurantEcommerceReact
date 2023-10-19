@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import UserBag from "../screens/order/userBag";
-import Address from "../screens/order/Address";
-import CreateAddress from "../screens/order/CreateAddress";
-import Maps from "../screens/order/Maps";
-import Payment from "../screens/order/Payment";
-import SuccessOrder from "../screens/order/SuccessOrder";
+import UserBag from "../screens/client/order/userBag";
+import Address from "../screens/client/order/Address";
+import CreateAddress from "../screens/client/order/CreateAddress";
+import Maps from "../screens/client/order/Maps";
+import Payment from "../screens/client/order/Payment";
+import SuccessOrder from "../screens/client/order/SuccessOrder";
 
 const Stack = createNativeStackNavigator();
 

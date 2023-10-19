@@ -7,7 +7,7 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-import { FavoriteServices } from "../../data/services/favoriteServices";
+import { FavoriteServices } from "../../../data/services/favoriteServices";
 import { useFocusEffect } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 

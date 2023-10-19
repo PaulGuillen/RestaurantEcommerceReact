@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
 } from "react-native";
-import { onBoardingStyles } from "../../styles/firstViewStyle.js";
+import { onBoardingStyles } from "../../../styles/firstViewStyle";
 import { useNavigation } from "@react-navigation/native";
 
 const FirstView = () => {
@@ -16,7 +16,7 @@ const FirstView = () => {
 
   return (
     <ImageBackground
-      source={require("../../../assets/images/backgroundViewPrincipal.png")}
+      source={require("../../../../assets/images/backgroundViewPrincipal.png")}
       style={onBoardingStyles.container}
     >
       <View style={onBoardingStyles.header}>
@@ -34,7 +34,7 @@ const FirstView = () => {
       <View style={onBoardingStyles.body}>
         <View style={onBoardingStyles.imageContainer}>
           <Image
-            source={require("../../../assets/images/eating.png")}
+            source={require("../../../../assets/images/eating.png")}
             style={onBoardingStyles.image}
           />
           <View style={onBoardingStyles.textBottomFromImageContainer}>

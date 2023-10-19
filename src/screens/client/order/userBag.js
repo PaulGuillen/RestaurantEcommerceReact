@@ -12,9 +12,9 @@ import {
   BackHandler,
 } from "react-native";
 import * as SecureStore from "expo-secure-store";
-import { OrderService } from "../../data/services/orderServices";
-import { PerfilServices } from "../../data/services/perfilServices";
-import { saveData } from "../../util/AsyncStorage";
+import { OrderService } from "../../../data/services/orderServices";
+import { PerfilServices } from "../../../data/services/perfilServices";
+import { saveData } from "../../../util/AsyncStorage";
 
 const UserBag = () => {
   const navigation = useNavigation();
@@ -252,7 +252,7 @@ const UserBag = () => {
       <View style={styles.rowHorizontalHeader}>
         <TouchableOpacity onPress={backHomeNavigator}>
           <Image
-            source={require("../../../assets/images/back_view.png")}
+            source={require("../../../../assets/images/back_view.png")}
             style={styles.imageButton}
           />
         </TouchableOpacity>
@@ -263,7 +263,7 @@ const UserBag = () => {
       {showImageCentered ? (
         <View style={styles.centeredContainer}>
           <Image
-            source={require("../../../assets/images/eating_2.png")}
+            source={require("../../../../assets/images/eating_2.png")}
             style={styles.centeredImage}
           />
           <Text style={styles.centeresTitle}>
@@ -305,7 +305,7 @@ const UserBag = () => {
                         }
                       >
                         <Image
-                          source={require("../../../assets/images/mas.png")}
+                          source={require("../../../../assets/images/mas.png")}
                           style={styles.iconPlus}
                         />
                       </TouchableOpacity>
@@ -322,7 +322,7 @@ const UserBag = () => {
                         }
                       >
                         <Image
-                          source={require("../../../assets/images/menos.png")}
+                          source={require("../../../../assets/images/menos.png")}
                           style={styles.iconMinus}
                         />
                       </TouchableOpacity>
@@ -343,7 +343,7 @@ const UserBag = () => {
                         ]}
                       >
                         <Image
-                          source={require("../../../assets/images/eliminar.png")}
+                          source={require("../../../../assets/images/eliminar.png")}
                           style={styles.iconDelete}
                         />
                       </TouchableOpacity>

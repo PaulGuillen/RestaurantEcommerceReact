@@ -5,9 +5,9 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import { thirdOnBoardingStyles } from "../../styles/thirdViewStyle";
+import { thirdOnBoardingStyles } from "../../../styles/thirdViewStyle";
 import { useNavigation } from "@react-navigation/native";
-import { useBackButtonHandler } from "../../util/LifeCycle";
+import { useBackButtonHandler } from "../../../util/LifeCycle";
 
 const ThirdView = () => {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ const ThirdView = () => {
     <ImageBackground style={thirdOnBoardingStyles.container}>
       <View style={thirdOnBoardingStyles.body}>
         <Image
-          source={require("../../../assets/images/eating_3.png")}
+          source={require("../../../../assets/images/eating_3.png")}
           style={thirdOnBoardingStyles.image}
         />
         <Text style={thirdOnBoardingStyles.textBottomFromImage}>

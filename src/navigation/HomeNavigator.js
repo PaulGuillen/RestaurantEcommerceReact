@@ -1,14 +1,14 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "../screens/home/HomeScreen";
-import Promotions from "../screens/home/Promotions";
-import Perfil from "../screens/home/Perfil";
+import HomeScreen from "../screens/client/home/HomeScreen";
+import Promotions from "../screens/client/home/Promotions";
+import Perfil from "../screens/client/home/Perfil";
 import OrderNavigator from "./OrderNavigator";
-import ProductDetail from "../screens/product/ProductDetail";
-import ProductDetailOffer from "../screens/product/ProductDetailsOffer";
-import ProductDetailMainOffer from "../screens/product/ProductDetailMainOffer";
-import Order from "../screens/home/Order";
+import ProductDetail from "../screens/client/product/ProductDetail";
+import ProductDetailOffer from "../screens/client/product/ProductDetailsOffer";
+import ProductDetailMainOffer from "../screens/client/product/ProductDetailMainOffer";
+import Order from "../screens/client/home/Order";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();

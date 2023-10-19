@@ -11,7 +11,7 @@ import {
   Alert,
 } from "react-native";
 import { TextInput } from "react-native-paper";
-import { AddressServices } from "../../data/services/addressServices";
+import { AddressServices } from "../../../data/services/addressServices";
 import * as SecureStore from "expo-secure-store";
 import Spinner from "react-native-loading-spinner-overlay";
 
@@ -155,7 +155,7 @@ const CreateAddress = ({ route }) => {
       <View style={styles.rowHorizontalHeader}>
         <TouchableOpacity onPress={backAddress}>
           <Image
-            source={require("../../../assets/images/back_view.png")}
+            source={require("../../../../assets/images/back_view.png")}
             style={styles.imageButton}
           />
         </TouchableOpacity>

@@ -5,7 +5,7 @@ import {
   Text,
   Image,
 } from "react-native";
-import { secondOnBoardingStyles } from "../../styles/secondViewStyle.js";
+import { secondOnBoardingStyles } from "../../../styles/secondViewStyle.js";
 import { useNavigation } from "@react-navigation/native";
 
 const SecondView = () => {
@@ -23,7 +23,7 @@ const SecondView = () => {
     <ImageBackground style={secondOnBoardingStyles.container}>
       <View style={secondOnBoardingStyles.body}>
         <Image
-          source={require("../../../assets//images/eating_2.png")}
+          source={require("../../../../assets//images/eating_2.png")}
           style={secondOnBoardingStyles.image}
         />
         <Text style={secondOnBoardingStyles.textBottomFromImage}>

@@ -9,7 +9,7 @@ import {
   Alert,
   FlatList,
 } from "react-native";
-import { OrderService } from "../../data/services/orderServices";
+import { OrderService } from "../../../data/services/orderServices";
 import * as SecureStore from "expo-secure-store";
 import Spinner from "react-native-loading-spinner-overlay";
 
@@ -103,7 +103,7 @@ const Order = () => {
       {showImageCentered ? (
         <View style={styles.centeredContainer}>
           <Image
-            source={require("../../../assets/images/carro-vacio.png")}
+            source={require("../../../../assets/images/carro-vacio.png")}
             style={styles.centeredImage}
           />
           <Text style={styles.centeresTitle}>

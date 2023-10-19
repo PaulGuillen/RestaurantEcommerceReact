@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
-import { PerfilServices } from "../../data/services/perfilServices";
+import { PerfilServices } from "../../../data/services/perfilServices";
 import Spinner from "react-native-loading-spinner-overlay";
 
 const Perfil = () => {
@@ -58,7 +58,7 @@ const Perfil = () => {
       <View style={styles.body}>
         <View syle={styles.containerImage}>
           <Image
-            source={require("../../../assets/images/eating.png")}
+            source={require("../../../../assets/images/eating.png")}
             style={styles.profileImage}
           />
         </View>
@@ -71,7 +71,7 @@ const Perfil = () => {
           <Text style={styles.phone}>{data.phone}</Text>
           <TouchableOpacity style={styles.button}>
             <Image
-              source={require("../../../assets/images/update_phone.png")}
+              source={require("../../../../assets/images/update_phone.png")}
               style={styles.image}
             />
           </TouchableOpacity>

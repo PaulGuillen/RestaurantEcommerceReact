@@ -16,14 +16,14 @@ const Rol = () => {
       <TouchableOpacity onPress={handleSelectClient}>
         <Image
           style={styles.imageSize}
-          source={require("../../../assets/images/cliente.png")}
+          source={require("../../../../assets/images/cliente.png")}
         />
       </TouchableOpacity>
       <Text style={styles.textStyle}>Cliente</Text>
       <TouchableOpacity onPress={handleSelectRestaurant}>
         <Image
           style={styles.imageSize}
-          source={require("../../../assets/images/restaurante.png")}
+          source={require("../../../../assets/images/restaurante.png")}
         />
       </TouchableOpacity>
       <Text style={styles.textStyle}>Restaurante</Text>
