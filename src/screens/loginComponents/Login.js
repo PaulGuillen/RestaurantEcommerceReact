@@ -10,10 +10,10 @@ import {
 } from "react-native";
 import { useBackButtonHandler } from "../../util/LifeCycle";
 import { loginStyle } from "../../styles/loginComponent/loginViewStyle.js";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { LoginServices } from "../../data/services/loginServices";
 import Spinner from "react-native-loading-spinner-overlay";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 
 const Login = () => {
@@ -46,7 +46,11 @@ const Login = () => {
       if (response.success) {
         const uid = response.data?.uid;
         await SecureStore.setItemAsync("userUid", uid);
-        navigation.navigate("HomeNavigator", { screen: "HomeScreen" });
+        if (response.data?.userType == "admin") {
+          navigation.navigate("Rol");
+        } else {
+          navigation.navigate("HomeNavigator", { screen: "HomeScreen" });
+        }
       } else {
         Alert.alert("Error", response.error);
       }
@@ -60,6 +64,13 @@ const Login = () => {
   const isValidInput = (email, password) => {
     return email.trim().length > 0 && password.trim().length > 0;
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      setEmail("");
+      setPassword("");
+    }, [])
+  );
 
   return (
     <ScrollView contentContainerStyle={loginStyle.container}>

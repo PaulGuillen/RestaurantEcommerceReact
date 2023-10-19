@@ -30,7 +30,7 @@ const Register = () => {
 
   const handleRegister = async () => {
     const inputsAreValid = isValidInput(name, lastname, email, password);
-
+    const userType = "client";
     if (!inputsAreValid) {
       Alert.alert(
         "Error",
@@ -46,7 +46,8 @@ const Register = () => {
         lastname,
         email,
         password,
-        phone
+        phone,
+        userType
       );
       if (response.success) {
         Alert.alert("Exitoso", response.data.message);

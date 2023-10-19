@@ -68,31 +68,34 @@ const Order = () => {
     const minutosTranscurridos = Math.floor(
       diferenciaEnMilisegundos / (1000 * 60)
     );
-    const segundosTranscurridos = Math.floor(diferenciaEnMilisegundos / 1000);
+    const horasTranscurridas = Math.floor(minutosTranscurridos / 60);
+    const diasTranscurridos = Math.floor(horasTranscurridas / 24);
 
-    if (minutosTranscurridos === 0) {
-      return `${
+    let timeSinceOrder = "";
+    if (diasTranscurridos > 0) {
+      timeSinceOrder =
+        diasTranscurridos === 1 ? "1 día" : `${diasTranscurridos} días`;
+    } else if (horasTranscurridas > 0) {
+      const minutosRestantes = minutosTranscurridos % 60;
+      const horas =
+        horasTranscurridas === 1 ? "1 hora" : `${horasTranscurridas} horas`;
+      const minutos =
+        minutosRestantes > 0 ? ` y ${minutosRestantes} minutos` : "";
+      timeSinceOrder = horas + minutos;
+    } else if (minutosTranscurridos > 0) {
+      timeSinceOrder =
+        minutosTranscurridos === 1
+          ? "1 minuto"
+          : `${minutosTranscurridos} minutos`;
+    } else {
+      const segundosTranscurridos = Math.floor(diferenciaEnMilisegundos / 1000);
+      timeSinceOrder =
         segundosTranscurridos === 1
           ? "1 segundo"
-          : `${segundosTranscurridos} segundos`
-      }`;
-    } else if (minutosTranscurridos === 1) {
-      return "1 minuto";
-    } else if (minutosTranscurridos < 60) {
-      return `${minutosTranscurridos} minutos`;
-    } else {
-      const horas = Math.floor(minutosTranscurridos / 60);
-      const minutosRestantes = minutosTranscurridos % 60;
-      if (horas === 1) {
-        return `1 hora y ${
-          minutosRestantes === 1 ? "1 minuto" : `${minutosRestantes} minutos`
-        }`;
-      } else {
-        return `${horas} horas y ${
-          minutosRestantes === 1 ? "1 minuto" : `${minutosRestantes} minutos`
-        }`;
-      }
+          : `${segundosTranscurridos} segundos`;
     }
+
+    return timeSinceOrder;
   };
 
   return (
