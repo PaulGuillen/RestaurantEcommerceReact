@@ -70,9 +70,20 @@ _Como se registra una direccion en caso de que el cliente no tenga una._
 ![Screenshot_1696718780](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/c277cf2e-2235-4644-a45f-3e74980a8a8d)
 
 
+_\* Vistas creacion de una Orden por cliente_
+
+_Con direccion registrada previamente y productos seleccionados en el carrito, se usa Stripe como metodo de pago de ejemplo para este caso y visualizacion de la orden._
+
+![Screenshot_1697681627](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/6f03809d-6e8e-4718-9ad3-663ef459e21b)
+![Screenshot_1697681638](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/d73ffdb0-7cde-4e90-bd67-011b33b260b8)
+![Screenshot_1697681657](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/df886d61-3716-413c-9358-d2df283953e2)
+![Screenshot_1697681661](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/c637a6da-6f3a-4466-9c24-cd427c07453f)
+![Screenshot_1697681667](https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/ac806a8a-f7f9-41f5-94ce-ac860b52e6f4)
+
+
 _En este video se mostrará un poco de las funcionalidades hasta el momento del proyecto_
 
-https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/215e7dcb-16bd-44c3-96d7-4ba00cfe6344
+https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/1df0a6a7-cb75-4e36-8aa8-c0b6c74ec7c2
 
 
 ## Autor ✒️
