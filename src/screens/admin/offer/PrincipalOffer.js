@@ -6,9 +6,14 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { HomeServices } from '../../../data/services/homeServices';
+import { AdminServices } from '../../../data/services/adminServices';
+import { convertImageToBase64 } from '../../../util/LifeCycle';
+import Spinner from "react-native-loading-spinner-overlay";
 
 const PrincipalOffer = () => {
+  const [loading, setLoading] = useState(false);
   const [imageUri, setImageUri] = useState(null);
+  const [ulrImage, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
     id: '01',
     title: '',
@@ -38,7 +43,30 @@ const PrincipalOffer = () => {
     });
 
     if (!result.canceled) {
+      const fileName = result.assets[0].uri.split('/').pop();
       setImageUri(result.assets[0].uri);
+      const base64Image = await convertImageToBase64(result.assets[0].uri);
+
+      const dataImage = {
+        imageInBase64: base64Image,
+        fileName: fileName,
+      };
+
+      setLoading(true);
+      try {
+        const response = await uploadImage(dataImage);
+        if (response.success) {
+          Alert.alert("Actualizado", response.data.message);
+          const imageUrl = response.data.url;
+          setImageUrl(imageUrl);
+        } else {
+          Alert.alert("Error", response.error);
+        }
+      } catch (error) {
+        Alert.alert("Error", "Ocurrió un error en la solicitud.");
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
@@ -49,11 +77,10 @@ const PrincipalOffer = () => {
     });
   };
 
-
   const handleSubmit = async () => {
 
     const mainOfferData = {
-      image: imageUri,
+      image: ulrImage,
       id: formData.id,
       title: formData.title,
       color: '#' + formData.color,
@@ -65,7 +92,7 @@ const PrincipalOffer = () => {
       rangeDay: formData.rangeDay
     };
 
-    console.log('mainOfferData', mainOfferData);
+    setLoading(true);
     try {
       const response = await mainOffer(mainOfferData);
       if (response.success) {
@@ -75,11 +102,18 @@ const PrincipalOffer = () => {
       }
     } catch (error) {
       Alert.alert("Error", "Ocurrió un error en la solicitud.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const mainOffer = async (mainOfferData) => {
     const response = await HomeServices.mainOffer(mainOfferData);
+    return response;
+  };
+
+  const uploadImage = async (dataImage) => {
+    const response = await AdminServices.uploadImage(dataImage);
     return response;
   };
 
@@ -142,6 +176,11 @@ const PrincipalOffer = () => {
           <Text>Enviar formulario</Text>
         </TouchableOpacity>
       </View>
+      <Spinner
+        visible={loading}
+        textContent={"Cargando..."}
+        textStyle={{ color: "#FFF" }}
+      />
     </ScrollView>
   );
 };
