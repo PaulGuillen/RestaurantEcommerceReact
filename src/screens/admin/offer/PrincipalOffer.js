@@ -69,7 +69,7 @@ const PrincipalOffer = () => {
     try {
       const response = await mainOffer(mainOfferData);
       if (response.success) {
-        Alert.alert("Actualizado", response.message);
+        Alert.alert("Actualizado", response.data.message);
       } else {
         Alert.alert("Error", response.error);
       }
