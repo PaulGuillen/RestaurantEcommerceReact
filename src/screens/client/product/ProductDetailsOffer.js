@@ -252,6 +252,7 @@ const styles = StyleSheet.create({
     marginTop: 160,
     fontSize: 28,
     fontWeight: "bold",
+    textAlign: "center",
   },
   descriptionStyle: {
     padding : 10,
