@@ -5,18 +5,20 @@ import {
   View,
   TouchableOpacity,
   Alert,
-  SafeAreaView,
+  SafeAreaView
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
 import { useEffect, useState } from "react";
 import { PerfilServices } from "../../../data/services/perfilServices";
 import Spinner from "react-native-loading-spinner-overlay";
+import { loadString } from "../../../util/AsyncStorage";
 
 const Perfil = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showAdminButton, setShowAdminButton] = useState(false);
 
   useEffect(() => {
     SecureStore.getItemAsync("userUid")
@@ -30,6 +32,16 @@ const Perfil = () => {
       .catch((error) => {
         console.error("Error al obtener el UID desde SecureStore:", error);
       });
+  }, []);
+
+  useEffect(() => {
+    loadString('userType').then((userType) => {
+      if (userType === 'admin') {
+        setShowAdminButton(true);
+      } else {
+        setShowAdminButton(false);
+      }
+    });
   }, []);
 
   const fetchData = async (uniqueID) => {
@@ -51,6 +63,10 @@ const Perfil = () => {
 
   const handleLogout = () => {
     navigation.navigate("Login");
+  };
+
+  const handleAdminButton = () => {
+    navigation.navigate("Rol");
   };
 
   return (
@@ -77,6 +93,14 @@ const Perfil = () => {
           </TouchableOpacity>
         </View>
       </View>
+
+      {showAdminButton && (
+        <View style={styles.containerBottomRol}>
+          <TouchableOpacity onPress={handleAdminButton} style={styles.rolButton}>
+            <Text style={styles.logoutText}>Seleccionar Rol</Text>
+          </TouchableOpacity>
+        </View>
+      )}
 
       <View style={styles.containerBottom}>
         <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
@@ -121,8 +145,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
-   /** Phone container */
-   phoneContainer: {
+  /** Phone container */
+  phoneContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
@@ -142,10 +166,22 @@ const styles = StyleSheet.create({
     height: 28,
   },
 
+  /**Bottom button rol */
+  containerBottomRol: {
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  rolButton: {
+    backgroundColor: "green",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+
   /**Bottom button logOut */
   containerBottom: {
-    alignItems: "center", 
-    bottom: 20,
+    alignItems: "center",
+    marginBottom: 20,
   },
   logoutButton: {
     backgroundColor: "red",

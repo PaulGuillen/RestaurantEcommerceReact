@@ -15,6 +15,7 @@ import { LoginServices } from "../../../data/services/loginServices";
 import Spinner from "react-native-loading-spinner-overlay";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as SecureStore from "expo-secure-store";
+import { saveString } from "../../../util/AsyncStorage";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -46,7 +47,9 @@ const Login = () => {
       if (response.success) {
         const uid = response.data?.uid;
         await SecureStore.setItemAsync("userUid", uid);
-        if (response.data?.userType == "admin") {
+        const userType = response.data?.userType;
+        saveString('userType', userType);
+        if (userType === "admin") {
           navigation.navigate("Rol");
         } else {
           navigation.navigate("HomeNavigator", { screen: "HomeScreen" });

@@ -24,3 +24,26 @@ export const loadData = async (key) => {
     return null;
   }
 };
+
+export const saveString = async (key, stringValue) => {
+  try {
+    await AsyncStorage.setItem(key, stringValue);
+  } catch (error) {
+    console.error('Error al guardar la cadena:', error);
+  }
+};
+
+export const loadString = async (key) => {
+  try {
+    const stringValue = await AsyncStorage.getItem(key);
+    if (stringValue !== null) {
+      return stringValue;
+    } else {
+      console.log(`No se encontró ninguna cadena en la clave ${key}`);
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al recuperar la cadena:', error);
+    return null;
+  }
+};

@@ -20,4 +20,5 @@ export const environment = {
   apiCreateOrder: API_BASE_URL + "/payed",
   apiCleanProductsInBag: API_BASE_URL + "/order",
   apiGetAllOrders: API_BASE_URL + "/order",
+  apiCreateOrUpdateMainOffer : API_BASE_URL + "/promotion",
 };

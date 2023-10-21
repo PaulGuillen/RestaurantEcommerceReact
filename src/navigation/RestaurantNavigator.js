@@ -37,8 +37,8 @@ const HomeRestaurantNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopTab.Navigator
-        tabBarOptions={{
-          labelStyle: {
+        screenOptions={{
+          tabBarLabelStyle: {
             paddingTop: 50,
           },
         }}
@@ -55,8 +55,8 @@ const ProductsRestaurantNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopTab.Navigator
-        tabBarOptions={{
-          labelStyle: {
+        screenOptions={{
+          tabBarLabelStyle: {
             paddingTop: 50,
           },
         }}
@@ -72,9 +72,9 @@ const OfferRestaurantNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopTab.Navigator
-        tabBarOptions={{
-          labelStyle: {
-            paddingTop: 50, // Adjust the padding as needed
+        screenOptions={{
+          tabBarLabelStyle: {
+            paddingTop: 50,
           },
         }}
       >
