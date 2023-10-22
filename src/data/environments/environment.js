@@ -23,4 +23,5 @@ export const environment = {
   apiCreateOrUpdateMainOffer: API_BASE_URL + "/promotion",
   apiUploadImage: API_BASE_URL + "/image",
   apiCreateCommonOffer : API_BASE_URL + "/promotion",
+  apiCreateProduct: API_BASE_URL + "/home",
 };

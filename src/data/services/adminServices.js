@@ -109,5 +109,41 @@ export const AdminServices = {
         }
     },
 
+    createProduct: async (product) => {
+        try {
+            const response = await fetch(`${environment.apiCreateProduct}/createProducts`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    image: product.image,
+                    color: product.color,
+                    price: product.price,
+                    description: product.description,
+                    title: product.title,
+                    type: product.type,
+                    percentOffer: product.percentOffer,
+                    rangeDay: product.rangeDay,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                return { success: true, data: data };
+            } else {
+                const errorData = await response.json();
+                console.log("errorData", errorData);
+                return {
+                    success: false,
+                    error:
+                        errorData.message || "Error en la comunicación con el servidor",
+                };
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            return { success: false, error: "Error en la solicitud" };
+        }
+    },
 
 };

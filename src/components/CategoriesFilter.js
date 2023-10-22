@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   View,
   TouchableOpacity,
   Text,
   StyleSheet,
-  ScrollView,
+  ScrollView
 } from "react-native";
 import { HomeServices } from "../data/services/homeServices";
 import { useFocusEffect } from "@react-navigation/native";
@@ -45,16 +45,18 @@ const CategoriesFilter = ({ onSelectCategory }) => {
     }
   }, [hasFetchedData]);
 
-  useFocusEffect(() => {
-    setHasFetchedData(false);
-  });
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   return (
     <ScrollView horizontal showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>
         {data.map((category) => (
           <TouchableOpacity
-            key={category.id}
+            key={category.categoryID}
             style={[
               styles.categoryButton,
               localSelectedCategory === category.type &&

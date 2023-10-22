@@ -52,7 +52,7 @@ export const HomeServices = {
       if (response.status === 200) {
         const data = await response.json();
         const formattedData = data.map((item) => ({
-          id: item.id || "",
+          categoryID : item.categoryID || "",
           category: item.category || "",
           type: item.type || "",
         }));
