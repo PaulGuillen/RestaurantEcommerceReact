@@ -7,8 +7,8 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { HomeServices } from '../../../data/services/homeServices';
 import { AdminServices } from '../../../data/services/adminServices';
-import { convertImageToBase64 } from '../../../util/LifeCycle';
 import Spinner from "react-native-loading-spinner-overlay";
+import { convertImageToBase64 } from '../../../util/Util';
 
 const PrincipalOffer = () => {
   const [loading, setLoading] = useState(false);

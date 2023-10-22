@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import {
-  StyleSheet, ScrollView, Image, View, TextInput, Button, TouchableOpacity, Text, Alert,
+  ScrollView, Image, View, TextInput, Button, TouchableOpacity, Text, Alert
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AdminServices } from '../../../data/services/adminServices';
-import { convertImageToBase64 } from '../../../util/LifeCycle';
 import Spinner from "react-native-loading-spinner-overlay";
 import { HomeServices } from '../../../data/services/homeServices';
 import { Picker } from '@react-native-picker/picker';
+import { commonOfferStyles } from '../../../styles/admin/offer/commonOfferStyle';
+import { convertImageToBase64, getSpanishMonth } from '../../../util/Util';
 
 const CommonOffer = () => {
   const [data, setData] = useState([]);
@@ -25,6 +26,12 @@ const CommonOffer = () => {
 
   const [selectedColor, setSelectedColor] = useState('');
   const circles = ['#A7D397', '#FFF2D8', '#FF6969', '#35A29F'];
+  const currentDate = new Date();
+  const currentMonth = getSpanishMonth(currentDate);
+
+  const [startDay, setStartDay] = useState('');
+  const [endDay, setEndDay] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const handleColorSelection = (color) => {
     setSelectedColor(color);
@@ -97,15 +104,17 @@ const CommonOffer = () => {
 
   const handleSubmit = async () => {
 
+    const rangeDay = `${startDay} - ${endDay} ${currentMonth}`
+
     const mainOfferData = {
       image: ulrImage,
       title: formData.title,
       color: selectedColor,
-      price: parseInt(formData.price),
+      price: formData.price,
       description: formData.description,
       percentOffer: formData.percentOffer,
-      type: formData.type,
-      rangeDay: formData.rangeDay
+      type: selectedCategory,
+      rangeDay: rangeDay
     };
 
     setLoading(true);
@@ -135,29 +144,30 @@ const CommonOffer = () => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      <View style={commonOfferStyles.container}>
+        <View style={commonOfferStyles.imageContainer}>
+          {imageUri && <Image source={{ uri: imageUri }} style={commonOfferStyles.image} />}
           <Button title="Subir imagen" onPress={handleImageUpload} />
         </View>
         <TextInput
           placeholder="Nombre producto"
           value={formData.title}
           onChangeText={(text) => handleInputChange('title', text)}
-          style={styles.textTitle}
+          style={commonOfferStyles.textTitle}
         />
-        <View style={styles.horizontal}>
+        <View style={commonOfferStyles.horizontal}>
           <TextInput
             placeholder="Precio"
-            style={styles.textPrice}
+            style={commonOfferStyles.textPrice}
             value={formData.price}
             onChangeText={(text) => handleInputChange('price', text)}
+            keyboardType="numeric"
           />
           <TextInput
             placeholder="Descuento %"
             value={formData.percentOffer}
             onChangeText={(text) => handleInputChange('percentOffer', text)}
-            style={styles.textOfferDiscount}
+            style={commonOfferStyles.textOfferDiscount}
           />
         </View>
 
@@ -166,58 +176,66 @@ const CommonOffer = () => {
           multiline={true}
           value={formData.description}
           onChangeText={(text) => handleInputChange('description', text)}
-          style={styles.descriptionText}
+          style={commonOfferStyles.descriptionText}
         />
 
-        <Text style={styles.textRangoOferta}>
+        <Text style={commonOfferStyles.textRangoOferta}>
           Rango oferta
         </Text>
 
-        <View style={styles.horizontal}>
+        <View style={commonOfferStyles.horizontal}>
           <TextInput
-            style={styles.textStarDate}
+            style={commonOfferStyles.textStarDate}
             placeholder="Dia Inicio"
-          />
-          <TextInput
-            style={styles.textEndDate}
-            placeholder="Dia Fin"
+            maxLength={2}
+            keyboardType="numeric"
+            onChangeText={(text) => setStartDay(text)}
           />
 
-          <Text style={styles.textMonth}>Octubre</Text>
+          <TextInput
+            style={commonOfferStyles.textEndDate}
+            placeholder="Dia Fin"
+            maxLength={2}
+            keyboardType="numeric"
+            onChangeText={(text) => setEndDay(text)}
+          />
+
+          <Text style={commonOfferStyles.textMonth}>{currentMonth}</Text>
         </View>
 
-        <View style={styles.pickerContainer}>
+        <View style={commonOfferStyles.pickerContainer}>
           <Picker
-            style={styles.picker}
             selectedValue={formData.type}
-            onValueChange={(itemValue, itemIndex) =>
-              handleInputChange('type', itemValue)
-            }>
+            onValueChange={(itemValue, itemIndex) => {
+              handleInputChange('type', itemValue);
+              const selectedText = data.find((category) => category.id === itemValue)?.type;
+              setSelectedCategory(selectedText || '');
+            }}
+          >
             {data.map((category) => (
               <Picker.Item
                 key={category.id}
                 label={category.category}
                 value={category.id}
-                style={styles.pickerItem}
               />
             ))}
           </Picker>
         </View>
 
-        <Text style={styles.textColorBackground}>
+        <Text style={commonOfferStyles.textColorBackground}>
           Colores de fondo
         </Text>
 
-        <View style={styles.horizontal}>
+        <View style={commonOfferStyles.horizontal}>
           {circles.map((circleColor, index) => (
             <TouchableOpacity
               key={index}
-              style={styles.touchableContainer}
+              style={commonOfferStyles.touchableContainer}
               onPress={() => handleColorSelection(circleColor)}
             >
               <View
                 style={[
-                  styles.circularFirst,
+                  commonOfferStyles.circularFirst,
                   {
                     backgroundColor: circleColor,
                     borderWidth: selectedColor === circleColor ? 1 : 0,
@@ -231,9 +249,9 @@ const CommonOffer = () => {
 
         <TouchableOpacity
           onPress={handleSubmit}
-          style={styles.submitButton}
+          style={commonOfferStyles.submitButton}
         >
-          <Text style={styles.submitText}>Enviar formulario</Text>
+          <Text style={commonOfferStyles.submitText}>Enviar formulario</Text>
         </TouchableOpacity>
 
       </View>
@@ -248,150 +266,5 @@ const CommonOffer = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 40,
-  },
-  imageContainer: {
-    marginBottom: 20,
-  },
-  image: {
-    width: 240,
-    height: 240,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-  },
-  textTitle: {
-    width: '80%',
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    fontSize: 14,
-    paddingTop: 10,
-    paddingBottom: 6,
-    marginBottom: 10,
-  },
-  horizontal: {
-    width: '80%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  textPrice: {
-    width: '46%',
-    height: 40,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    marginBottom: 10,
-    paddingBottom: 6,
-  },
-  textOfferDiscount: {
-    width: '48%',
-    height: 40,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    marginBottom: 10,
-    paddingBottom: 6,
-  },
-  textRangoOferta: {
-    textDecorationLine: 'underline',
-    fontWeight: 'bold',
-    marginTop: 18,
-    fontSize: 14,
-    width: '80%',
-  },
-  textColorBackground: {
-    textDecorationLine: 'underline',
-    fontWeight: 'bold',
-    marginTop: 10,
-    fontSize: 14,
-    width: '80%',
-  },
-  touchableContainer: {
-    marginTop: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  circularFirst: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  descriptionText: {
-    width: '80%',
-    fontSize: 14,
-    marginTop: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    paddingBottom: 10,
-    height: 80,
-    justifyContent: "center",
-    maxHeight: 200,
-  },
-  textStarDate: {
-    marginTop: 10,
-    paddingRight: 40,
-    height: 40,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    marginBottom: 10,
-    paddingBottom: 6,
-  },
-  textEndDate: {
-    marginTop: 10,
-    paddingRight: 40,
-    height: 40,
-    borderBottomWidth: 2,
-    borderBottomColor: '#D0D4CA',
-    marginBottom: 10,
-    paddingBottom: 6,
-  },
-  textMonth: {
-    fontFamily: 'Roboto',
-    fontSize: 14,
-    fontWeight: '800',
-    height: 'auto',
-    paddingBottom: 6,
-    textAlignVertical: 'center',
-    justifyContent: 'center',
-  },
-  pickerContainer: {
-    marginTop: 14,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-  },
-  picker: {
-
-  },
-  pickerItem: {
-    fontSize: 14,
-  },
-  submitButton: {
-    top: 40,
-    width: '80%',
-    backgroundColor: '#3085C3',
-    borderRadius: 10,
-    padding: 10,
-    marginBottom : 20,
-  },
-
-  submitText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-});
 
 export default CommonOffer;
