@@ -72,4 +72,42 @@ export const AdminServices = {
         }
     },
 
+    commonOffer : async (commonOffer) => {
+        try {
+            const response = await fetch(`${environment.apiCreateCommonOffer}/createPromotions`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    image: commonOffer.image,
+                    color: commonOffer.color,
+                    price: commonOffer.price,
+                    description: commonOffer.description,
+                    title: commonOffer.title,
+                    type: commonOffer.type,
+                    percentOffer: commonOffer.percentOffer,
+                    rangeDay: commonOffer.rangeDay,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                return { success: true, data: data };
+            } else {
+                const errorData = await response.json();
+                console.log("errorData", errorData);
+                return {
+                    success: false,
+                    error:
+                        errorData.message || "Error en la comunicación con el servidor",
+                };
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            return { success: false, error: "Error en la solicitud" };
+        }
+    },
+
+
 };
