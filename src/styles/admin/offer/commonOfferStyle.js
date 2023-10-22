@@ -36,6 +36,11 @@ export const commonOfferStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
+    horizontalColors: {
+        width: '80%',
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
     textPrice: {
         width: '46%',
         height: 40,
@@ -74,7 +79,7 @@ export const commonOfferStyles = StyleSheet.create({
     circularFirst: {
         width: 40,
         height: 40,
-        borderRadius: 40,
+        marginHorizontal: 14,
         justifyContent: 'center',
         alignItems: 'center',
     },

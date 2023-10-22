@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import {
-  ScrollView, Image, View, TextInput, Button, TouchableOpacity, Text, Alert
+  Image, View, TextInput, Button, TouchableOpacity, Text, Alert, FlatList, ScrollView
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AdminServices } from '../../../data/services/adminServices';
-import Spinner from "react-native-loading-spinner-overlay";
 import { HomeServices } from '../../../data/services/homeServices';
 import { Picker } from '@react-native-picker/picker';
 import { commonOfferStyles } from '../../../styles/admin/offer/commonOfferStyle';
 import { convertImageToBase64, getSpanishMonth } from '../../../util/Util';
+import Spinner from "react-native-loading-spinner-overlay";
 
 const CommonOffer = () => {
   const [data, setData] = useState([]);
@@ -25,7 +25,7 @@ const CommonOffer = () => {
   });
 
   const [selectedColor, setSelectedColor] = useState('');
-  const circles = ['#A7D397', '#FFF2D8', '#FF6969', '#35A29F'];
+  const circles = ['#A7D397', '#FFF2D8', '#FF6969', '#35A29F', '#26577C', '#713ABE', '#FFFD8C', '#FFDBAA'];
   const currentDate = new Date();
   const currentMonth = getSpanishMonth(currentDate);
 
@@ -81,7 +81,7 @@ const CommonOffer = () => {
       try {
         const response = await uploadImage(dataImage);
         if (response.success) {
-          Alert.alert("Actualizado", response.data.message);
+          Alert.alert("Promoción creada", response.data.message);
           const imageUrl = response.data.url;
           setImageUrl(imageUrl);
         } else {
@@ -170,7 +170,6 @@ const CommonOffer = () => {
             style={commonOfferStyles.textOfferDiscount}
           />
         </View>
-
         <TextInput
           placeholder="Descripción"
           multiline={true}
@@ -178,11 +177,9 @@ const CommonOffer = () => {
           onChangeText={(text) => handleInputChange('description', text)}
           style={commonOfferStyles.descriptionText}
         />
-
         <Text style={commonOfferStyles.textRangoOferta}>
           Rango oferta
         </Text>
-
         <View style={commonOfferStyles.horizontal}>
           <TextInput
             style={commonOfferStyles.textStarDate}
@@ -191,7 +188,6 @@ const CommonOffer = () => {
             keyboardType="numeric"
             onChangeText={(text) => setStartDay(text)}
           />
-
           <TextInput
             style={commonOfferStyles.textEndDate}
             placeholder="Dia Fin"
@@ -199,10 +195,8 @@ const CommonOffer = () => {
             keyboardType="numeric"
             onChangeText={(text) => setEndDay(text)}
           />
-
           <Text style={commonOfferStyles.textMonth}>{currentMonth}</Text>
         </View>
-
         <View style={commonOfferStyles.pickerContainer}>
           <Picker
             selectedValue={formData.type}
@@ -221,32 +215,32 @@ const CommonOffer = () => {
             ))}
           </Picker>
         </View>
-
         <Text style={commonOfferStyles.textColorBackground}>
           Colores de fondo
         </Text>
-
-        <View style={commonOfferStyles.horizontal}>
-          {circles.map((circleColor, index) => (
+        <FlatList
+          style={commonOfferStyles.flatList}
+          data={circles}
+          numColumns={4}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
             <TouchableOpacity
-              key={index}
               style={commonOfferStyles.touchableContainer}
-              onPress={() => handleColorSelection(circleColor)}
+              onPress={() => handleColorSelection(item)}
             >
               <View
                 style={[
                   commonOfferStyles.circularFirst,
                   {
-                    backgroundColor: circleColor,
-                    borderWidth: selectedColor === circleColor ? 1 : 0,
+                    backgroundColor: item,
+                    borderWidth: selectedColor === item ? 1 : 0,
                     borderColor: 'black',
                   },
                 ]}
               />
             </TouchableOpacity>
-          ))}
-        </View>
-
+          )}
+        />
         <TouchableOpacity
           onPress={handleSubmit}
           style={commonOfferStyles.submitButton}
@@ -255,13 +249,11 @@ const CommonOffer = () => {
         </TouchableOpacity>
 
       </View>
-
       <Spinner
         visible={loading}
         textContent={"Cargando..."}
         textStyle={{ color: "#FFF" }}
       />
-
     </ScrollView>
   );
 };

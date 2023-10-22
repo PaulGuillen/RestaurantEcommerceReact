@@ -121,7 +121,7 @@ const ProductDetailOffer = ({ route }) => {
 
   return (
     <View style={{ backgroundColor: productDetail.color, flex: 1 }}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <SafeAreaView style={styles.safeAreaView}>
           <TouchableOpacity style={styles.button} onPress={backHomeNavigator}>
             <Image
@@ -149,65 +149,69 @@ const ProductDetailOffer = ({ route }) => {
                   </Text>
                 </TouchableOpacity>
               )}
-              <View style={styles.rowSpaceBetween}>
-                <View style={styles.rowHorizontal}>
-                  <TouchableOpacity
-                    style={[
-                      styles.roundedButtonIcon,
-                      { backgroundColor: productDetail.color },
-                    ]}
-                    onPress={increaseQuantity}
-                  >
-                    <Image
-                      source={require("../../../../assets/images/mas.png")}
-                      style={styles.iconPlus}
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.textIcon}>{quantity}</Text>
-                  <TouchableOpacity
-                    style={[
-                      styles.roundedButtonIcon,
-                      { backgroundColor: productDetail.color },
-                    ]}
-                    onPress={decreaseQuantity}
-                  >
-                    <Image
-                      source={require("../../../../assets/images/menos.png")}
-                      style={styles.iconMinus}
-                    />
-                  </TouchableOpacity>
-                </View>
 
-                <View style={styles.rowHorizontal}>
-                  <View style={styles.alignItemsCenter}>
-                    <Text style={styles.textPriceBefore}>
-                      Antes: {parseFloat(productDetail.price).toFixed(1)}
-                    </Text>
+            </ScrollView>
 
-                    <Text style={styles.textPrice}>
-                      Ahora : S/.{productDetail.totalPriceDiscount.toFixed(1)}
-                    </Text>
-
-                    <Text style={styles.textTotal}>
-                      Total a pagar : S/.{totalPrice}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-
-              <View style={styles.centered}>
+            <View style={styles.rowSpaceBetween}>
+              <View style={styles.rowHorizontal}>
                 <TouchableOpacity
-                  onPress={() => handleSaveInBagProduct(productDetail)}
                   style={[
-                    styles.roundedButton,
+                    styles.roundedButtonIcon,
                     { backgroundColor: productDetail.color },
                   ]}
+                  onPress={increaseQuantity}
                 >
-                  <Text style={styles.textColorBtn}>AGREGAR PRODUCTO</Text>
+                  <Image
+                    source={require("../../../../assets/images/mas.png")}
+                    style={styles.iconPlus}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.textIcon}>{quantity}</Text>
+                <TouchableOpacity
+                  style={[
+                    styles.roundedButtonIcon,
+                    { backgroundColor: productDetail.color },
+                  ]}
+                  onPress={decreaseQuantity}
+                >
+                  <Image
+                    source={require("../../../../assets/images/menos.png")}
+                    style={styles.iconMinus}
+                  />
                 </TouchableOpacity>
               </View>
-            </ScrollView>
+
+              <View style={styles.rowHorizontal}>
+                <View style={styles.alignItemsCenter}>
+                  <Text style={styles.textPriceBefore}>
+                    Antes: {parseFloat(productDetail.price).toFixed(1)}
+                  </Text>
+
+                  <Text style={styles.textPrice}>
+                    Ahora : S/.{productDetail.totalPriceDiscount.toFixed(1)}
+                  </Text>
+
+                  <Text style={styles.textTotal}>
+                    Total a pagar : S/.{totalPrice}
+                  </Text>
+                </View>
+              </View>
+            </View>
+
+            <View style={styles.centered}>
+              <TouchableOpacity
+                onPress={() => handleSaveInBagProduct(productDetail)}
+                style={[
+                  styles.roundedButton,
+                  { backgroundColor: productDetail.color },
+                ]}
+              >
+                <Text style={styles.textColorBtn}>AGREGAR PRODUCTO</Text>
+              </TouchableOpacity>
+            </View>
+
           </View>
+          
         </View>
       </ScrollView>
     </View>
@@ -230,7 +234,7 @@ const styles = StyleSheet.create({
   viewBackgroundBack: {
     backgroundColor: "#fff",
     flex: 1,
-    marginTop: 120,
+    marginTop: 140,
     borderTopLeftRadius: 56,
     borderTopRightRadius: 56,
     alignItems: "center",
@@ -255,8 +259,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   descriptionStyle: {
-    padding : 10,
-    textAlign: 'justify', 
+    padding: 10,
+    textAlign: 'justify',
     fontSize: 20,
     marginVertical: 16,
     width: "100%",
@@ -282,6 +286,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   rowHorizontal: {
+    marginHorizontal: 16,
     flexDirection: "row",
     justifyContent: "start",
     alignItems: "center",
