@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react';
 import {
-  StyleSheet, ScrollView, Image, View, TextInput, Button,
-  TouchableOpacity, Text,
-  Alert
+  StyleSheet, ScrollView, Image, View, TextInput, Button, TouchableOpacity, Text, Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AdminServices } from '../../../data/services/adminServices';
 import { convertImageToBase64 } from '../../../util/LifeCycle';
 import Spinner from "react-native-loading-spinner-overlay";
+import { HomeServices } from '../../../data/services/homeServices';
+import { Picker } from '@react-native-picker/picker';
 
 const CommonOffer = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [ulrImage, setImageUrl] = useState("");
@@ -30,6 +31,7 @@ const CommonOffer = () => {
   };
 
   useEffect(() => {
+    fetchData();
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
@@ -37,6 +39,19 @@ const CommonOffer = () => {
       }
     })();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await HomeServices.getCategories();
+      if (response.success) {
+        setData(response.data);
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    }
+  };
 
   const handleImageUpload = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -146,6 +161,49 @@ const CommonOffer = () => {
           />
         </View>
 
+        <TextInput
+          placeholder="Descripción"
+          multiline={true}
+          value={formData.description}
+          onChangeText={(text) => handleInputChange('description', text)}
+          style={styles.descriptionText}
+        />
+
+        <Text style={styles.textRangoOferta}>
+          Rango oferta
+        </Text>
+
+        <View style={styles.horizontal}>
+          <TextInput
+            style={styles.textStarDate}
+            placeholder="Dia Inicio"
+          />
+          <TextInput
+            style={styles.textEndDate}
+            placeholder="Dia Fin"
+          />
+
+          <Text style={styles.textMonth}>Octubre</Text>
+        </View>
+
+        <View style={styles.pickerContainer}>
+          <Picker
+            style={styles.picker}
+            selectedValue={formData.type}
+            onValueChange={(itemValue, itemIndex) =>
+              handleInputChange('type', itemValue)
+            }>
+            {data.map((category) => (
+              <Picker.Item
+                key={category.id}
+                label={category.category}
+                value={category.id}
+                style={styles.pickerItem}
+              />
+            ))}
+          </Picker>
+        </View>
+
         <Text style={styles.textColorBackground}>
           Colores de fondo
         </Text>
@@ -170,34 +228,22 @@ const CommonOffer = () => {
             </TouchableOpacity>
           ))}
         </View>
-        <TextInput
-          placeholder="Descripción"
-          multiline={true}
-          value={formData.description}
-          onChangeText={(text) => handleInputChange('description', text)}
-          style={styles.descriptionText}
-        />
-        <TextInput
-          placeholder="Días de rango"
-          value={formData.rangeDay}
-          onChangeText={(text) => handleInputChange('rangeDay', text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Tipo"
-          value={formData.type}
-          onChangeText={(text) => handleInputChange('type', text)}
-          style={styles.input}
-        />
-        <TouchableOpacity onPress={handleSubmit}>
-          <Text>Enviar formulario</Text>
+
+        <TouchableOpacity
+          onPress={handleSubmit}
+          style={styles.submitButton}
+        >
+          <Text style={styles.submitText}>Enviar formulario</Text>
         </TouchableOpacity>
+
       </View>
+
       <Spinner
         visible={loading}
         textContent={"Cargando..."}
         textStyle={{ color: "#FFF" }}
       />
+
     </ScrollView>
   );
 };
@@ -224,7 +270,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     padding: 10,
   },
-
   textTitle: {
     width: '80%',
     borderBottomWidth: 2,
@@ -234,13 +279,11 @@ const styles = StyleSheet.create({
     paddingBottom: 6,
     marginBottom: 10,
   },
-
   horizontal: {
     width: '80%',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-
   textPrice: {
     width: '46%',
     height: 40,
@@ -249,7 +292,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingBottom: 6,
   },
-
   textOfferDiscount: {
     width: '48%',
     height: 40,
@@ -258,10 +300,18 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingBottom: 6,
   },
-
-  textColorBackground: {
+  textRangoOferta: {
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
+    marginTop: 18,
     fontSize: 14,
+    width: '80%',
+  },
+  textColorBackground: {
+    textDecorationLine: 'underline',
+    fontWeight: 'bold',
     marginTop: 10,
+    fontSize: 14,
     width: '80%',
   },
   touchableContainer: {
@@ -276,16 +326,71 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   descriptionText: {
     width: '80%',
     fontSize: 14,
-    marginTop: 14,
+    marginTop: 10,
     borderBottomWidth: 2,
     borderBottomColor: '#D0D4CA',
     paddingBottom: 10,
+    height: 80,
     justifyContent: "center",
     maxHeight: 200,
+  },
+  textStarDate: {
+    marginTop: 10,
+    paddingRight: 40,
+    height: 40,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D0D4CA',
+    marginBottom: 10,
+    paddingBottom: 6,
+  },
+  textEndDate: {
+    marginTop: 10,
+    paddingRight: 40,
+    height: 40,
+    borderBottomWidth: 2,
+    borderBottomColor: '#D0D4CA',
+    marginBottom: 10,
+    paddingBottom: 6,
+  },
+  textMonth: {
+    fontFamily: 'Roboto',
+    fontSize: 14,
+    fontWeight: '800',
+    height: 'auto',
+    paddingBottom: 6,
+    textAlignVertical: 'center',
+    justifyContent: 'center',
+  },
+  pickerContainer: {
+    marginTop: 14,
+    width: '80%',
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  picker: {
+
+  },
+  pickerItem: {
+    fontSize: 14,
+  },
+  submitButton: {
+    top: 40,
+    width: '80%',
+    backgroundColor: '#3085C3',
+    borderRadius: 10,
+    padding: 10,
+    marginBottom : 20,
+  },
+
+  submitText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
