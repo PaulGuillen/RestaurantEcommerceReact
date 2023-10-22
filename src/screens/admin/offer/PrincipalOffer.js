@@ -1,32 +1,45 @@
 import { useState, useEffect } from 'react';
 import {
-  StyleSheet, ScrollView, Image, View, TextInput, Button,
-  TouchableOpacity, Text,
-  Alert
+  Image, View, TextInput, Button, TouchableOpacity, Text, Alert, ScrollView
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import { HomeServices } from '../../../data/services/homeServices';
 import { AdminServices } from '../../../data/services/adminServices';
+import { HomeServices } from '../../../data/services/homeServices';
+import { Picker } from '@react-native-picker/picker';
+import { commonOfferStyles } from '../../../styles/admin/offer/commonOfferStyle';
+import { arrayChunk, colorsGroup, convertImageToBase64, getSpanishMonth } from '../../../util/Util';
 import Spinner from "react-native-loading-spinner-overlay";
-import { convertImageToBase64 } from '../../../util/Util';
 
 const PrincipalOffer = () => {
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [imageUri, setImageUri] = useState(null);
   const [ulrImage, setImageUrl] = useState("");
   const [formData, setFormData] = useState({
-    id: '01',
     title: '',
     price: '',
-    color: '',
-    rating: '',
     description: '',
     percentOffer: '',
     rangeDay: '',
     type: '',
   });
 
+  const [selectedColor, setSelectedColor] = useState('');
+
+  const colorsPerRow = 4;
+  const currentDate = new Date();
+  const currentMonth = getSpanishMonth(currentDate);
+
+  const [startDay, setStartDay] = useState('');
+  const [endDay, setEndDay] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const handleColorSelection = (color) => {
+    setSelectedColor(color);
+  };
+
   useEffect(() => {
+    fetchData();
     (async () => {
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
       if (status !== 'granted') {
@@ -34,6 +47,19 @@ const PrincipalOffer = () => {
       }
     })();
   }, []);
+
+  const fetchData = async () => {
+    try {
+      const response = await HomeServices.getCategories();
+      if (response.success) {
+        setData(response.data);
+      } else {
+        Alert.alert("Error", response.error);
+      }
+    } catch (error) {
+      Alert.alert("Error", "Hubo un problema al cargar los datos");
+    }
+  };
 
   const handleImageUpload = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -56,7 +82,7 @@ const PrincipalOffer = () => {
       try {
         const response = await uploadImage(dataImage);
         if (response.success) {
-          Alert.alert("Actualizado", response.data.message);
+          Alert.alert("Promoción creada", response.data.message);
           const imageUrl = response.data.url;
           setImageUrl(imageUrl);
         } else {
@@ -79,17 +105,18 @@ const PrincipalOffer = () => {
 
   const handleSubmit = async () => {
 
+    const rangeDay = `${startDay} - ${endDay} ${currentMonth}`
+
     const mainOfferData = {
+      id: "01",
       image: ulrImage,
-      id: formData.id,
       title: formData.title,
-      color: '#' + formData.color,
-      price: parseInt(formData.price),
-      rating: formData.rating,
+      color: selectedColor,
+      price: parseFloat(formData.price),
       description: formData.description,
       percentOffer: formData.percentOffer,
-      type: formData.type,
-      rangeDay: formData.rangeDay
+      type: selectedCategory,
+      rangeDay: rangeDay
     };
 
     setLoading(true);
@@ -108,7 +135,7 @@ const PrincipalOffer = () => {
   };
 
   const mainOffer = async (mainOfferData) => {
-    const response = await HomeServices.mainOffer(mainOfferData);
+    const response = await AdminServices.mainOffer(mainOfferData);
     return response;
   };
 
@@ -119,61 +146,105 @@ const PrincipalOffer = () => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
+      <View style={commonOfferStyles.container}>
+        <View style={commonOfferStyles.imageContainer}>
+          {imageUri && <Image source={{ uri: imageUri }} style={commonOfferStyles.image} />}
           <Button title="Subir imagen" onPress={handleImageUpload} />
         </View>
         <TextInput
-          placeholder="Título"
+          placeholder="Nombre producto"
           value={formData.title}
           onChangeText={(text) => handleInputChange('title', text)}
-          style={styles.input}
+          style={commonOfferStyles.textTitle}
         />
-        <TextInput
-          placeholder="Precio"
-          value={formData.price}
-          onChangeText={(text) => handleInputChange('price', text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Color"
-          value={formData.color}
-          onChangeText={(text) => handleInputChange('color', text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Rating"
-          value={formData.rating}
-          onChangeText={(text) => handleInputChange('rating', text)}
-          style={styles.input}
-        />
+        <View style={commonOfferStyles.horizontal}>
+          <TextInput
+            placeholder="Precio"
+            style={commonOfferStyles.textPrice}
+            value={formData.price}
+            onChangeText={(text) => handleInputChange('price', text)}
+            keyboardType="numeric"
+          />
+          <TextInput
+            placeholder="Descuento %"
+            value={formData.percentOffer}
+            onChangeText={(text) => handleInputChange('percentOffer', text)}
+            style={commonOfferStyles.textOfferDiscount}
+          />
+        </View>
         <TextInput
           placeholder="Descripción"
+          multiline={true}
           value={formData.description}
           onChangeText={(text) => handleInputChange('description', text)}
-          style={styles.input}
+          style={commonOfferStyles.descriptionText}
         />
-        <TextInput
-          placeholder="Porcentaje de oferta"
-          value={formData.percentOffer}
-          onChangeText={(text) => handleInputChange('percentOffer', text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Días de rango"
-          value={formData.rangeDay}
-          onChangeText={(text) => handleInputChange('rangeDay', text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Tipo"
-          value={formData.type}
-          onChangeText={(text) => handleInputChange('type', text)}
-          style={styles.input}
-        />
-        <TouchableOpacity onPress={handleSubmit}>
-          <Text>Enviar formulario</Text>
+        <Text style={commonOfferStyles.textRangoOferta}>
+          Rango oferta
+        </Text>
+        <View style={commonOfferStyles.horizontal}>
+          <TextInput
+            style={commonOfferStyles.textStarDate}
+            placeholder="Dia Inicio"
+            maxLength={2}
+            keyboardType="numeric"
+            onChangeText={(text) => setStartDay(text)}
+          />
+          <TextInput
+            style={commonOfferStyles.textEndDate}
+            placeholder="Dia Fin"
+            maxLength={2}
+            keyboardType="numeric"
+            onChangeText={(text) => setEndDay(text)}
+          />
+          <Text style={commonOfferStyles.textMonth}>{currentMonth}</Text>
+        </View>
+        <View style={commonOfferStyles.pickerContainer}>
+          <Picker
+            selectedValue={formData.type}
+            onValueChange={(itemValue, itemIndex) => {
+              handleInputChange('type', itemValue);
+              const selectedText = data.find((category) => category.id === itemValue)?.type;
+              setSelectedCategory(selectedText || '');
+            }}
+          >
+            {data.map((category) => (
+              <Picker.Item
+                key={category.id}
+                label={category.category}
+                value={category.id}
+              />
+            ))}
+          </Picker>
+        </View>
+        <Text style={commonOfferStyles.textColorBackground}>
+          Colores de fondo
+        </Text>
+        <View style={commonOfferStyles.horizontalColorsContainer}>
+          {arrayChunk(colorsGroup, colorsPerRow).map((colorGroup, rowIndex) => (
+            <View key={rowIndex} style={commonOfferStyles.horizontalColorsRow}>
+              {colorGroup.map((color, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[commonOfferStyles.circularFirst,
+                  {
+                    backgroundColor: color,
+                    borderWidth: selectedColor === color ? 1 : 0,
+                  },
+                  ]}
+                  onPress={() => handleColorSelection(color)}
+                />
+              ))}
+            </View>
+          ))}
+
+        </View>
+
+        <TouchableOpacity
+          onPress={handleSubmit}
+          style={commonOfferStyles.submitButton}
+        >
+          <Text style={commonOfferStyles.submitText}>Enviar formulario</Text>
         </TouchableOpacity>
       </View>
       <Spinner
@@ -183,30 +254,8 @@ const PrincipalOffer = () => {
       />
     </ScrollView>
   );
+
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 40,
-  },
-  imageContainer: {
-    marginBottom: 20,
-  },
-  image: {
-    width: 240,
-    height: 240,
-  },
-  input: {
-    width: '80%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    padding: 10,
-  },
-});
 
 export default PrincipalOffer;

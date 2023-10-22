@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import {
-  Image, View, TextInput, Button, TouchableOpacity, Text, Alert, FlatList, ScrollView
+  Image, View, TextInput, Button, TouchableOpacity, Text, Alert, ScrollView
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { AdminServices } from '../../../data/services/adminServices';
 import { HomeServices } from '../../../data/services/homeServices';
 import { Picker } from '@react-native-picker/picker';
 import { commonOfferStyles } from '../../../styles/admin/offer/commonOfferStyle';
-import { convertImageToBase64, getSpanishMonth } from '../../../util/Util';
+import { arrayChunk, colorsGroup, convertImageToBase64, getSpanishMonth } from '../../../util/Util';
 import Spinner from "react-native-loading-spinner-overlay";
 
 const CommonOffer = () => {
@@ -25,7 +25,8 @@ const CommonOffer = () => {
   });
 
   const [selectedColor, setSelectedColor] = useState('');
-  const circles = ['#A7D397', '#FFF2D8', '#FF6969', '#35A29F', '#26577C', '#713ABE', '#FFFD8C', '#FFDBAA'];
+
+  const colorsPerRow = 4;
   const currentDate = new Date();
   const currentMonth = getSpanishMonth(currentDate);
 
@@ -106,7 +107,7 @@ const CommonOffer = () => {
 
     const rangeDay = `${startDay} - ${endDay} ${currentMonth}`
 
-    const mainOfferData = {
+    const commonOfferData = {
       image: ulrImage,
       title: formData.title,
       color: selectedColor,
@@ -119,7 +120,7 @@ const CommonOffer = () => {
 
     setLoading(true);
     try {
-      const response = await commonOffer(mainOfferData);
+      const response = await commonOffer(commonOfferData);
       if (response.success) {
         Alert.alert("Actualizado", response.data.message);
       } else {
@@ -218,36 +219,32 @@ const CommonOffer = () => {
         <Text style={commonOfferStyles.textColorBackground}>
           Colores de fondo
         </Text>
-        <FlatList
-          style={commonOfferStyles.flatList}
-          data={circles}
-          numColumns={4}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={commonOfferStyles.touchableContainer}
-              onPress={() => handleColorSelection(item)}
-            >
-              <View
-                style={[
-                  commonOfferStyles.circularFirst,
+        <View style={commonOfferStyles.horizontalColorsContainer}>
+          {arrayChunk(colorsGroup, colorsPerRow).map((colorGroup, rowIndex) => (
+            <View key={rowIndex} style={commonOfferStyles.horizontalColorsRow}>
+              {colorGroup.map((color, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={[commonOfferStyles.circularFirst,
                   {
-                    backgroundColor: item,
-                    borderWidth: selectedColor === item ? 1 : 0,
-                    borderColor: 'black',
+                    backgroundColor: color,
+                    borderWidth: selectedColor === color ? 1 : 0,
                   },
-                ]}
-              />
-            </TouchableOpacity>
-          )}
-        />
+                  ]}
+                  onPress={() => handleColorSelection(color)}
+                />
+              ))}
+            </View>
+          ))}
+
+        </View>
+
         <TouchableOpacity
           onPress={handleSubmit}
           style={commonOfferStyles.submitButton}
         >
           <Text style={commonOfferStyles.submitText}>Enviar formulario</Text>
         </TouchableOpacity>
-
       </View>
       <Spinner
         visible={loading}
@@ -256,6 +253,7 @@ const CommonOffer = () => {
       />
     </ScrollView>
   );
+
 };
 
 

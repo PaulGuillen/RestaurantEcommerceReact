@@ -43,7 +43,6 @@ export default Header;
 
 const styles = StyleSheet.create({
   horizontalView: {
-    marginTop: 10,
     flexDirection: "row",
   },
   titleText: {

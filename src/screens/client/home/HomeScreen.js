@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     marginHorizontal: 10,
-    marginTop: 60,
+    paddingTop: 40,
   },
   productView: {
     flex: 1,

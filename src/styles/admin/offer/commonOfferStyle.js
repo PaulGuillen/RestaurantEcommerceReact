@@ -36,10 +36,14 @@ export const commonOfferStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    horizontalColors: {
+    horizontalColorsContainer: {
+        padding: 10,
+        flexDirection: 'column',
+    },
+    horizontalColorsRow: {
         width: '80%',
         flexDirection: 'row',
-        justifyContent: 'center',
+        flexWrap: 'wrap',
     },
     textPrice: {
         width: '46%',
@@ -79,9 +83,10 @@ export const commonOfferStyles = StyleSheet.create({
     circularFirst: {
         width: 40,
         height: 40,
-        marginHorizontal: 14,
+        marginTop: 12,
         justifyContent: 'center',
         alignItems: 'center',
+        marginHorizontal: 10,
     },
     descriptionText: {
         width: '80%',

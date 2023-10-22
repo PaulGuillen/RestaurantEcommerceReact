@@ -19,3 +19,14 @@ export const convertImageToBase64 = async (imageUri) => {
         reader.readAsDataURL(blob);
     });
 };
+
+
+export const arrayChunk = (array, chunkSize) => {
+    const chunks = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        chunks.push(array.slice(i, i + chunkSize));
+    }
+    return chunks;
+};
+
+export const colorsGroup = ['#A7D397', '#FFF2D8', '#FF6969', '#35A29F', '#26577C', '#713ABE', '#FFFD8C', '#FFDBAA', '#ED7D31', '#BCA37F', "#D988B9", "#8DDFCB", "#6499E9", "#B0D9B1", "#FF6AC2", "#164B60", "#FF6969", "#6C5F5B"];

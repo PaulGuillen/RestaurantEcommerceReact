@@ -72,7 +72,7 @@ export const AdminServices = {
         }
     },
 
-    commonOffer : async (commonOffer) => {
+    commonOffer: async (commonOffer) => {
         try {
             const response = await fetch(`${environment.apiCreateCommonOffer}/createPromotions`, {
                 method: "POST",
