@@ -192,7 +192,7 @@ const GeneralProduct = () => {
             <View key={rowIndex} style={generalProductStyle.horizontalColorsRow}>
               {colorGroup.map((color, index) => (
                 <TouchableOpacity
-                  key={index}
+                  key={`${rowIndex}-${index}`}
                   style={[generalProductStyle.circularFirst,
                   {
                     backgroundColor: color,
@@ -204,7 +204,6 @@ const GeneralProduct = () => {
               ))}
             </View>
           ))}
-
         </View>
 
         <TouchableOpacity

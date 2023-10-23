@@ -222,10 +222,10 @@ const PrincipalOffer = () => {
         </Text>
         <View style={commonOfferStyles.horizontalColorsContainer}>
           {arrayChunk(colorsGroup, colorsPerRow).map((colorGroup, rowIndex) => (
-            <View key={rowIndex} style={commonOfferStyles.horizontalColorsRow}>
+            <View key={`row-${rowIndex}`} style={commonOfferStyles.horizontalColorsRow}>
               {colorGroup.map((color, index) => (
                 <TouchableOpacity
-                  key={index}
+                  key={`color-${rowIndex}-${index}`}
                   style={[commonOfferStyles.circularFirst,
                   {
                     backgroundColor: color,
@@ -237,8 +237,9 @@ const PrincipalOffer = () => {
               ))}
             </View>
           ))}
-
         </View>
+
+
 
         <TouchableOpacity
           onPress={handleSubmit}

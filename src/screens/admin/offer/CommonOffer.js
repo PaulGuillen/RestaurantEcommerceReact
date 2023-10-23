@@ -224,7 +224,7 @@ const CommonOffer = () => {
             <View key={rowIndex} style={commonOfferStyles.horizontalColorsRow}>
               {colorGroup.map((color, index) => (
                 <TouchableOpacity
-                  key={index}
+                  key={`${rowIndex}-${index}`}
                   style={[commonOfferStyles.circularFirst,
                   {
                     backgroundColor: color,
@@ -236,7 +236,6 @@ const CommonOffer = () => {
               ))}
             </View>
           ))}
-
         </View>
 
         <TouchableOpacity
