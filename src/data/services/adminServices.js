@@ -32,7 +32,7 @@ export const AdminServices = {
                 return {
                     success: false,
                     error:
-                        errorData.message || "Error en la comunicación con el servidor",
+                        errorData.error || "Error en la comunicación con el servidor",
                 };
             }
         } catch (error) {
@@ -63,7 +63,7 @@ export const AdminServices = {
                 return {
                     success: false,
                     error:
-                        errorData.message || "Error en la comunicación con el servidor",
+                        errorData.error || "Error en la comunicación con el servidor",
                 };
             }
         } catch (error) {
@@ -100,7 +100,7 @@ export const AdminServices = {
                 return {
                     success: false,
                     error:
-                        errorData.message || "Error en la comunicación con el servidor",
+                        errorData.error || "Error en la comunicación con el servidor",
                 };
             }
         } catch (error) {
@@ -137,7 +137,7 @@ export const AdminServices = {
                 return {
                     success: false,
                     error:
-                        errorData.message || "Error en la comunicación con el servidor",
+                        errorData.error || "Error en la comunicación con el servidor",
                 };
             }
         } catch (error) {

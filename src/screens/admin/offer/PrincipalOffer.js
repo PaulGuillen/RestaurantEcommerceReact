@@ -9,6 +9,7 @@ import { Picker } from '@react-native-picker/picker';
 import { commonOfferStyles } from '../../../styles/admin/offer/commonOfferStyle';
 import { arrayChunk, colorsGroup, convertImageToBase64, getSpanishMonth } from '../../../util/Util';
 import Spinner from "react-native-loading-spinner-overlay";
+import { v4 as uuidv4 } from 'uuid';
 
 const PrincipalOffer = () => {
   const [data, setData] = useState([]);
@@ -204,15 +205,15 @@ const PrincipalOffer = () => {
             selectedValue={formData.type}
             onValueChange={(itemValue, itemIndex) => {
               handleInputChange('type', itemValue);
-              const selectedText = data.find((category) => category.id === itemValue)?.type;
+              const selectedText = data.find((category) => category.categoryID === itemValue)?.type;
               setSelectedCategory(selectedText || '');
             }}
           >
             {data.map((category) => (
               <Picker.Item
-                key={category.id}
+                key={uuidv4()}
                 label={category.category}
-                value={category.id}
+                value={category.categoryID}
               />
             ))}
           </Picker>
@@ -222,10 +223,10 @@ const PrincipalOffer = () => {
         </Text>
         <View style={commonOfferStyles.horizontalColorsContainer}>
           {arrayChunk(colorsGroup, colorsPerRow).map((colorGroup, rowIndex) => (
-            <View key={`row-${rowIndex}`} style={commonOfferStyles.horizontalColorsRow}>
+            <View key={rowIndex} style={commonOfferStyles.horizontalColorsRow}>
               {colorGroup.map((color, index) => (
                 <TouchableOpacity
-                  key={`color-${rowIndex}-${index}`}
+                  key={uuidv4()}
                   style={[commonOfferStyles.circularFirst,
                   {
                     backgroundColor: color,
@@ -238,8 +239,6 @@ const PrincipalOffer = () => {
             </View>
           ))}
         </View>
-
-
 
         <TouchableOpacity
           onPress={handleSubmit}

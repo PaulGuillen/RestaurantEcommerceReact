@@ -9,6 +9,7 @@ import { Picker } from '@react-native-picker/picker';
 import { generalProductStyle } from '../../../styles/admin/offer/generalProductStyle';
 import { arrayChunk, colorsGroup, convertImageToBase64 } from '../../../util/Util';
 import Spinner from "react-native-loading-spinner-overlay";
+import { v4 as uuidv4 } from 'uuid';
 
 const GeneralProduct = () => {
   const [data, setData] = useState([]);
@@ -27,7 +28,6 @@ const GeneralProduct = () => {
   const [selectedColor, setSelectedColor] = useState('');
   const colorsPerRow = 4;
   const [selectedCategory, setSelectedCategory] = useState('');
-
   const handleColorSelection = (color) => {
     setSelectedColor(color);
   };
@@ -171,15 +171,15 @@ const GeneralProduct = () => {
             selectedValue={formData.type}
             onValueChange={(itemValue, itemIndex) => {
               handleInputChange('type', itemValue);
-              const selectedText = data.find((category) => category.id === itemValue)?.type;
+              const selectedText = data.find((category) => category.categoryID === itemValue)?.type;
               setSelectedCategory(selectedText || '');
             }}
           >
             {data.map((category) => (
               <Picker.Item
-                key={category.id}
+                key={uuidv4()}
                 label={category.category}
-                value={category.id}
+                value={category.categoryID}
               />
             ))}
           </Picker>
@@ -192,7 +192,7 @@ const GeneralProduct = () => {
             <View key={rowIndex} style={generalProductStyle.horizontalColorsRow}>
               {colorGroup.map((color, index) => (
                 <TouchableOpacity
-                  key={`${rowIndex}-${index}`}
+                  key={uuidv4()}
                   style={[generalProductStyle.circularFirst,
                   {
                     backgroundColor: color,

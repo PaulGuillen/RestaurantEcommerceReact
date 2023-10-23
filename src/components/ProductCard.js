@@ -132,19 +132,19 @@ const ProductCard = ({ filterText, category }) => {
   return (
     <FlatList
       data={filteredData}
-      keyExtractor={(item) => item.id.toString()}
+      keyExtractor={(item) => item.productID.toString()}
       horizontal={true}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item }) => (
         <Pressable
-          key={item.id}
+          key={item.productID}
           onPress={() =>
             navigation.navigate("ProductDetail", {
               productDetail: item,
             })
           }
         >
-          <View key={item.id} style={styles.containerBody}>
+          <View key={item.productID} style={styles.containerBody}>
             <View style={styles.card}>
               <View style={styles.imageContainer}>
                 <Image source={{ uri: item.image }} style={styles.image} />
@@ -164,7 +164,7 @@ const ProductCard = ({ filterText, category }) => {
                 }}
               >
                 <FontAwesome
-                  key={`${item.id}`}
+                  key={`${item.productID}`}
                   name="heart"
                   size={24}
                   color={isFavorite(item) ? "red" : "white"}
