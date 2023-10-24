@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import {
   Image, View, TextInput, Button, TouchableOpacity, Text, Alert, ScrollView
 } from 'react-native';
@@ -10,6 +10,7 @@ import { generalProductStyle } from '../../../styles/admin/offer/generalProductS
 import { arrayChunk, colorsGroup, convertImageToBase64 } from '../../../util/Util';
 import Spinner from "react-native-loading-spinner-overlay";
 import { v4 as uuidv4 } from 'uuid';
+import { useFocusEffect } from '@react-navigation/native';
 
 const GeneralProduct = () => {
   const [data, setData] = useState([]);
@@ -41,6 +42,12 @@ const GeneralProduct = () => {
       }
     })();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [])
+  );
 
   const fetchData = async () => {
     try {

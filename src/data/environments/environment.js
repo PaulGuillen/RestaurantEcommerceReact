@@ -24,4 +24,6 @@ export const environment = {
   apiUploadImage: API_BASE_URL + "/image",
   apiCreateCommonOffer : API_BASE_URL + "/promotion",
   apiCreateProduct: API_BASE_URL + "/home",
+  apiCreateCategory: API_BASE_URL + "/category",
+
 };

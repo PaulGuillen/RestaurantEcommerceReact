@@ -146,4 +146,34 @@ export const AdminServices = {
         }
     },
 
+    createCategory: async (category) => {
+        try {
+            const response = await fetch(`${environment.apiCreateCategory}/createCategory`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    category: category.category,
+                    type: category.category,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                return { success: true, data: data };
+            } else {
+                const errorData = await response.json();
+                console.log("errorData", errorData);
+                return {
+                    success: false,
+                    error:
+                        errorData.error || "Error en la comunicación con el servidor",
+                };
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            return { success: false, error: "Error en la solicitud" };
+        }
+    },
 };
