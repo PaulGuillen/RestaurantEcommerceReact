@@ -64,8 +64,8 @@ const formatOrderDataRes = (order) => {
     totalPrice: setDefault(order.totalPrice, 0),
     orderID: setDefault(order.orderID, ""),
     isPayed: setDefault(order.isPayed, false),
-    fullName : setDefault(order.fullName, ""),
-    orderDate : setDefault(order.orderDate, ""),
+    fullName: setDefault(order.fullName, ""),
+    orderDate: setDefault(order.orderDate, ""),
     listProducts: order.listProducts.map((product) => ({
       image: setDefault(product.image, ""),
       quantity: setDefault(product.quantity, 0),
@@ -264,4 +264,74 @@ export const OrderService = {
       return { success: false, error: "Error en la solicitud" };
     }
   },
+
+  getAllOrdersPayued: async () => {
+    try {
+      const response = await fetch(
+        `${environment.apiOrdersRoute}/allOrdersPayued`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.status === 200) {
+        console.log(response)
+        const data = await response.json();
+        const formattedData = Object.keys(data).map(orderID => {
+          const orderDetails = data[orderID];
+          const listProducts = orderDetails.listProducts.map(product => ({
+            image: product.image,
+            quantity: product.quantity,
+            color: product.color,
+            productID: product.productID,
+            productPriceUnitDiscount: product.productPriceUnitDiscount,
+            isMainOffer: product.isMainOffer,
+            rating: product.rating,
+            description: product.description,
+            percentOffer: product.percentOffer,
+            productInBag: product.productInBag,
+            title: product.title,
+            type: product.type,
+            totalProductPriceToPay: product.totalProductPriceToPay,
+            isCommonOffer: product.isCommonOffer,
+            price: product.price,
+            productPriceUnit: product.productPriceUnit,
+            id: product.id,
+          }));
+
+          const addressSelected = {
+            ref: orderDetails.addressSelected.ref,
+            district: orderDetails.addressSelected.district,
+            latitude: orderDetails.addressSelected.latitude,
+            direction: orderDetails.addressSelected.direction,
+            addressID: orderDetails.addressSelected.addressID,
+            longitude: orderDetails.addressSelected.longitude,
+          };
+
+          return {
+            orderID: orderDetails.orderID,
+            phoneNumber: orderDetails.phoneNumber,
+            totalPrice: orderDetails.totalPrice,
+            listProducts: listProducts,
+            addressSelected: addressSelected,
+            fullName: orderDetails.fullName,
+            isPayed: orderDetails.isPayed,
+            orderDate: orderDetails.orderDate,
+          };
+        });
+
+        return { success: true, data: formattedData };
+      } else {
+        const errorData = await response.json();
+        return {
+          success: false,
+          error:
+            errorData.message || "Error al consultar la colección Categories",
+        };
+      }
+    } catch (error) {
+      return { success: false, error: "Error en la solicitud" };
+    }
+  }
+
 };
