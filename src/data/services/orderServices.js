@@ -260,21 +260,19 @@ export const OrderService = {
     }
   },
 
-  getAllOrdersPayued: async () => {
+  getAllOrdersPayed: async () => {
     try {
       const response = await fetch(
-        `${environment.apiOrdersRoute}/allOrdersPayed`,
+        `${environment.apiOrdersRoute}/allOrdersAdminRole`,
         {
           method: "GET",
         }
       );
 
       if (response.status === 200) {
-        console.log(response)
         const data = await response.json();
         const formattedData = data.map(order => {
-          const orderDetails = Object.values(order)[0];
-          const listProducts = orderDetails.listProducts.map(product => ({
+          const listProducts = order.listProducts.map(product => ({
             image: product.image,
             quantity: product.quantity,
             color: product.color,
@@ -295,23 +293,23 @@ export const OrderService = {
           }));
 
           const addressSelected = {
-            ref: orderDetails.addressSelected.ref,
-            district: orderDetails.addressSelected.district,
-            latitude: orderDetails.addressSelected.latitude,
-            direction: orderDetails.addressSelected.direction,
-            addressID: orderDetails.addressSelected.addressID,
-            longitude: orderDetails.addressSelected.longitude,
+            ref: order.addressSelected.ref,
+            district: order.addressSelected.district,
+            latitude: order.addressSelected.latitude,
+            direction: order.addressSelected.direction,
+            addressID: order.addressSelected.addressID,
+            longitude: order.addressSelected.longitude,
           };
 
           return {
-            orderID: orderDetails.orderID,
-            phoneNumber: orderDetails.phoneNumber,
-            totalPrice: orderDetails.totalPrice,
+            orderID: order.orderID,
+            phoneNumber: order.phoneNumber,
+            totalPrice: order.totalPrice,
             listProducts: listProducts,
             addressSelected: addressSelected,
-            fullName: orderDetails.fullName,
-            isPayed: orderDetails.isPayed,
-            orderDate: orderDetails.orderDate,
+            fullName: order.fullName,
+            isPayed: order.isPayed,
+            orderDate: order.orderDate,
           };
         });
 
@@ -327,6 +325,6 @@ export const OrderService = {
     } catch (error) {
       return { success: false, error: "Error en la solicitud" };
     }
-  }
+  },
 
 };

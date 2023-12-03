@@ -26,5 +26,4 @@ export const environment = {
   apiCreateProduct: API_BASE_URL + "/home",
   apiCreateCategory: API_BASE_URL + "/category",
   apiOrdersRoute: API_BASE_URL + "/order",
-
 };
