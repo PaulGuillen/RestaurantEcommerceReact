@@ -199,11 +199,6 @@ export const OrderService = {
 
   createOrder: async (orderInfo) => {
     try {
-      const formattedData = {
-        userUID: orderInfo.userUID,
-        orders: orderInfo.orders,
-      };
-
       const response = await fetch(
         `${environment.apiCreateOrder}/productPayed`,
         {
@@ -211,7 +206,7 @@ export const OrderService = {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(formattedData),
+          body: JSON.stringify(orderInfo),
         }
       );
 
@@ -268,7 +263,7 @@ export const OrderService = {
   getAllOrdersPayued: async () => {
     try {
       const response = await fetch(
-        `${environment.apiOrdersRoute}/allOrdersPayued`,
+        `${environment.apiOrdersRoute}/allOrdersPayed`,
         {
           method: "GET",
         }
@@ -277,8 +272,8 @@ export const OrderService = {
       if (response.status === 200) {
         console.log(response)
         const data = await response.json();
-        const formattedData = Object.keys(data).map(orderID => {
-          const orderDetails = data[orderID];
+        const formattedData = data.map(order => {
+          const orderDetails = Object.values(order)[0];
           const listProducts = orderDetails.listProducts.map(product => ({
             image: product.image,
             quantity: product.quantity,
@@ -326,7 +321,7 @@ export const OrderService = {
         return {
           success: false,
           error:
-            errorData.message || "Error al consultar la colección Categories",
+            errorData.message || "Error al consultar la colección Orders",
         };
       }
     } catch (error) {

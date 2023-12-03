@@ -176,9 +176,7 @@ const Payment = () => {
         const userUID = dataOrder.userUID;
 
         const orderData = {
-          userUID: userUID,
-          orders: [
-            {
+              userUID: userUID,
               listProducts: listProducts,
               addressSelected: addressOrder,
               totalPrice: totalPrice,
@@ -187,8 +185,6 @@ const Payment = () => {
               fullName: fullName,
               orderDate: orderDate,
               phoneNumber : principalPhoneNumber,
-            },
-          ],
         };
 
         const response = await OrderService.createOrder(orderData);
