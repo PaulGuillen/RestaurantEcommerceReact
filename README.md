@@ -86,6 +86,10 @@ _En este video se mostrará un poco de las funcionalidades hasta el momento del 
 
 https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/1df0a6a7-cb75-4e36-8aa8-c0b6c74ec7c2
 
+_En este video se mostrará un poco de las funcionalidades del ROL Administrador_
+
+https://github.com/PaulGuillen/RestaurantEcommerceReact/assets/43099030/3de62b6a-2000-4af9-bf19-60a3f2830c38
+
 
 ## Autor ✒️
 
